@@ -1,0 +1,57 @@
+<web-app>
+	<servlet>
+        <servlet-name>Part2</servlet-name>
+        <servlet-class>HW1_Part2</servlet-class>
+    </servlet>
+	<servlet>
+        <servlet-name>Part4</servlet-name>
+        <servlet-class>HW1_Part4</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Part5</servlet-name>
+        <servlet-class>HW1_Part5</servlet-class>
+    </servlet>    
+    <servlet>
+        <servlet-name>Part6</servlet-name>
+        <servlet-class>HW1_Part6</servlet-class>
+    </servlet>  
+    <servlet>
+        <servlet-name>Part7</servlet-name>
+        <servlet-class>HW1_Part7</servlet-class>
+    </servlet>  
+	
+	<servlet-mapping>
+        <servlet-name>Part2</servlet-name>
+        <url-pattern>/part2</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>Part4</servlet-name>
+        <url-pattern>/part4</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Part5</servlet-name>
+        <url-pattern>/part5</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Part6</servlet-name>
+        <url-pattern>/part6</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Part7</servlet-name>
+        <url-pattern>/part7</url-pattern>
+    </servlet-mapping>
+
+    <context-param> 
+      <description>Location to store uploaded file</description> 
+      <param-name>file-upload</param-name> 
+      <param-value>
+         C:\tomcat9\webapps\data\
+      </param-value> 
+   </context-param>
+
+	<welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+    
+</web-app>
