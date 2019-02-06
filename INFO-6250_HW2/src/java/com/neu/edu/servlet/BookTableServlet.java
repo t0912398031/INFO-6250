@@ -70,6 +70,7 @@ public class BookTableServlet extends HttpServlet {
 //                users.add(login);                  
             } 
             out.println("<br>");
+            out.println("<input type=\"hidden\" name=\"number\" value='"+ number+ "'>");
             out.println("<input type='submit' value='Add Books'/>"+"</form>");
             
 //            out.println("<a href='movieStore.html'>Back to movie store.</a><br>");

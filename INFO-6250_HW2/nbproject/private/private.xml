@@ -3,8 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/download/Github/INFO-6250_HW2/web/index.html</file>
+            <file>file:/D:/download/Github/INFO-6250_HW2/src/java/com/neu/edu/servlet/AddBookServlet.java</file>
+            <file>file:/D:/download/Github/INFO-6250_HW2/src/java/com/neu/edu/servlet/AddServlet.java</file>
+            <file>file:/D:/download/Github/INFO-6250_HW2/web/addMovies.html</file>
             <file>file:/D:/download/Github/INFO-6250_HW2/web/WEB-INF/web.xml</file>
-            <file>file:/D:/download/Github/INFO-6250_HW2/src/java/com/neu/edu/servlet/MessageServlet.java</file>
+            <file>file:/D:/download/Github/INFO-6250_HW2/src/java/com/neu/edu/servlet/BookTableServlet.java</file>
+            <file>file:/D:/download/Github/INFO-6250_HW2/web/bookStore.html</file>
+            <file>file:/D:/download/Github/INFO-6250_HW2/web/movieStore.html</file>
             <file>file:/D:/download/Github/INFO-6250_HW2/src/java/com/neu/edu/servlet/OptionServlet.java</file>
         </group>
     </open-files>

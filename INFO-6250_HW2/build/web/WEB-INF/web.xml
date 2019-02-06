@@ -27,6 +27,14 @@
         <servlet-name>booktable</servlet-name>
         <servlet-class>com.neu.edu.servlet.BookTableServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addbook</servlet-name>
+        <servlet-class>com.neu.edu.servlet.AddBookServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>csv</servlet-name>
+        <servlet-class>com.neu.edu.servlet.CSV</servlet-class>
+    </servlet>
     
     
     
@@ -57,6 +65,14 @@
     <servlet-mapping>
         <servlet-name>booktable</servlet-name>
         <url-pattern>/booktable</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addbook</servlet-name>
+        <url-pattern>/addbook</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>csv</servlet-name>
+        <url-pattern>/csv</url-pattern>
     </servlet-mapping>
     
     
