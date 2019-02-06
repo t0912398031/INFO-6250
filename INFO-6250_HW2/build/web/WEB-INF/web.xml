@@ -33,8 +33,34 @@
     </servlet>
     <servlet>
         <servlet-name>csv</servlet-name>
-        <servlet-class>com.neu.edu.servlet.CSV</servlet-class>
+        <servlet-class>com.neu.edu.servlet.CSVServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>hw1part7</servlet-name>
+        <servlet-class>com.neu.edu.servlet.ShoppingBooksServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>result</servlet-name>
+        <servlet-class>com.neu.edu.servlet.ResultServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>laptop</servlet-name>
+        <servlet-class>com.neu.edu.servlet.ShoppingLaptopServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>cd</servlet-name>
+        <servlet-class>com.neu.edu.servlet.ShoppingCDServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>cart</servlet-name>
+        <servlet-class>com.neu.edu.servlet.CartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>excel</servlet-name>
+        <servlet-class>Excel</servlet-class>
+    </servlet>
+    
+    
     
     
     
@@ -74,6 +100,31 @@
         <servlet-name>csv</servlet-name>
         <url-pattern>/csv</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>hw1part7</servlet-name>
+        <url-pattern>/hw1part7</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>result</servlet-name>
+        <url-pattern>/result</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>laptop</servlet-name>
+        <url-pattern>/laptop</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cd</servlet-name>
+        <url-pattern>/cd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cart</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>excel</servlet-name>
+        <url-pattern>/excel</url-pattern>
+    </servlet-mapping>
+    
     
     
     <welcome-file-list>
