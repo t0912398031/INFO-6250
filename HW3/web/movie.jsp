@@ -10,7 +10,7 @@
     <!DOCTYPE html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Shopping View</title>
+        <title>Movie</title>
     </head>
     
     <body>

@@ -18,7 +18,7 @@ import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 public class MovieDao {
-
+       
     public List<Movie> getMovies() {
         Connection connection = null;
         List<Movie> result = null;
@@ -42,6 +42,7 @@ public class MovieDao {
         return result;
 
     }
+    
      public int addMovies(String title,String actor,String actress, String genre, int year) {
         Connection connection = null;
         int result = 0;

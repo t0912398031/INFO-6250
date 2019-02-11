@@ -12,7 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1> this is the error page</h1>
-        <a href="/WEB-INF/jsp/messages.jsp">home</a>
+        <a href='index.jsp'>Home</a><br/><br/>
+        <h1>This is the error page</h1>
+        <!--<a href="/WEB-INF/jsp/messages.jsp">home</a>-->
     </body>
 </html>
