@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package com.neu.edu.dao;
-
+/**
+ *
+ * @author Chung-Yang Li
+ */
 import com.neu.edu.pojo.Login;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,10 +18,6 @@ import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
-/**
- *
- * @author shiva
- */
 public class UserDao {
 
     public Login authenticateLogin(String user, String password) {

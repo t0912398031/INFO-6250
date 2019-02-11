@@ -36,16 +36,6 @@
         <c:out value="${items}" />
         </c:forEach> 
 
-<!--        <form action="login" method ="post">
-            <input type="hidden" name="option" value="logout"/>
-            <input type="submit" value="Logout"/>
-        </form><br/>
-        <h4>SEARCH USERS</h4>
-        <form action="user" method="post">
-            Search User: <input type="text" name="search" />
-            <input type="hidden" name="option" value="search"/>
-            <input type="submit" value="Search"/>
-        </form>-->
     <%--<c:out value="Shop for ${requestScope.option}:" />--%>
     <h2>Your Cart:</h2>
     <div>Books:</div>
@@ -64,11 +54,6 @@
     </c:forEach> 
     <br><br>
     
-<!--    <form action = 'shoppingtype' method = 'post'>
-
-        <input type="hidden" name="option" value="cart"/>
-    <input type =  'submit' value = 'Add to Cart' name = 'button'/><br /></p>
-    </form>-->
 
 
 

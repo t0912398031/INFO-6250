@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package com.neu.edu.dao;
-
+/**
+ *
+ * @author Chung-Yang Li
+ */
 import com.neu.edu.pojo.Message;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -14,10 +17,6 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
-/**
- *
- * @author shiva
- */
 public class MessageDao {
 
     public List<Message> getMessages(String user) {

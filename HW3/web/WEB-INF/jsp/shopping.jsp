@@ -30,18 +30,6 @@
             <input type="submit" value="CD"/>
         </form><br/>
         
-        
-        
-<!--        <form action="login" method ="post">
-            <input type="hidden" name="option" value="logout"/>
-            <input type="submit" value="Logout"/>
-        </form><br/>
-        <h4>SEARCH USERS</h4>
-        <form action="user" method="post">
-            Search User: <input type="text" name="search" />
-            <input type="hidden" name="option" value="search"/>
-            <input type="submit" value="Search"/>
-        </form>-->
     <c:out value="Shop for ${requestScope.option}:" />
 
     <form action = 'shoppingtype' method = 'post'>

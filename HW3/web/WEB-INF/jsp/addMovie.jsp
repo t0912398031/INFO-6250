@@ -16,8 +16,7 @@
     
     <body>
         <a href='index.jsp'>Home</a><br/>
-
-        
+     
         <h1>Please Enter the Details Below</h1>
         <form action="movie" method="POST">
             <label>title :</label>  <input type="text" name="title" required><br /><br/>
@@ -39,8 +38,6 @@
             </form>
             
         </c:if> 
-    
-
 
 </body>
 </html>

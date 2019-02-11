@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 package com.neu.edu.dao;
-
-import com.neu.edu.pojo.Message;
+/**
+ *
+ * @author Chung-Yang Li
+ */
 import com.neu.edu.pojo.Movie;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,10 +17,6 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
-/**
- *
- * @author Chung-Yang Li
- */
 public class MovieDao {
 
     public List<Movie> getMovies() {

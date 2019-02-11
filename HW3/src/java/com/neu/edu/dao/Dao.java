@@ -4,16 +4,14 @@
  * and open the template in the editor.
  */
 package com.neu.edu.dao;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import org.apache.commons.dbutils.DbUtils;
-
 /**
  *
  * @author Chung-Yang Li
  */
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class Dao {
 
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";

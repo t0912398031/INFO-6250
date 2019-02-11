@@ -4,23 +4,20 @@
  * and open the template in the editor.
  */
 package com.neu.edu.servlet;
-
+/**
+ *
+ * @author Chung-Yang Li
+ */
 import com.neu.edu.dao.MovieDao;
 import com.neu.edu.pojo.Movie;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Chung-Yang Li
- */
 public class MovieController extends HttpServlet {
 
     @Override

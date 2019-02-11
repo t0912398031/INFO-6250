@@ -14,10 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 /**
  *
- * @author Hardik
+ * @author Chung-Yang Li
  */
 public class ShoppingTypeController extends HttpServlet {
 
