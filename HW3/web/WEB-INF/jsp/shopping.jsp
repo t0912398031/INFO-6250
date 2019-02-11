@@ -15,7 +15,7 @@
     </head>
     
     <body>
-
+        <a href='index.jsp'>Home</a><br/><br/>
         
         <form action="shoppingtype" method ="post">
             <input type="hidden" name="option" value="book"/>

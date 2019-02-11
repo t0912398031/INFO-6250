@@ -22,6 +22,8 @@
     </head>
     
     <body>
+        <a href='index.jsp'>Home</a><br/><br/>
+
         <h4>c:import fn:length, substring, replace</h4>
         <c:import var="data" url="https://www.google.com/"/>  
         <div>google site:</div>
@@ -87,13 +89,46 @@
         
             
             
-        <sql:setDataSource var="db" driver="com.mysql.jdbc.Driver"  
-            url="jdbc:mysql://localhost/test"  
-            user="root"  password="1234"/>  
+        <sql:setDataSource var="db" driver="com.mysql.cj.jdbc.Driver"  
+            url="jdbc:mysql://newton.neu.edu:3306/moviedb"  
+            user="student"  password="p@ssw0rd"/>  
 
         <sql:query dataSource="${db}" var="rs">  
-        SELECT * from Students;  
+        SELECT * FROM movies;  
         </sql:query>      
+        
+        
+        <c:if test="${rs != null}"> 
+            <%--<c:set var="movies" value="${requestScope.movies}" scope="request"/>--%> 
+            <%--<c:set var="size" value="${requestScope.size}" scope="request"/>--%>
+        <%--<c:out value="${rs.next()}"/>--%>
+        <%--<c:out value="${size}"/>--%>
+        
+        <table border="1">
+            <thead>  
+                <th>Title</th>
+                <th>Actor</th>
+                <th>Actress</th>
+                <th>Genre</th>
+                <th>Year</th> 
+            </thead>
+            <tbody>           
+            <c:forEach var="m" items="${rs.rows}">
+                <tr>
+                    <td>${m.title}</td>
+                    <td>${m.actor}</td>
+                    <td>${m.actress}</td>
+                    <td>${m.genre}</td>
+                    <td>${m.year}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    
+        </c:if> 
+        
+        
+        
         
     </body>
 </html>

@@ -1,7 +1,8 @@
 <%-- 
-    Document   : messages
-    Created on : Feb 1, 2019, 1:21:27 AM
-    Author     : Hardik
+/**
+ *
+ * @author Chung-Yang Li
+ */
 --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="com.neu.edu.pojo.Message"%>
@@ -15,6 +16,7 @@
     </head>
     
     <body>
+        <a href='index.jsp'>Home</a><br/><br/>
 
         <form action="shoppingtype" method ="post">
             <input type="hidden" name="option" value="book"/>
@@ -61,7 +63,6 @@
         <c:out value="${items}" />
     </c:forEach> 
     <br><br>
-    <a href='index.jsp'>Home</a><br/>
     
 <!--    <form action = 'shoppingtype' method = 'post'>
 

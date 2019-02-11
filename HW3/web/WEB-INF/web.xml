@@ -15,6 +15,10 @@
         <servlet-name>csv</servlet-name>
         <servlet-class>com.neu.edu.servlet.CSVController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>movie</servlet-name>
+        <servlet-class>com.neu.edu.servlet.MovieController</servlet-class>
+    </servlet>
     
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>csv</servlet-name>
         <url-pattern>/csv</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>movie</servlet-name>
+        <url-pattern>/movie</url-pattern>
     </servlet-mapping>
     
     <welcome-file-list>

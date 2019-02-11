@@ -42,11 +42,7 @@
             </tr>
         </c:forEach>
         </table>
-        
-        
-           
-            
-            <%--<c:out value="${'random number <= 7, if > 7 redirect to Google'}"/>--%>        
+    
         </c:if>  
         
         
