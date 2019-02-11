@@ -49,14 +49,6 @@ public class CSVController extends HttpServlet {
             
             req.setAttribute("resultSet", rs);
             
-//            int size=0;
-//            while(rs.next())
-//            {
-//                size++;
-//            }
-//            
-//
-//            req.setAttribute("size", size);
 
             List<Row> rows = Row.list(rs);
 

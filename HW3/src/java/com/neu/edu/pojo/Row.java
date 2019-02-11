@@ -16,8 +16,8 @@ import java.util.List;
  */
 public class Row {
 
-    private static String string1;
-    private static String string2;
+    private String string1;
+    private String string2;
     private String string3;
 
     public String getString2() {
@@ -36,7 +36,7 @@ public class Row {
         this.string3 = string3;
     }
 
-    public static String getString1() {
+    public String getString1() {
         return string1;
     }
     

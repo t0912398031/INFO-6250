@@ -16,6 +16,7 @@
     </head>
     
     <body>
+        <a href='index.jsp'>Home</a><br/>
         
         <h1>Please enter csv folder name</h1>
         <form action = 'csv' method = 'post'>
@@ -29,19 +30,26 @@
             <c:set var="size" value="${requestScope.size}" scope="request"/>
         <%--<c:out value="${rs.next()}"/>--%>
         <%--<c:out value="${size}"/>--%>
+        
+        <table>
         <c:forEach var="r" items="${requestScope.rows}">
             <%--<c:out value="${r}"/>--%>
-            <c:out value="${r.getString1}"/>
-            <%--<c:out value="${r.getString2}"/>--%>
-   
+            <%--<c:out value="${r.getString1()}"/>--%>
+            <%--<c:out value="${r.getString2()}"/>--%>
+            <tr>
+                <td>${r.getString1()}</td>
+                <td>${r.getString2()}</td>
+            </tr>
         </c:forEach>
-        
+        </table>
         
         
            
             
             <%--<c:out value="${'random number <= 7, if > 7 redirect to Google'}"/>--%>        
         </c:if>  
+        
+        
 <!--        
         <form action="shoppingtype" method ="post">
             <input type="hidden" name="option" value="book"/>
