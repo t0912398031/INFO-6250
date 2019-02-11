@@ -5,10 +5,6 @@
  */
 package com.neu.edu.servlet;
 
-import com.neu.edu.dao.MessageDao;
-import com.neu.edu.dao.UserDao;
-import com.neu.edu.pojo.Login;
-import com.neu.edu.pojo.Message;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;

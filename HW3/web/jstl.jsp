@@ -1,17 +1,17 @@
 <%-- 
-    Document   : messages
-    Created on : Feb 1, 2019, 1:21:27 AM
-    Author     : Hardik
+/**
+ *
+ * @author Chung-Yang Li
+ */
 --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>  
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%--<jsp:useBean id="USER" type="com.neu.edu.pojo.Login" scope="session"></jsp:useBean>--%>
-<%--<jsp:useBean id="usersMessages" class="Message" scope="request"></jsp:useBean>--%>
 <jsp:useBean id="random" class="com.neu.edu.pojo.RandomBean" scope="application" />
 
 
@@ -57,20 +57,20 @@
         
         
         
-        <h4>x:out, set</h4> 
+        <h4>x:out, set, if</h4> 
         <c:set var="vegetable">  
         <vehicles>  
             <vehicle>  
                 <name>Car</name>  
-                <price>100000$</price>  
+                <price>100000</price>  
             </vehicle>  
             <vehicle>  
                 <name>Airplane</name>  
-                <price>5000000$</price>  
+                <price>5000000</price>  
             </vehicle>  
             <vehicle>  
                 <name>Bicycle</name>  
-                <price>100$</price>  
+                <price>100</price>  
             </vehicle>  
         </vehicles>  
         </c:set>  
@@ -78,9 +78,22 @@
         <b>Name of the vehicle is</b>:  
         <x:out select="$output/vehicles/vehicle[1]/name" /><br>  
         <b>Price of Airplane is</b>:  
-        <x:set var="airplane" select="$output/vehicles/vehicle[2]/price"/>  
-        <x:out select="$airplane"  />  
+        <x:set var="airplane" select="$output/vehicles/vehicle[2]/price"/>   
+        <x:out select="$airplane" />  
+        <x:if select="$airplane < 10000000">  
+            , Price is reasonable.  
+        </x:if>
         
+        
+            
+            
+        <sql:setDataSource var="db" driver="com.mysql.jdbc.Driver"  
+            url="jdbc:mysql://localhost/test"  
+            user="root"  password="1234"/>  
+
+        <sql:query dataSource="${db}" var="rs">  
+        SELECT * from Students;  
+        </sql:query>      
         
     </body>
 </html>

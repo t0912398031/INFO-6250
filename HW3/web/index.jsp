@@ -16,7 +16,7 @@ and open the template in the editor.
     <body>
         <a href='jstl.jsp'>JSTL</a><br/>
         <a href='shoppingtype'>Shopping cart</a><br/>
-        <a href='csv'>CSV</a><br/>
+        <a href='csv.jsp'>CSV</a><br/>
         <a href='movie'>Movie store</a><br/>
         
         

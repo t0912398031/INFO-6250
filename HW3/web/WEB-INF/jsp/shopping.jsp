@@ -1,10 +1,10 @@
 <%-- 
-    Document   : messages
-    Created on : Feb 1, 2019, 1:21:27 AM
-    Author     : Hardik
+/**
+ *
+ * @author Chung-Yang Li
+ */
 --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%--<%@page import="com.neu.edu.pojo.Message"%>--%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%--<jsp:useBean id="USER" type="com.neu.edu.pojo.Login" scope="session"></jsp:useBean>--%>
 <%--<jsp:useBean id="usersMessages" class="Message" scope="request"></jsp:useBean>--%>
