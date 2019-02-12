@@ -39,19 +39,53 @@
     <%--<c:out value="Shop for ${requestScope.option}:" />--%>
     <h2>Your Cart:</h2>
     <div>Books:</div>
+    <table border="1">      
     <c:forEach var="items" items="${sessionScope.book}">
-        <c:out value="${items}" />
-    </c:forEach>
+        <tr>
+        <form action="shoppingtype" method ="post">
+            <input type="hidden" name="type" value="book"/>
+            <input type="hidden" name="option" value="delete"/>
+            <input type="hidden" name="delete" value="${items}"/>
+            <%--<c:out value="${items}" />--%>
+            <td>${items}</td>
+            <td><input type="submit" value="delete"/></td>
+        </form>
+        </tr>
+    </c:forEach>       
+    </table>
     <br><br>
     <div>Laptops:</div>
+    <table border="1">      
     <c:forEach var="items" items="${sessionScope.laptop}">
-        <c:out value="${items}" />
-    </c:forEach> 
+        <tr>
+        <form action="shoppingtype" method ="post">
+            <input type="hidden" name="type" value="laptop"/>
+            <input type="hidden" name="option" value="delete"/>
+            <input type="hidden" name="delete" value="${items}"/>
+            <%--<c:out value="${items}" />--%>
+            <td>${items}</td>
+            <td><input type="submit" value="delete"/></td>
+        </form>
+        </tr>
+    </c:forEach>       
+    </table>
     <br><br>
     <div>CDs:</div>
+    
+    <table border="1">      
     <c:forEach var="items" items="${sessionScope.cd}">
-        <c:out value="${items}" />
-    </c:forEach> 
+        <tr>
+        <form action="shoppingtype" method ="post">
+            <input type="hidden" name="type" value="cd"/>
+            <input type="hidden" name="option" value="delete"/>
+            <input type="hidden" name="delete" value="${items}"/>
+            <%--<c:out value="${items}" />--%>
+            <td>${items}</td>
+            <td><input type="submit" value="delete"/></td>
+        </form>
+        </tr>
+    </c:forEach>       
+    </table>
     <br><br>
     
 

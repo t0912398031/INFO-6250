@@ -6,6 +6,7 @@
 package com.neu.edu.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -78,6 +79,49 @@ public class ShoppingTypeController extends HttpServlet {
 
             requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/cart.jsp");
             requestDispatcher.forward(req, resp);
+        } else if (option.equals("delete")) {
+            String delete = req.getParameter("delete");
+            String type = req.getParameter("type");
+            
+            
+            if(type.equalsIgnoreCase("cd")){
+                String[] cd = (String[])session.getAttribute("cd");
+//                for(String b: cd){System.out.println(b);}
+
+                List<String> list = new ArrayList<String>(Arrays.asList(cd));
+                list.remove(delete);
+                cd = list.toArray(new String[0]);
+//                for(String b: cd){System.out.println(b);}
+                session.setAttribute("cd", cd);
+            } else if(type.equalsIgnoreCase("book")){
+                String[] cd = (String[])session.getAttribute("book");
+
+                List<String> list = new ArrayList<String>(Arrays.asList(cd));
+                list.remove(delete);
+                cd = list.toArray(new String[0]);
+
+                session.setAttribute("book", cd);
+            } else if(type.equalsIgnoreCase("laptop")){
+                String[] cd = (String[])session.getAttribute("laptop");
+
+
+                List<String> list = new ArrayList<String>(Arrays.asList(cd));
+                list.remove(delete);
+                cd = list.toArray(new String[0]);
+
+                session.setAttribute("laptop", cd);
+            }
+            
+//            req.setAttribute("option", option);
+//            List<String> item = Arrays.asList("apple", "asus", "hp", "toshiba", "sony");
+//            req.setAttribute("items", item);
+            
+            
+            
+            
+            requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/cart.jsp");
+            requestDispatcher.forward(req, resp);
+
         }
 
     }

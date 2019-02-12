@@ -56,6 +56,8 @@ public class ShoppingBooksServlet extends HttpServlet {
                 );
         out.println("<input type =  'submit' value = 'Next' name = 'button'/><br /></p>");
         out.println("</form>");
+        out.println("<a href='cart'>View Cart</a><br/>");
+        out.println("<br/><a href='index.html'>Home</a><br/>");
         out.println("</body>");
         out.println("</html>");
     }

@@ -62,7 +62,7 @@ public class ResultServlet extends HttpServlet {
         }
         // out.println("<form action = 'quizservlet2?ans=" + ans + "' method = 'post'>");
 
-        out.println("<a href='cart'>View Cart</a><br/>");
+//        out.println("<a href='cart'>View Cart</a><br/>");
         out.println("</body>");
         out.println("</html>");
     }
