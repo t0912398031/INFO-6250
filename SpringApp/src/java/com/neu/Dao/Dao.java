@@ -4,18 +4,20 @@
  * and open the template in the editor.
  */
 package com.neu.edu.dao;
-/**
- *
- * @author Chung-Yang Li
- */
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import org.apache.commons.dbutils.DbUtils;
 
+/**
+ *
+ * @author Adi
+ */
 public class Dao {
 
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://newton.neu.edu:3306/moviedb";
+    static final String DB_URL = "jdbc:mysql://newton.neu.edu:3306/usersdb";
     static final String USER = "student";
     static final String PASSWORD = "p@ssw0rd";
     private Connection connection;
