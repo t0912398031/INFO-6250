@@ -35,5 +35,10 @@
             <input type="hidden" value="csv" name="option" />
             <input type="submit" value="CSV"/>
         </form>
+        <br>
+        <form action="part.htm" method="POST">          
+            <input type="hidden" value="movie" name="option" />
+            <input type="submit" value="Movie"/>
+        </form>
     </body>
 </html>

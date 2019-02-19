@@ -6,7 +6,10 @@
 --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="com.neu.edu.pojo.Row"%>
+<%@page import="com.neu.pojo.Row"%>
+<%@page import="com.neu.tag.MyTag"%>
+
+<%--<%@ taglib prefix = "ex" uri = "WEB-INF/custom.tld"%>--%>
 <%--<jsp:useBean id="USER" type="com.neu.edu.pojo.Login" scope="session"></jsp:useBean>--%>
 <%--<jsp:useBean id="usersMessages" class="Message" scope="request"></jsp:useBean>--%>
     <!DOCTYPE html>
@@ -19,11 +22,13 @@
         <a href='index.jsp'>Home</a><br/>
         
         <h1>Please enter csv folder name</h1>
-        <form action = 'csv' method = 'post'>
+        <form action = 'csv.htm' method = 'post'>
         <input type="text" name="foldername">
+        <input type="hidden" value="csvlist" name="option" />
         <input type = 'submit' value = 'Submit' name = 'button'/>
         </form>
         
+                
         
         <c:if test="${requestScope.resultSet != null}"> 
             <c:set var="rs" value="${requestScope.resultSet}" scope="request"/> 

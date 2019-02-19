@@ -6,7 +6,10 @@
 --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="com.neu.edu.pojo.Row"%>
+<%@page import="com.neu.pojo.Row"%>
+<%@page import="com.neu.tag.MyTag"%>
+
+<%--<%@ taglib prefix = "ex" uri = "WEB-INF/custom.tld"%>--%>
 <%--<jsp:useBean id="USER" type="com.neu.edu.pojo.Login" scope="session"></jsp:useBean>--%>
 <%--<jsp:useBean id="usersMessages" class="Message" scope="request"></jsp:useBean>--%>
     <!DOCTYPE html>
@@ -18,11 +21,25 @@
     <body>
         <a href='index.jsp'>Home</a><br/>
         
-        <h1>Please enter csv folder name</h1>
-        <form action = 'csv' method = 'post'>
+        <h1>List:</h1>
+<!--        <form action = 'part.htm' method = 'post'>
         <input type="text" name="foldername">
+        <input type="hidden" value="csv" name="option" />
         <input type = 'submit' value = 'Submit' name = 'button'/>
-        </form>
+        </form>-->
+        
+        <%--<c:if test="${requestScope.resultSet != null}">--%>
+            
+        <%if (request.isUserInRole("admin")) {%>
+          
+        <%@ taglib uri="/WEB-INF/tlds/mytags.tld" prefix="m" %>  
+        <%String a= request.getParameter("foldername");%>
+        <m:csv message="<%=a%>"/> 
+        <%--<m:csv message = "This is custom tag" />--%>
+        
+        <% } %>
+        
+        <%--</c:if>--%> 
         
         
         <c:if test="${requestScope.resultSet != null}"> 

@@ -43,7 +43,7 @@ public class MyTag extends SimpleTagSupport {
 
             ResultSet rs = stmt.executeQuery("SELECT SalesOrderID, OrderDate FROM " + message);
             
-              System.out.println(rs);
+//              System.out.println(rs);
 
             List<Row> rows = Row.list(rs);
 
@@ -54,7 +54,17 @@ public class MyTag extends SimpleTagSupport {
 //                row.setString2(rs.getString(2));
 //                rows.add(row);
 //            }
-
+            
+            JspWriter out = getJspContext().getOut();
+            out.println("<table>"); 
+            for(Row r: rows){
+                out.println("<tr>");                
+                out.println("<td>" + r.getString1() + "</td>");
+                out.println("<td>" + r.getString2() + "</td>");
+                out.println("</tr>");  
+            }
+            out.println("</table>"); 
+            
             con.close();
         } catch (ClassNotFoundException ex) {
             System.out.println("ClassNotFoundException: " + ex.getMessage());
@@ -64,8 +74,8 @@ public class MyTag extends SimpleTagSupport {
           
           
          /* Use message from attribute */
-         JspWriter out = getJspContext().getOut();
-         out.println( message );
+//         JspWriter out = getJspContext().getOut();
+//         out.println( message);
       } else {
          /* use message from the body */
          getJspBody().invoke(sw);

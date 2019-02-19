@@ -53,9 +53,20 @@ public class PartController extends AbstractController {
                 break;
             case "csvlist":
 //                session.invalidate();
-                mv = new ModelAndView("csvList");
+                String filename = request.getParameter("foldername");
+                if(filename.equals("SalesOrder")){
+                    mv = new ModelAndView("csvList");
+                }
+                else{
+                    mv = new ModelAndView("csv");
+                }
 //                mv = new ModelAndView(new RedirectView("/HW4/csv.htm", false));
                 break;
+            case "movie":
+//                session.invalidate();
+            mv = new ModelAndView("movie");
+//                mv = new ModelAndView(new RedirectView("/HW4/csv.htm", false));
+            break;
 //            case "login":
 //                Login loggedUser = user.authenticateLogin(userName, password);
 //                if (loggedUser == null) {
