@@ -48,20 +48,23 @@ public class PartController extends AbstractController {
         switch (option) {
             case "csv":
 //                session.invalidate();
+                
                 mv = new ModelAndView("csv");
 //                mv = new ModelAndView(new RedirectView("/HW4/csv.htm", false));
                 break;
-            case "csvlist":
-//                session.invalidate();
-                String filename = request.getParameter("foldername");
-                if(filename.equals("SalesOrder")){
-                    mv = new ModelAndView("csvList");
-                }
-                else{
-                    mv = new ModelAndView("csv");
-                }
-//                mv = new ModelAndView(new RedirectView("/HW4/csv.htm", false));
-                break;
+//            case "csvlist":
+////                session.invalidate();
+//                String filename = request.getParameter("foldername");
+//                if(filename.equals("SalesOrder")){
+//                    
+//                    mv = new ModelAndView("csvList");
+//                }
+//                else{
+//                    
+//                    mv = new ModelAndView("csv");
+//                }
+////                mv = new ModelAndView(new RedirectView("/HW4/csv.htm", false));
+//                break;
             case "movie":
 //                session.invalidate();
             mv = new ModelAndView("movie");

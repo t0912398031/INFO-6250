@@ -28,7 +28,9 @@
         <input type = 'submit' value = 'Submit' name = 'button'/>
         </form>
         
-                
+        <c:if test="${requestScope.error != null}"> 
+            no such file
+        </c:if> 
         
         <c:if test="${requestScope.resultSet != null}"> 
             <c:set var="rs" value="${requestScope.resultSet}" scope="request"/> 

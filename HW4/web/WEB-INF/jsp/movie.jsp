@@ -58,7 +58,7 @@
     
         </c:if> 
 
-        <c:if test="${requestScope != null}"> 
+        <c:if test="${requestScope.status != null}"> 
             test
         </c:if> 
 </body>

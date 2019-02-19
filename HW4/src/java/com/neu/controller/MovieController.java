@@ -73,6 +73,7 @@ public class MovieController extends AbstractController {
 //                request.setAttribute("status", "Error");
 //                requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/addMovie.jsp");
 //                requestDispatcher.forward(req, resp);
+                request.setAttribute("status", "fail");
                 mv = new ModelAndView("error");
             }
 //            

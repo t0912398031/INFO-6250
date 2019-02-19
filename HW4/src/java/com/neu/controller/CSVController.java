@@ -46,11 +46,11 @@ public class CSVController extends AbstractController {
 //        UserDao user = new UserDao();
 //        MessageDao msg = new MessageDao();
         switch (option) {
-            case "csv":
-//                session.invalidate();
-                mv = new ModelAndView("csv");
-//                mv = new ModelAndView(new RedirectView("/HW4/csv.htm", false));
-                break;
+//            case "csv":
+////                session.invalidate();
+//                mv = new ModelAndView("csv");
+////                mv = new ModelAndView(new RedirectView("/HW4/csv.htm", false));
+//                break;
             case "csvlist":
 //                session.invalidate();
 //                if (!request.isUserInRole("admin")) {
@@ -66,6 +66,7 @@ public class CSVController extends AbstractController {
                     mv = new ModelAndView("csvList");
                 }
                 else{
+                    request.setAttribute("error", "error");
                     mv = new ModelAndView("csv");
                 }
 //                mv = new ModelAndView(new RedirectView("/HW4/csv.htm", false));
