@@ -26,19 +26,19 @@ public class CSVController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String foldername = req.getParameter("foldername");
+        String filename = req.getParameter("foldername");
         RequestDispatcher requestDispatcher = null;
         
         try{
             Class.forName("org.relique.jdbc.csv.CsvDriver");
         
-            String path = "D:\\download\\Github\\INFO-6250\\HW3\\";
+            String path = "D:\\download\\Github\\INFO-6250\\HW3\\data";
 
-            Connection con = DriverManager.getConnection("jdbc:relique:csv:" + path + foldername);
-
+            Connection con = DriverManager.getConnection("jdbc:relique:csv:" + path);
+            
             Statement stmt = con.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT SalesOrderID, OrderDate FROM SalesOrder");
+            ResultSet rs = stmt.executeQuery("SELECT SalesOrderID, OrderDate FROM " + filename);
             
             req.setAttribute("resultSet", rs);
             

@@ -35,16 +35,7 @@ public class PartController extends AbstractController {
         ModelAndView mv = null;
         
         String option = request.getParameter("option");
-//        String option = request.getParameter("option") == null ? "" : request.getParameter("option");
-
-//        if (session.getAttribute("USER") == null && option.equals("")) {
-//            return new ModelAndView("loginPage");
-//        }
-//
-//        String userName = request.getParameter("userName");
-//        String password = request.getParameter("password");
-//        UserDao user = new UserDao();
-//        MessageDao msg = new MessageDao();
+//        System.out.println(option);
         switch (option) {
             case "csv":
 //                session.invalidate();
@@ -94,7 +85,7 @@ public class PartController extends AbstractController {
 //                }
 //                break;
             default:
-                mv = new ModelAndView(new RedirectView("/SpringMVC/messageHome.htm", false));
+                mv = new ModelAndView("loginPage");
         }
         return mv;
     }

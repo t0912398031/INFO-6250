@@ -15,7 +15,11 @@
     </head>
     
     <body>
-        <a href='user.htm'>Home</a><br/>
+        <!--<a href='user.htm'>Home</a><br/>-->
+        <form action="part.htm" method="POST">          
+            <input type="hidden" value="" name="option" />
+            <input type="submit" value="Home"/>
+        </form>
      
         <h1>Please Enter the Details Below</h1>
         <form action="movie.htm" method="POST">
@@ -32,7 +36,7 @@
         <c:if test="${requestScope.status != null}">
             <c:out value="${requestScope.status}"/>
 
-            <form action="movie" method="POST">
+            <form action="movie.htm" method="POST">
                 <input type="hidden" value="browse" name="option" />
                 <input type="submit" value="Browse Movies"/>
             </form>

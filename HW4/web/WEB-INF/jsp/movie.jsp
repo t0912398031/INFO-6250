@@ -14,7 +14,11 @@
     </head>
     
     <body>
-        <a href='index.jsp'>Home</a><br/><br/>
+        <!--<a href='part.htm'>Home</a><br/><br/>-->
+        <form action="part.htm" method="POST">          
+            <input type="hidden" value="" name="option" />
+            <input type="submit" value="Home"/>
+        </form>
         
         <h1>Welcome to Our Movie Store</h1>
         <form action="movie.htm" method="POST">

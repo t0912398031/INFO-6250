@@ -4,9 +4,9 @@
     Author     : Hardik
 --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page import="com.neu.edu.pojo.Message"%>
+<%@page import="com.neu.pojo.Message"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="USER" type="com.neu.edu.pojo.Login" scope="session"></jsp:useBean>
+<jsp:useBean id="USER" type="com.neu.pojo.Login" scope="session"></jsp:useBean>
 <%--<jsp:useBean id="usersMessages" class="Message" scope="request"></jsp:useBean>--%>
     <!DOCTYPE html>
     <head>

@@ -13,7 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h1>Login Section</h1>
+<!--        <h1>Login Section</h1>
         <form action="authentication.htm" method="POST">
             <label> Username :  </label><input type="text" name="userName" />
             <label> Password :  </label><input type="password" name="password" />
@@ -27,9 +27,9 @@
             <label> Password :  </label><input type="password" name="password" />            
             <input type="hidden" value="register" name="option" />
             <input type="submit" value="Sign Up"/>
-        </form>
+        </form>-->
         
-        
+        <h1>HW4</h1>
         
         <form action="part.htm" method="POST">          
             <input type="hidden" value="csv" name="option" />

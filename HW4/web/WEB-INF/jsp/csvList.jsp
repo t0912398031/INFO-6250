@@ -19,7 +19,11 @@
     </head>
     
     <body>
-        <a href='index.jsp'>Home</a><br/>
+        <!--<a href='index.jsp'>Home</a><br/>-->
+        <form action="part.htm" method="POST">          
+            <input type="hidden" value="" name="option" />
+            <input type="submit" value="Home"/>
+        </form>
         
         <h1>List:</h1>
 <!--        <form action = 'part.htm' method = 'post'>

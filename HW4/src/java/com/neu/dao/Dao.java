@@ -20,7 +20,7 @@ public class Dao {
 
     private Connection connection = null;
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://newton.neu.edu:3306/usersdb";
+    static final String DB_URL = "jdbc:mysql://newton.neu.edu:3306/moviedb";
     static final String USER = "student";
     static final String PASSWORD = "p@ssw0rd";
 

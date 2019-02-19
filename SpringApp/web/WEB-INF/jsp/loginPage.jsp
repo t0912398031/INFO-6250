@@ -12,7 +12,7 @@ and open the template in the editor.
     </head>
     <body>
         <h1>Login Section</h1>
-        <form action="login" method="POST">
+        <form action="auth.htm" method="POST">
             <label> Username :  </label><input type="text" name="userName" />
             <label> Password :  </label><input type="password" name="password" />
             <input type="hidden" value="login" name="option" />
@@ -20,7 +20,7 @@ and open the template in the editor.
         </form>
         <br/><br/><br/><br/><br/><br/><br/>
         <h1>Registration Section</h1>
-        <form action="login" method="POST">
+        <form action="auth.htm" method="POST">
             <label> Username :  </label><input type="text" name="userName" />
             <label> Password :  </label><input type="password" name="password" />            
             <input type="hidden" value="register" name="option" />

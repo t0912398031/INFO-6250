@@ -45,10 +45,10 @@ public class MovieController extends AbstractController {
 //        System.out.println(option);
 
         if (option.equals("browse")) {
-//            MovieDao md = new MovieDao();
-//            List<Movie> movies = md.getMovies();
-//            request.setAttribute("movies", movies);
-            request.setAttribute("test", "test");
+            MovieDao md = new MovieDao();
+            List<Movie> movies = md.getMovies();
+            request.setAttribute("movies", movies);
+//            request.setAttribute("test", "test");
             mv = new ModelAndView("movie");
 
         }  else if (option.equals("add")) {
