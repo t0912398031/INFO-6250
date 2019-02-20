@@ -38,7 +38,7 @@
 
     <%--<c:out value="Shop for ${requestScope.option}:" />--%>
     <h2>Your Cart:</h2>
-    <div>Books:</div>
+    <div>Items:</div>
     <table border="1">      
     <c:forEach var="items" items="${sessionScope.book}">
         <tr>
@@ -54,39 +54,7 @@
     </c:forEach>       
     </table>
     <br><br>
-    <div>Laptops:</div>
-    <table border="1">      
-    <c:forEach var="items" items="${sessionScope.laptop}">
-        <tr>
-        <form action="shoppingtype" method ="post">
-            <input type="hidden" name="type" value="laptop"/>
-            <input type="hidden" name="option" value="delete"/>
-            <input type="hidden" name="delete" value="${items}"/>
-            <%--<c:out value="${items}" />--%>
-            <td>${items}</td>
-            <td><input type="submit" value="delete"/></td>
-        </form>
-        </tr>
-    </c:forEach>       
-    </table>
-    <br><br>
-    <div>CDs:</div>
     
-    <table border="1">      
-    <c:forEach var="items" items="${sessionScope.cd}">
-        <tr>
-        <form action="shoppingtype" method ="post">
-            <input type="hidden" name="type" value="cd"/>
-            <input type="hidden" name="option" value="delete"/>
-            <input type="hidden" name="delete" value="${items}"/>
-            <%--<c:out value="${items}" />--%>
-            <td>${items}</td>
-            <td><input type="submit" value="delete"/></td>
-        </form>
-        </tr>
-    </c:forEach>       
-    </table>
-    <br><br>
     
 
 

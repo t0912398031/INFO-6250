@@ -5,6 +5,7 @@
  */
 package com.neu.edu.servlet;
 
+import com.neu.edu.pojo.Item;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,54 +29,37 @@ public class ShoppingTypeController extends HttpServlet {
         String option = req.getParameter("option");
         RequestDispatcher requestDispatcher = null;
 //        System.out.println(option);
-        if (option.equals("book")) {
+
+        if (option.equals("book")||option.equals("laptop")||option.equals("cd")) {
             req.setAttribute("option", option);
-            List<String> item = Arrays.asList("java", "oracle", "uml", "object", "web");
-            req.setAttribute("items", item);
+            Item i = new Item();
+            i.setType(option);
+            req.setAttribute("items", i.getItemByType());
+            
             requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/shopping.jsp");
             requestDispatcher.forward(req, resp); 
-
-        } else if (option.equals("laptop")) {
-            req.setAttribute("option", option);
-            List<String> item = Arrays.asList("apple", "asus", "hp", "toshiba", "sony");
-            req.setAttribute("items", item);
-            requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/shopping.jsp");
-            requestDispatcher.forward(req, resp);
-
-        } else if (option.equals("cd")){
-            req.setAttribute("option", option);
-            List<String> item = Arrays.asList("mandomna", "spears", "justin", "nelly", "kanye");
-            req.setAttribute("items", item);
-            requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/shopping.jsp");
-            requestDispatcher.forward(req, resp);
-            
+   
         } else if (option.equals("cart")){
             
             req.setAttribute("option", option);
             String type = req.getParameter("type");
-            
-            if(type.equalsIgnoreCase("book")){
-                String[] book = req.getParameterValues("book");
-                session.setAttribute("book", book);
-                req.setAttribute("items", book);
-//                for(String l: book){
-//                    System.out.println(l);
-//                }
-            }else if(type.equalsIgnoreCase("laptop")){
-                String[] laptop = req.getParameterValues("laptop");
-                session.setAttribute("laptop", laptop);
-                req.setAttribute("items", laptop);
-//                for(String l: laptop){
-//                    System.out.println(l);
-//                }
-            }else if(type.equalsIgnoreCase("cd")){
-                String[] cd = req.getParameterValues("cd");
-                session.setAttribute("cd", cd);
-                req.setAttribute("items", cd);
-//                for(String c: cd){
-//                    System.out.println(c);
-//                }
+    
+            String[] item = req.getParameterValues(type);
+            String[] items = null;
+            if(session.getAttribute("book")!=null){
+                items = (String[])session.getAttribute("book");
+                List<String> list = new ArrayList<String>(Arrays.asList(items));     
+                for(String i:item){
+                    list.add(i);
+                }
+                items = list.toArray(new String[0]);
+                session.setAttribute("book", items);
+                req.setAttribute("items", item);
+            } else{
+                session.setAttribute("book", item);
+                req.setAttribute("items", item);
             }
+
 
             requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/cart.jsp");
             requestDispatcher.forward(req, resp);
@@ -111,14 +95,7 @@ public class ShoppingTypeController extends HttpServlet {
 
                 session.setAttribute("laptop", cd);
             }
-            
-//            req.setAttribute("option", option);
-//            List<String> item = Arrays.asList("apple", "asus", "hp", "toshiba", "sony");
-//            req.setAttribute("items", item);
-            
-            
-            
-            
+       
             requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/cart.jsp");
             requestDispatcher.forward(req, resp);
 
