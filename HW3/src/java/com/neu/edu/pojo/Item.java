@@ -13,10 +13,19 @@ import java.util.List;
  * @author Chung-Yang Li
  */
 public class Item {
+    
+    private List<String> book; 
+    private List<String> laptop;
+    private List<String> cd;
+    private String name;
     private String type;
-    private List<String> book = Arrays.asList("java", "oracle", "uml", "object", "web");
-    private List<String> laptop = Arrays.asList("apple", "asus", "hp", "toshiba", "sony");
-    private List<String> cd = Arrays.asList("mandomna", "spears", "justin", "nelly", "kanye");
+    private int price;
+
+    public Item() {
+        book = Arrays.asList("java", "oracle", "uml", "object", "web");
+        laptop = Arrays.asList("apple", "asus", "hp", "toshiba", "sony");
+        cd = Arrays.asList("mandomna", "spears", "justin", "nelly", "kanye");
+    }
 
     public void setType(String type) {
         this.type = type;
