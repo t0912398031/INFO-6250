@@ -14,7 +14,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.dbcp2.BasicDataSource;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
@@ -138,25 +139,59 @@ public class MovieDao {
 //            }
 //        }
 //        return result;
-        int result = 0;
-        try {
-            Movie movie = new Movie();
-            movie.setActor(actor);
-            movie.setActress(actress);
-            movie.setGenre(genre);
-            movie.setTitle(title);
-            movie.setYear(year);
-            beginTransaction();
-            getSession().save(movie);
-            commit();
-            result = 1;
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            rollbackTransaction();
-        } finally {
-            close();
-        }
-        return result;
 
+
+//        int result = 0;
+//        try {
+//            Movie movie = new Movie();
+//            movie.setActor(actor);
+//            movie.setActress(actress);
+//            movie.setGenre(genre);
+//            movie.setTitle(title);
+//            movie.setYear(year);
+//            beginTransaction();
+//            getSession().save(movie);
+//            commit();
+//            result = 1;
+//        } catch (HibernateException e) {
+//            e.printStackTrace();
+//            rollbackTransaction();
+//        } finally {
+//            close();
+//        }
+//        return result;
+return 0;
+    }
+     
+     public Movie searchMovie(String id){
+        List<Movie> movies = new ArrayList<>();
+        try{
+            beginTransaction();
+            Session session = getSession();
+//            Query q = session.createQuery("from Course where username=:username and "+searchType+"=:type");
+            Query q = session.createQuery("from Movie where id=:id");
+            System.out.println(q.toString());
+            q.setString("id", id);
+
+            movies = q.list();
+            System.out.println(q.toString());
+            commit();
+        } catch(HibernateException e){
+            e.printStackTrace();
+            try {
+                rollbackTransaction();
+            } catch (Exception ex) {
+                Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                //close();
+            } catch (Exception ex) {
+                Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return movies.get(0);
     }
 }

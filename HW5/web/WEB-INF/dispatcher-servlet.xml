@@ -27,6 +27,7 @@
                 <prop key="addcourse.htm">addCourseController</prop>
                 <prop key="movie.htm">movieController</prop>
                 <prop key="movieform.htm">movieFormController</prop>
+                <prop key="moviesearchform.htm">movieSearchFormController</prop>
                 <prop key="part.htm">partController</prop>
             </props>
         </property>
@@ -52,6 +53,13 @@
         <property name="successView" value="movie-success" />
         <property name="commandClass" value="com.neu.pojo.Movie" />
         <property name="commandName" value="movie" />
+    </bean>
+    
+    <bean name="movieSearchFormController" class="com.neu.controller.MovieSearchFormController">
+        <property name="formView" value="moviesearch-form" />
+        <property name="successView" value="movie-success" />
+        <property name="commandClass" value="com.neu.pojo.Movie" />
+        <property name="commandName" value="moviesearch" />
     </bean>
 
 </beans>

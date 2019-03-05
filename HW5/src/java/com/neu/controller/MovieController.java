@@ -45,45 +45,23 @@ public class MovieController extends AbstractController {
 //        System.out.println(option);
 
         if (option.equals("browse")) {
-            MovieDao md = new MovieDao();
-            List<Movie> movies = md.getMovies();
-            request.setAttribute("movies", movies);
+//            MovieDao md = new MovieDao();
+//            List<Movie> movies = md.getMovies();
+//            request.setAttribute("movies", movies);
 //            request.setAttribute("test", "test");
-
+            request.setAttribute("type", "add");
 //            mv = new ModelAndView("movie");
             return new ModelAndView(new RedirectView("movieform.htm", false));
 
-        }  else if (option.equals("add")) {
-            
-            mv = new ModelAndView("addMovie");
-
-        }   else if (option.equals("insert")) {
-            String title = request.getParameter("title");
-            String actor = request.getParameter("actor");
-            String actress = request.getParameter("actress");
-            String genre = request.getParameter("genre");
-            int year = Integer.parseInt(request.getParameter("year"));
-            
-            MovieDao md = new MovieDao();
-            int result = md.addMovies(title, actor, actress, genre, year);
-            if (result == 1) {
-//                System.out.println("successful");
-                request.setAttribute("status", "Add Successfully");
-
-                mv = new ModelAndView("addMovie");
-            } else {
-//                request.setAttribute("status", "Error");
-//                requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/addMovie.jsp");
-//                requestDispatcher.forward(req, resp);
-                request.setAttribute("status", "fail");
-                mv = new ModelAndView("error");
-            }
+//        }  else if (option.equals("add")) {
 //            
-//            
-//            requestDispatcher = req.getRequestDispatcher("/WEB-INF/jsp/addMovie.jsp");
-//            requestDispatcher.forward(req, resp);
-//            
+//            request.setAttribute("type", "add");
+//            return new ModelAndView(new RedirectView("movieform.htm", false));
+////            mv = new ModelAndView("addMovie");
 
+        }   else if (option.equals("search")) {
+            request.setAttribute("type", "search");
+            return new ModelAndView(new RedirectView("moviesearchform.htm", false));
         } 
         
         

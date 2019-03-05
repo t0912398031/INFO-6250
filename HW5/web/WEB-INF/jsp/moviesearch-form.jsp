@@ -17,15 +17,10 @@ and open the template in the editor.
             <input type="hidden" value="" name="option" />
             <input type="submit" value="Home"/>
         </form>
-        
-        
-        <h1>Please Enter the Details Below</h1>
-        <form:form commandName="movie" method="post">
-            <label> title :  </label><form:input path="title" type="text" /><br><br>
-            <label> actor :  </label><form:input path="actor" type="text" /><br><br>
-            <label> actress :  </label><form:input path="actress" type="text"/><br><br>
-            <label> genre :  </label><form:input path="genre" type="text" /><br><br>
-            <label> year :  </label><form:input path="year" type="number" /><br><br>
+
+    
+        <form:form commandName="moviesearch" method="post">           
+            <label> Search by ID :  </label><form:input path="id" type="number" /><br><br>
             <input type="hidden" path="login" value="login" name="option" />
             <input type="submit"  value="Login"/>
         </form:form>

@@ -34,7 +34,7 @@ public class PartController extends AbstractController {
 //        HttpSession session = request.getSession();
         ModelAndView mv = null;
         
-        String option = request.getParameter("option");
+        String option = request.getParameter("option") == null ? "" : request.getParameter("option");
 //        System.out.println(option);
         switch (option) {
             case "csv":

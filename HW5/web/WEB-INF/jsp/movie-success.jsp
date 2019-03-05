@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Add Successful</h1>
+        
 <!--        <a href="addcourse.htm?formtype=addcourse"><h3>[Add Courses]</h3></a>
         <h2>Search</h2>
         <form action="search.htm" method="post">
@@ -22,7 +22,9 @@
             <input type="submit" name="search" value="Search" />
         </form>-->
         
-        <%--<c:if test="${sessionScope.Movie != null}">--%> 
+        <c:if test="${sessionScope.Type == 'Add'}"> 
+            
+        <h1>Add Successful</h1>
             <%--<c:set var="movies" value="${sessionScope.Movie}" scope="request"/>--%> 
             <%--<c:set var="size" value="${requestScope.size}" scope="request"/>--%>
         <%--<c:out value="${rs.next()}"/>--%>
@@ -30,6 +32,7 @@
         
         <table border="1">
             <thead>  
+                <th>ID</th>
                 <th>Title</th>
                 <th>Actor</th>
                 <th>Actress</th>
@@ -39,6 +42,7 @@
             <tbody>           
             <c:forEach var="m" items="${movies}">
                 <tr>
+                    <td>${m.id}</td>
                     <td>${m.title}</td>
                     <td>${m.actor}</td>
                     <td>${m.actress}</td>
@@ -49,6 +53,39 @@
             </tbody>
         </table>
     
-        <%--</c:if>--%>
+        </c:if>
+
+
+        <c:if test="${sessionScope.Type == 'Search'}"> 
+            
+        <h1>Search Result:</h1>
+            <%--<c:set var="movies" value="${sessionScope.Movie}" scope="request"/>--%> 
+            <%--<c:set var="size" value="${requestScope.size}" scope="request"/>--%>
+        <%--<c:out value="${rs.next()}"/>--%>
+        <%--<c:out value="${size}"/>--%>
+        
+        <table border="1">
+            <thead>  
+                <th>ID</th>
+                <th>Title</th>
+                <th>Actor</th>
+                <th>Actress</th>
+                <th>Genre</th>
+                <th>Year</th> 
+            </thead>
+            <tbody>           
+            
+            <tr>
+                <td>${movie.id}</td>
+                <td>${movie.title}</td>
+                <td>${movie.actor}</td>
+                <td>${movie.actress}</td>
+                <td>${movie.genre}</td>
+                <td>${movie.year}</td>
+            </tr>
+            </tbody>
+        </table>
+    
+        </c:if>
     </body>
 </html>

@@ -24,7 +24,8 @@
         <form action="movie.htm" method="POST">
             <select name="option">
             <option value="browse">Browse Movies</option>
-            <option value="add">Add New Movie to Database</option>
+            <!--<option value="add">Add New Movie to Database</option>-->
+            <option value="search">Search Movie</option>
             </select>
             <!--<input type="hidden" value="login" name="option" />-->
             <input type="submit" value="Send"/>
