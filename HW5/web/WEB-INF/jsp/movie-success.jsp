@@ -12,7 +12,10 @@
         <title>JSP Page</title>
     </head>
     <body>
-        
+        <form action="part.htm" method="POST">          
+            <input type="hidden" value="" name="option" />
+            <input type="submit" value="Home"/>
+        </form>
 <!--        <a href="addcourse.htm?formtype=addcourse"><h3>[Add Courses]</h3></a>
         <h2>Search</h2>
         <form action="search.htm" method="post">

@@ -17,7 +17,7 @@ and open the template in the editor.
             <input type="hidden" value="" name="option" />
             <input type="submit" value="Home"/>
         </form>
-
+<br><br>
     
         <form:form commandName="moviesearch" method="post">           
             <label> Search by ID :  </label><form:input path="id" type="number" /><br><br>
