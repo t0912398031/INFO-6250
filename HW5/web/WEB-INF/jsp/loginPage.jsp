@@ -42,5 +42,10 @@
             <input type="hidden" value="movie" name="option" />
             <input type="submit" value="Movie"/>
         </form>
+        <br>
+        <form action="part.htm" method="POST">          
+            <input type="hidden" value="quiz" name="option" />
+            <input type="submit" value="Quiz"/>
+        </form>
     </body>
 </html>

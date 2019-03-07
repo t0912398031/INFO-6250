@@ -84,6 +84,11 @@ public class PartController extends AbstractController {
 //                    mv = new ModelAndView("loginPage");
 //                }
 //                break;
+            case "quiz":
+                return new ModelAndView("redirect:question/1.htm");
+//            mv = new ModelAndView("quiz");
+
+            
             default:
                 mv = new ModelAndView("loginPage");
         }

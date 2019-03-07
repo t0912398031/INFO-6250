@@ -29,6 +29,8 @@
                 <prop key="movieform.htm">movieFormController</prop>
                 <prop key="moviesearchform.htm">movieSearchFormController</prop>
                 <prop key="part.htm">partController</prop>
+                
+                <prop key="question/*.htm">quizController</prop>
             </props>
         </property>
     </bean>
@@ -42,11 +44,13 @@
     <bean name="authController" class="com.neu.controller.AuthenticationController"/>
     <bean name="messageController" class="com.neu.controller.MessageController"/>
 
-      <bean name = "user.htm" class = "com.neu.controller.UserController" />
-       <bean name="searchController" class="com.neu.controller.SearchController"/>
+    <bean name ="user.htm" class = "com.neu.controller.UserController" />
+    <bean name="searchController" class="com.neu.controller.SearchController"/>
     <bean name="addCourseController" class="com.neu.controller.AddCourseController"/>
+    
     <bean name="movieController" class="com.neu.controller.MovieController"/>
     <bean name="partController" class="com.neu.controller.PartController"/>
+    <bean name="quizController" class="com.neu.controller.QuizController" />
     
     <bean name="movieFormController" class="com.neu.controller.MovieFormController">
         <property name="formView" value="movie-form" />
