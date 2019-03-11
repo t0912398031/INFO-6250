@@ -47,5 +47,10 @@
             <input type="hidden" value="quiz" name="option" />
             <input type="submit" value="Quiz"/>
         </form>
+        
+        <form action="part.htm" method="POST">          
+            <input type="hidden" value="form" name="option" />
+            <input type="submit" value="Form"/>
+        </form>
     </body>
 </html>

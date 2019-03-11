@@ -66,4 +66,17 @@
         <property name="commandName" value="moviesearch" />
     </bean>
 
+    <bean class="com.neu.controller.FormController" >
+        <property name="pages">
+             <list>
+             <!-- follow sequence -->
+             <value>Page1Form</value> <!-- page1, _target0 -->
+             <value>Page2Form</value> <!-- page2, _target1 -->
+             <value>Page3Form</value> <!-- page3, _target2 -->
+             </list>
+        </property>
+        <property name="validator">
+             <bean class="com.neu.controller.AnswersValidator" />
+        </property>
+    </bean>
 </beans>

@@ -87,7 +87,8 @@ public class PartController extends AbstractController {
             case "quiz":
                 return new ModelAndView("redirect:question/1.htm");
 //            mv = new ModelAndView("quiz");
-
+            case "form":
+                return new ModelAndView("redirect:form.htm");
             
             default:
                 mv = new ModelAndView("loginPage");

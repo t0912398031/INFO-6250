@@ -37,13 +37,13 @@ public class Quiz {
         this.quiz1 = new Question("servce", "init", "doGet", "doPost","Which lifecycle method make ready the servlet for garbge collection?");
         this.quiz2 = new Question("servce", "init", "doGet", "doPost","Which method does not exist in HttpServlet Class?");
         this.quiz3 = new Question("servlet", "servlet-mapping", "web-app", "servlet-mappings","Which tag of DD maps internal name of servlet to public URL pattern?");
-        this.quiz4 = new Question("servlet", "servlet-mapping", "web-app", "servlet-mappings","Which ");
-        this.quiz5 = new Question("a", "b", "c", "d","Which ");
-        this.quiz6 = new Question("servlet", "servlet-mapping", "web-app", "servlet-mappings","Which ");
-        this.quiz7 = new Question("servlet", "servlet-mapping", "web-app", "servlet-mappings","Which ");
-        this.quiz8 = new Question("e", "f", "g", "h","Which ");
-        this.quiz9 = new Question("servlet", "servlet-mapping", "web-app", "servlet-mappings","Which ");
-        this.quiz10 = new Question("k", "l", "m", "n","Which ");
+        this.quiz4 = new Question("servlet", "servlet-mapping", "web-app", "servlet-mappings","Which A");
+        this.quiz5 = new Question("a", "b", "c", "d","Which B");
+        this.quiz6 = new Question("servlet", "servlet-mapping", "web-app", "servlet-mappings","Which C");
+        this.quiz7 = new Question("servlet", "servlet-mapping", "web-app", "servlet-mappings","Which D");
+        this.quiz8 = new Question("e", "f", "g", "h","Which E");
+        this.quiz9 = new Question("servlet", "servlet-mapping", "web-app", "servlet-mappings","Which F");
+        this.quiz10 = new Question("k", "l", "m", "n","Which G");
         
         quiz.add(quiz0);
         quiz.add(quiz1);
