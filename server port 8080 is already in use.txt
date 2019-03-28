@@ -1,0 +1,3 @@
+netstat -aon
+
+taskkill /f /pid 248

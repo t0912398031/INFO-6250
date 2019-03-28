@@ -35,7 +35,7 @@ public class AuthenticationController extends AbstractController {
         ModelAndView mv = null;
 
         String option = request.getParameter("option") == null ? "" : request.getParameter("option");
-
+        System.out.println(option);
         if (session.getAttribute("USER") == null && option.equals("")) {
             return new ModelAndView("loginPage");
         }

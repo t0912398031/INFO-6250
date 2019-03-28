@@ -8,18 +8,11 @@ package com.neu.dao;
  *
  * @author Chung-Yang Li
  */
-import com.neu.pojo.Message;
 import com.neu.pojo.Movie;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.dbutils.DbUtils;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.ResultSetHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
