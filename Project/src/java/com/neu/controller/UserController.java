@@ -5,9 +5,11 @@
  */
 package com.neu.controller;
 
-import com.neu.dao.BitCoinDao;
+import com.neu.dao.UserDao;
 import com.neu.pojo.BitCoin;
 import com.neu.pojo.User;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,7 +30,7 @@ public class UserController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         
-        BitCoinDao userDao;
+        UserDao userDao;
         ModelAndView mv = null;
         
         String url = request.getRequestURI();
@@ -43,14 +45,21 @@ public class UserController extends AbstractController {
 
             switch (option) {
                 case "addUser":
-                    userDao = (BitCoinDao) getApplicationContext().getBean("userdao");       
+                    userDao = (UserDao) getApplicationContext().getBean("userdao");       
                     User u = (User) getApplicationContext().getBean("user");
                     
                     
-                    BitCoin b = new BitCoin("1BvBMSEYstW");
-                    b.setOwner((String) request.getAttribute("name"));
+                    BitCoin b1 = new BitCoin("1BvBMSEYstW");
+                    BitCoin b2 = new BitCoin("3J98t1WpEZ73");
+                    Set<BitCoin> bitcoins = new HashSet<BitCoin>();
+                    bitcoins.add(b1);
+                    bitcoins.add(b2);
+                    u.setBitCoins(bitcoins);
+                    
+//                    b.setOwner((String) request.getAttribute("name"));
 
-
+                    System.out.println((String) request.getAttribute("username"));
+                    
                     u.setUserName((String) request.getAttribute("username"));
                     u.setPassword((String) request.getAttribute("password"));
                     u.setName((String) request.getAttribute("name"));

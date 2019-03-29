@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.neu.pojo.Category" table="categorytable">
+        <id name="id" column="id">
+            <generator class="native" />
+        </id>
+        <property name="title" column="title" type="string" />
+        <set name="adverts" table="link_category_advert" cascade="all">
+            <key column="category" foreign-key="fk_advert_category" />
+            <many-to-many class="com.neu.pojo.Advert" column="advert" foreign-key="fk_category_advert" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -40,7 +40,7 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-mapping>
-  <class dynamic-insert="false" dynamic-update="false" mutable="true" name="com.neu.pojo.BitCoin" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="bitcoin">
+  <class table="bitcoin" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.neu.pojo.BitCoin" optimistic-lock="version" polymorphism="implicit" select-before-update="false">
     <id name="ID" type="long">
       <column name="ID"/>
       <generator class="native"/>
@@ -52,8 +52,10 @@ Contributor(s):
       <column name="owner"/>
     </property>-->
     <!-- This is the foreign key column referencing UserID -->
-    <many-to-one class="com.neu.pojo.User" fetch="select" name="user">
+    <many-to-one name="user" class="com.neu.pojo.User"
+            column="fk_user" not-null="true"/>
+<!--    <many-to-one class="com.neu.pojo.User" fetch="select" name="user">
       <column name="fk_user" not-null="true"/>
-    </many-to-one>
+    </many-to-one>-->
   </class>
 </hibernate-mapping>

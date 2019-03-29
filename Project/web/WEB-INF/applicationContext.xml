@@ -43,8 +43,13 @@
 <!--<bean class="com.neu.dao.MessageDao" id="messageDAO" />-->
 
 
-    <!--<bean id="user" class="com.neu.pojo.User" />-->
-<!--    <bean class="com.neu.dao.BitCoinDao" id="bitcoindao" />
-    --><bean class="com.neu.dao.UserDao" id="userdao" />
+    
+    
+    
+    
     <bean class="com.neu.dao.MovieDao" id="moviedao" />
+    
+    <bean id="user" class="com.neu.pojo.User" />
+    <bean class="com.neu.dao.UserDao" id="userdao" />
+    <bean class="com.neu.dao.BitCoinDao" id="bitcoindao" />
 </beans>

@@ -5,7 +5,7 @@
  */
 package com.neu.controller;
 
-import com.neu.dao.BitCoinDao;
+import com.neu.dao.UserDao;
 import com.neu.pojo.Login;
 import com.neu.pojo.User;
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +43,7 @@ public class AuthenticationController extends AbstractController {
 
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
-        BitCoinDao user = (BitCoinDao) getApplicationContext().getBean("userdao");
+        UserDao user = (UserDao) getApplicationContext().getBean("userdao");
 //        MessageDao msg = (MessageDao) getApplicationContext().getBean("messageDAO");
         switch (option) {
             case "logout":

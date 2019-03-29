@@ -20,44 +20,15 @@ public class BitCoinDao extends Dao{
     public BitCoinDao() {
     }
     
-    public User authenticateLogin(String username, String password) {
-        User loggedInUser = null;
-
-        try{      
-            Query q= getSession().createQuery("from user where username= :username AND password= :password");
-            q.setString("username", username);
-            q.setString("password", password);
-            loggedInUser = (User)q.uniqueResult();
-            commit();
-        } catch(HibernateException e){
-            e.printStackTrace();
-            try {
-                rollbackTransaction();
-            } catch (Exception ex) {
-                Logger.getLogger(BitCoinDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(BitCoinDao.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
-            try {
-                //close();
-            } catch (Exception ex) {
-                Logger.getLogger(BitCoinDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return loggedInUser;
-    }
-//    
-//    public List<Movie> getMovies(){
-//        List<Movie> movies = new ArrayList<Movie>();
-//        try{
-//            
-//            beginTransaction();
-////            Query q = getSession().createQuery("from Message where userName= :username");
-//            Query q = getSession().createQuery("from Movie");
-//            movies = q.list();
-//            commit();
+//    public User authenticateLogin(String username, String password) {
+//        User loggedInUser = null;
 //
+//        try{      
+//            Query q= getSession().createQuery("from user where username= :username AND password= :password");
+//            q.setString("username", username);
+//            q.setString("password", password);
+//            loggedInUser = (User)q.uniqueResult();
+//            commit();
 //        } catch(HibernateException e){
 //            e.printStackTrace();
 //            try {
@@ -74,38 +45,67 @@ public class BitCoinDao extends Dao{
 //                Logger.getLogger(BitCoinDao.class.getName()).log(Level.SEVERE, null, ex);
 //            }
 //        }
+//        return loggedInUser;
+//    }
+//    
+//    public List<Movie> getMovies(){
+//        List<Movie> movies = new ArrayList<Movie>();
+//        try{
+//            
+//            beginTransaction();
+////            Query q = getSession().createQuery("from Message where userName= :username");
+//            Query q = getSession().createQuery("from Movie");
+//            movies = q.list();
+//            commit();
+//
+//        } catch(HibernateException e){
+//            e.printStackTrace();
+//            try {
+//                rollbackTransaction();
+//            } catch (Exception ex) {
+//                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        } catch (Exception ex) {
+//            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally{
+//            try {
+//                //close();
+//            } catch (Exception ex) {
+//                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
 //        return movies;
 //    }
 //    
     
 
     
-    public int add(User u){
-        int success = 0;
-        try {
-            beginTransaction();
-            Session session = getSession();
-            session.save(u);
-            commit();
-            success = 1;
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            try {
-                rollbackTransaction();
-            } catch (Exception ex) {
-                Logger.getLogger(BitCoinDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(BitCoinDao.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
-            try {
-                //close();
-            } catch (Exception ex) {
-                Logger.getLogger(BitCoinDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }      
-        return success;
-    }
+//    public int add(User u){
+//        int success = 0;
+//        try {
+//            beginTransaction();
+//            Session session = getSession();
+//            session.save(u);
+//            commit();
+//            success = 1;
+//        } catch (HibernateException e) {
+//            e.printStackTrace();
+//            try {
+//                rollbackTransaction();
+//            } catch (Exception ex) {
+//                Logger.getLogger(BitCoinDao.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        } catch (Exception ex) {
+//            Logger.getLogger(BitCoinDao.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally{
+//            try {
+//                //close();
+//            } catch (Exception ex) {
+//                Logger.getLogger(BitCoinDao.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }      
+//        return success;
+//    }
   
     
     
@@ -128,15 +128,15 @@ public class BitCoinDao extends Dao{
 //            try {
 //                rollbackTransaction();
 //            } catch (Exception ex) {
-//                Logger.getLogger(BitCoinDao.class.getName()).log(Level.SEVERE, null, ex);
+//                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 //            }
 //        } catch (Exception ex) {
-//            Logger.getLogger(BitCoinDao.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 //        } finally{
 //            try {
 //                //close();
 //            } catch (Exception ex) {
-//                Logger.getLogger(BitCoinDao.class.getName()).log(Level.SEVERE, null, ex);
+//                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
 //            }
 //        }
 //        return movies.get(0);

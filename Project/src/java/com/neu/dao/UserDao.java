@@ -32,7 +32,7 @@ public class UserDao extends Dao{
         } catch(HibernateException e){
             e.printStackTrace();
             try {
-                rollbackTransaction();
+//                rollbackTransaction();
             } catch (Exception ex) {
                 Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -76,39 +76,39 @@ public class UserDao extends Dao{
 //        }
 //        return movies;
 //    }
-//    
+    
     
 
     
-    public int add(User u){
-        int success = 0;
-        try {
-            beginTransaction();
-            Session session = getSession();
-            session.save(u);
-            commit();
-            success = 1;
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            try {
-                rollbackTransaction();
-            } catch (Exception ex) {
-                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
-            try {
-                //close();
-            } catch (Exception ex) {
-                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }      
-        return success;
-    }
-  
-    
-    
+//    public int add(User u){
+//        int success = 0;
+//        try {
+//            beginTransaction();
+//            Session session = getSession();
+//            session.save(u);
+//            commit();
+//            success = 1;
+//        } catch (HibernateException e) {
+//            e.printStackTrace();
+//            try {
+//                rollbackTransaction();
+//            } catch (Exception ex) {
+//                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        } catch (Exception ex) {
+//            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally{
+//            try {
+//                close();
+//            } catch (Exception ex) {
+//                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }      
+//        return success;
+//    }
+//  
+//    
+//    
 //    
 //    public Movie searchMovie(String id){
 //        List<Movie> movies = new ArrayList<>();
@@ -141,4 +141,50 @@ public class UserDao extends Dao{
 //        }
 //        return movies.get(0);
 //    }
+    
+    
+    
+    
+  
+    public int add(User u) {
+        int success = 0;
+        try {
+            super.begin();
+            getSession().save(u);
+            super.commit();
+            success = 1;
+        } catch (Exception e) {
+            super.rollback();
+        } finally {
+//            super.close();
+        }
+        return success;
+    }
+
+    public User get(String fname) throws Exception {
+        try {
+            super.begin();
+            Query q = getSession().createQuery("from User where fname = :username");
+            q.setString("fname", fname);
+            User user = (User) q.uniqueResult();
+            super.commit();
+            return user;
+        } catch (Exception e) {
+            super.rollback();
+            throw new Exception("Could not get user with first name " + fname, e);
+        } finally {
+//            super.close();
+        }
+    }
+
+    public void delete(User user) throws Exception {
+        try {
+            super.begin();
+            getSession().delete(user);
+            super.commit();
+        } catch (Exception e) {
+            super.rollback();
+            throw new Exception("Could not delete user " + user.getName(), e);
+        }
+    }
 }

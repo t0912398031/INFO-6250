@@ -14,7 +14,7 @@ public class BitCoin {
     private long ID;
     private String bitcoinID;
     private String owner;
-//    private User user;
+    private User user;
 
     public BitCoin(String bitcoinID) {
         this.bitcoinID = bitcoinID;
@@ -37,12 +37,12 @@ public class BitCoin {
         this.owner = owner;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 }

@@ -16,47 +16,76 @@ import org.hibernate.cfg.Configuration;
 
 public class Dao {
  
-    private SessionFactory sessionFactory;
+//    private SessionFactory sessionFactory;
+//    private static Session session;
+//    
+//    protected SessionFactory setUp() throws Exception {
+//        Configuration configuration = new Configuration();
+//        configuration.configure("hibernate.cfg.xml");
+//        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+//                .applySettings(configuration.getProperties())
+//                .build();
+//        try {
+//            this.sessionFactory = configuration.buildSessionFactory(registry);
+//            
+//        } catch (Exception e) {
+//            StandardServiceRegistryBuilder.destroy(registry);
+//        }
+//        
+//        return sessionFactory;
+//    }
+//    
+//    
+//    public Session getSession() throws Exception {
+//        if(session == null) {
+//            session = setUp().openSession();
+//        }
+//        return session;
+//    }
+//    
+//    public void beginTransaction() throws Exception {
+//        getSession().beginTransaction();
+//    }
+//
+//    public void commit() throws Exception {
+//        getSession().getTransaction().commit();;
+//    }
+//
+//    public void close() throws Exception {
+//        getSession().close();
+//    }
+//
+//    public void rollbackTransaction() throws Exception {
+//        getSession().getTransaction().rollback();
+//    }
+    
+    
+    
+    
+    
+    private static final SessionFactory sf = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
     private static Session session;
-    
-    protected SessionFactory setUp() throws Exception {
-        Configuration configuration = new Configuration();
-        configuration.configure("hibernate.cfg.xml");
-        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .applySettings(configuration.getProperties())
-                .build();
-        try {
-            this.sessionFactory = configuration.buildSessionFactory(registry);
-            
-        } catch (Exception e) {
-            StandardServiceRegistryBuilder.destroy(registry);
-        }
-        
-        return sessionFactory;
-    }
-    
-    
-    public Session getSession() throws Exception {
-        if(session == null) {
-            session = setUp().openSession();
+
+    public static Session getSession() {
+        if (session == null) {
+            session = sf.openSession();
         }
         return session;
     }
-    
-    public void beginTransaction() throws Exception {
+
+    public void begin() {
         getSession().beginTransaction();
     }
 
-    public void commit() throws Exception {
-        getSession().getTransaction().commit();;
+    public void commit() {
+        getSession().getTransaction().commit();
     }
 
-    public void close() throws Exception {
+    public void close() {
         getSession().close();
     }
-
-    public void rollbackTransaction() throws Exception {
+    
+    public void rollback() {
         getSession().getTransaction().rollback();
     }
-    
 }

@@ -17,7 +17,7 @@ public class User {
     private String password;
     private String name; 
     private int balance;
-    private Set bitCoin;
+    private Set<BitCoin> bitCoins;
     private Set record;
     private Set order;
 
@@ -56,12 +56,12 @@ public class User {
         this.name = name;
     }
 
-    public Set getBitCoin() {
-        return bitCoin;
+    public Set<BitCoin> getBitCoins() {
+        return bitCoins;
     }
 
-    public void setBitCoin(Set bitCoin) {
-        this.bitCoin = bitCoin;
+    public void setBitCoins(Set<BitCoin> bitCoins) {
+        this.bitCoins = bitCoins;
     }
 
     public int getBalance() {

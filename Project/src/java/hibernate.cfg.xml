@@ -61,13 +61,13 @@ Contributor(s):
     <property name="hibernate.connection.password">0912398031</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="hibernate.show_sql">true</property>
-    
+
     <!--    <mapping resource="Message.hbm.xml"/>
     -->
     <!--<mapping resource="Course.hbm.xml"/>-->
     <mapping resource="Movie.hbm.xml"/>
     
     <mapping resource="User.hbm.xml"/>
-    <!--<mapping resource="BitCoin.hbm.xml"/>-->
+    <mapping resource="BitCoin.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -27,7 +27,8 @@ public class MovieDao extends Dao{
         List<Movie> movies = new ArrayList<Movie>();
         try{
             
-            beginTransaction();
+//            beginTransaction();
+            begin();
 //            Query q = getSession().createQuery("from Message where userName= :username");
             Query q = getSession().createQuery("from Movie");
             movies = q.list();
@@ -36,7 +37,8 @@ public class MovieDao extends Dao{
         } catch(HibernateException e){
             e.printStackTrace();
             try {
-                rollbackTransaction();
+//                rollbackTransaction();
+                rollback();
             } catch (Exception ex) {
                 Logger.getLogger(MovieDao.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -55,7 +57,8 @@ public class MovieDao extends Dao{
     public int addMovie(Movie m){
         int result = 0;
         try {
-            beginTransaction();
+//            beginTransaction();
+            begin();
             Session session = getSession();
             session.save(m);
             commit();
@@ -63,17 +66,18 @@ public class MovieDao extends Dao{
         } catch (HibernateException e) {
             e.printStackTrace();
             try {
-                rollbackTransaction();
+//                rollbackTransaction();
+                rollback();
             } catch (Exception ex) {
-                Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MovieDao.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (Exception ex) {
-            Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovieDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
             try {
                 //close();
             } catch (Exception ex) {
-                Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MovieDao.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
@@ -83,7 +87,8 @@ public class MovieDao extends Dao{
     public Movie searchMovie(String id){
         List<Movie> movies = new ArrayList<>();
         try{
-            beginTransaction();
+//            beginTransaction();
+            begin();
             Session session = getSession();
 //            Query q = session.createQuery("from Course where username=:username and "+searchType+"=:type");
             Query q = session.createQuery("from Movie where id=:id");
@@ -96,17 +101,18 @@ public class MovieDao extends Dao{
         } catch(HibernateException e){
             e.printStackTrace();
             try {
-                rollbackTransaction();
+//                rollbackTransaction();
+                rollback();
             } catch (Exception ex) {
-                Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MovieDao.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (Exception ex) {
-            Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovieDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
             try {
                 //close();
             } catch (Exception ex) {
-                Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MovieDao.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return movies.get(0);
