@@ -40,6 +40,7 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-mapping>
+  <!--check table name conflict with SQL syntax-->
   <class table="orderTable" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.neu.pojo.Order" optimistic-lock="version" polymorphism="implicit" select-before-update="false">
     <id name="ID" type="long">
       <column name="ID"/>
