@@ -15,15 +15,16 @@
     </head>
     
     <body>
-        <!--<a href='user.htm'>Home</a><br/>-->
-        <form action="auth.htm" method="POST">          
+    	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
+        <form action="${contextPath}/" method="POST">          
             <input type="hidden" value="" name="option" />
             <input type="submit" value="Home"/>
         </form>
      
         <h1>Please Enter the Details Below</h1>
-        <form action="user.htm" method="POST">
-            <label>username :</label>  <input type="text" name="username" required><br /><br/>
+        <form action="${contextPath}/register/" method="POST">
+            <label>username :</label>  <input type="text" name="userName" required><br /><br/>
             <label>password :</label>  <input type="text" name="password" required><br /><br/>
             <label>name :</label>  <input type="text" name="name" required><br /><br/>
             <label>balance :</label>  <input type="number" name="balance" required><br /><br/>
@@ -32,6 +33,15 @@
             <input type="submit" value="Register"/>
         </form>
         <br>
+        
+        
+	
+        
+        
+        
+        
+        
+        
         
         <c:if test="${requestScope.status != null}">
             <c:out value="${requestScope.status}"/>

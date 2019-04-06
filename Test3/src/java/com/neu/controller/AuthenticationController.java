@@ -43,7 +43,7 @@ public class AuthenticationController extends AbstractController {
 
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
-        UserDao user = (UserDao) getApplicationContext().getBean("userdao");
+        UserDao userdao = (UserDao) getApplicationContext().getBean("userdao");
 //        MessageDao msg = (MessageDao) getApplicationContext().getBean("messageDAO");
         switch (option) {
             case "logout":
@@ -51,7 +51,7 @@ public class AuthenticationController extends AbstractController {
                 mv = new ModelAndView("loginPage");
                 break;
             case "login":
-                User loggedUser = user.authenticateLogin(userName, password);
+                User loggedUser = userdao.authenticateLogin(userName, password);
                 if (loggedUser == null) {
                     session.setAttribute("USER", "No user found, please check your username and password");
                     mv = new ModelAndView("loginPage");

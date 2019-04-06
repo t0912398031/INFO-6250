@@ -2,7 +2,10 @@ package com.neu.edu.dao;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+
+import com.neu.edu.exception.CategoryException;
 import com.neu.edu.exception.ClientException;
+import com.neu.edu.pojo.Category;
 import com.neu.edu.pojo.Client;
 
 public class ClientDao extends DAO {
@@ -35,6 +38,17 @@ public class ClientDao extends DAO {
 			throw new ClientException("Exception while creating user: " + e.getMessage());
 		}
 	}
+	
+	public void update(Client u) throws ClientException {
+		try {
+			begin();
+			getSession().update(u);
+			commit();
+		} catch (HibernateException e) {
+			rollback();
+			throw new ClientException("Could not save the client", e);
+		}
+	}
 
 	public void delete(Client user) throws ClientException {
 		try {
@@ -44,6 +58,22 @@ public class ClientDao extends DAO {
 		} catch (HibernateException e) {
 			rollback();
 			throw new ClientException("Could not delete user " + user.getUserName(), e);
+		}
+	}
+	
+	public Client authenticateLogin(String username, String password) throws ClientException {
+		try {
+			begin();
+			Query q = getSession().createQuery("from Client where userName= :username AND password= :password");
+			q.setString("username", username);
+            q.setString("password", password);
+			
+			Client user = (Client) q.uniqueResult();
+			commit();
+			return user;
+		} catch (HibernateException e) {
+			rollback();
+			throw new ClientException("Could not get user " + username, e);
 		}
 	}
 }

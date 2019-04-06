@@ -1,5 +1,8 @@
 package com.neu.edu.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -13,12 +16,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.neu.edu.dao.AdvertDao;
 import com.neu.edu.dao.CategoryDao;
+import com.neu.edu.dao.ClientDao;
 import com.neu.edu.dao.UserDao;
 import com.neu.edu.exception.AdvertException;
 import com.neu.edu.exception.CategoryException;
+import com.neu.edu.exception.ClientException;
 import com.neu.edu.exception.UserException;
 import com.neu.edu.pojo.Advert;
+import com.neu.edu.pojo.Bitcoin;
 import com.neu.edu.pojo.Category;
+import com.neu.edu.pojo.Client;
 import com.neu.edu.pojo.User;
 
 @Controller
@@ -34,8 +41,16 @@ public class RegisterController {
 //
 //	@Autowired
 //	CategoryDao categoryDao;
+	
+	@Autowired
+	ClientDao clientDao;
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
+//	@RequestMapping("/")
+//	public String viewHome() {
+//		return "home";
+//	}
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView register() throws CategoryException {
 		ModelAndView mv = new ModelAndView();
 //		mv.addObject("categories", categoryDao.list());
@@ -44,25 +59,21 @@ public class RegisterController {
 		return mv;
 	}
 
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String register(@ModelAttribute("advert") Advert advert, HttpServletRequest request)
-			throws CategoryException, AdvertException, UserException {
+	@RequestMapping(value = "/", method = RequestMethod.POST)
+	public String register(@ModelAttribute("client") Client client, HttpServletRequest request)
+			throws CategoryException, AdvertException, ClientException {
 		
-//		int userId = Integer.parseInt(request.getParameter("userId"));
-//		LOGGER.debug(advert);
-//		try {
-//			User user = userdao.get(userId);
-//			advert.setUser(user);
-//			advertdao.create(advert);
-//			for (Category c : advert.getCategories()) {
-//				c = categoryDao.get(c.getTitle());
-//				c.getAdverts().add(advert);
-//				categoryDao.update(c);
-//			}
-//
-//		} catch (NumberFormatException e) {
-//			e.printStackTrace();
-//		}
+		LOGGER.debug(client);
+		try {
+			Set bitcoins = new HashSet<Bitcoin>();
+	        bitcoins.add(new Bitcoin());
+	        bitcoins.add(new Bitcoin());
+	        client.setBitcoins(bitcoins);
+			clientDao.register(client);
+
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
 		return "redirect:/";
 	}
 }

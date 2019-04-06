@@ -28,8 +28,8 @@ public class Client {
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "balabce")
-	private int balabce;
+	@Column(name = "balance")
+	private int balance;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "USER_ID")
@@ -79,12 +79,12 @@ public class Client {
 		this.name = name;
 	}
 
-	public int getBalabce() {
-		return balabce;
+	public int getBalance() {
+		return balance;
 	}
 
-	public void setBalabce(int balabce) {
-		this.balabce = balabce;
+	public void setBalance(int balance) {
+		this.balance = balance;
 	}
 
 	public Set<Bitcoin> getBitcoins() {

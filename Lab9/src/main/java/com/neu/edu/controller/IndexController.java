@@ -3,6 +3,9 @@ package com.neu.edu.controller;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,4 +87,26 @@ public class IndexController {
 		user = userDao.register(user);
 		return new ModelAndView("home");
 	}
+	
+	
+//	@RequestMapping("/signin")
+//	public ModelAndView signin(HttpServletRequest request) throws CategoryException, ClientException {
+//		
+//		HttpSession session = request.getSession();
+//		String userName = request.getParameter("userName");
+//        String password = request.getParameter("password");
+//        
+//		Client loggedUser = clientDao.authenticateLogin(userName, password);
+//		
+//        if (loggedUser == null) {
+//            session.setAttribute("USER", "No user found, please check your username and password");
+////            System.out.println("no user");
+//            return new ModelAndView("home");
+//        } else {
+//            session.setAttribute("USER", loggedUser);
+//            return new ModelAndView("signin");
+//            
+//
+//        }
+//	}
 }
