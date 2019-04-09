@@ -59,35 +59,17 @@ public class AdminController {
 		return "admin";
 	}
 	
-//	@RequestMapping(value = "/", method = RequestMethod.POST)
-//	public ModelAndView signin(HttpServletRequest request) throws CategoryException, ClientException {
-//		
-//		HttpSession session = request.getSession();
-//		String userName = request.getParameter("userName");
-//        String password = request.getParameter("password");
-//        
-//		Client loggedUser = clientDao.authenticateLogin(userName, password);
-//		
-//        if (loggedUser == null) {
-//            session.setAttribute("error", "No user found, please check your username and password");
-//            System.out.println("no user");
-//            return new ModelAndView("home");
-//        } else if(loggedUser.getUserName().equals("lipang")&&loggedUser.getPassword().equals("123")){
-//            session.setAttribute("USER", loggedUser);
-//            session.setAttribute("error", "");
-//            
-//            List<Client> clients = clientDao.list();
-//            ModelAndView mv = new ModelAndView();
-//    		mv.addObject("clients", clients);
-//    		mv.setViewName("admin");
-//            
-//            return mv;
-//        } else {
-//            session.setAttribute("USER", loggedUser);
-//            session.setAttribute("error", "");
-//            return new ModelAndView("signin");
-//        }
-//	}
+	@RequestMapping(value = "/back", method = RequestMethod.POST)
+	public ModelAndView back(HttpServletRequest request) throws ClientException {
+		List<Client> clients = clientDao.list();
+
+        ModelAndView mv = new ModelAndView();
+		mv.addObject("clients", clients);
+		mv.setViewName("admin");
+        
+        return mv;
+		
+	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public ModelAndView delete(HttpServletRequest request) {
@@ -180,7 +162,7 @@ public class AdminController {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("orders", orders);
-		mv.setViewName("orderlist");
+		mv.setViewName("adminorderlist");
 		request.setAttribute("admin", "admin");
 		return mv;
 	}
@@ -236,8 +218,9 @@ public class AdminController {
 		double sellPrice = sellOrder.getPrice();    
 		if(buyPrice < sellPrice) return;
 
-		Client buyer = clientDao.get(buyOrder.getUser().getUserId());
-		Client seller = clientDao.get(sellOrder.getUser().getUserId());
+		Client buyer = clientDao.get(buyOrder.getClient().getUserId());
+		Client seller = clientDao.get(sellOrder.getClient().getUserId());
+
 
       int dealAmount = buyAmount;
       int bitCoinOfSeller = seller.getBitcoins().size();

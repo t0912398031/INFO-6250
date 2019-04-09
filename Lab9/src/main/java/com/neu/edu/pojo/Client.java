@@ -35,7 +35,7 @@ public class Client {
 	@JoinColumn(name = "USER_ID")
 	private Set<Bitcoin> bitcoins;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name = "USER_ID")
 	private Set<Order> orders;
 

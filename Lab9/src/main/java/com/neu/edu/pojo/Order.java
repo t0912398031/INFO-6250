@@ -22,7 +22,7 @@ public class Order {
 	// Implicit column name
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long Id;
+	private long orderId;
 
 	// Explicit column name
 	@Column(name = "type")
@@ -43,9 +43,12 @@ public class Order {
 	@Column(name = "dealdate")
 	private Date dealdate;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID")
-    private Client user;
+	@Column(name = "USER_ID")
+	private long USER_ID;
+	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "client")
+//    private Client client;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "ORDER_ID")
@@ -55,12 +58,12 @@ public class Order {
 		this.date = new Date();
 	}
 
-	public long getId() {
-		return Id;
+	public long getOrderId() {
+		return orderId;
 	}
 
-	public void setId(long id) {
-		Id = id;
+	public void setOrderId(long orderId) {
+		this.orderId = orderId;
 	}
 
 	public String getType() {
@@ -121,12 +124,12 @@ public class Order {
 		this.records = records;
 	}
 
-	public Client getUser() {
-		return user;
+	public long getUSER_ID() {
+		return USER_ID;
 	}
 
-	public void setUser(Client user) {
-		this.user = user;
+	public void setUSER_ID(long uSER_ID) {
+		USER_ID = uSER_ID;
 	}
 
 	

@@ -11,7 +11,12 @@
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-		
+	
+	<form action="${contextPath}/signin/order/back" method ="post">
+        <input type="hidden" name="option" value="logout"/>
+        <input type="submit" value="Back"/>
+    </form><br/>
+        	
 		<table border="1">
             <thead>
             	<c:if test="${requestScope.admin == 'admin'}">
@@ -23,6 +28,7 @@
                 <th>status</th>
                 <th>date</th> 
                 <th>dealdate</th> 
+                <th></th> 
             </thead>
             <tbody>           
             <c:forEach var="o" items="${orders}">
@@ -36,6 +42,12 @@
                     <td>${o.status}</td>
                     <td>${o.date}</td>
                     <td>${o.dealdate}</td>
+                    <td>
+                    <form action="${contextPath}/signin/order/delete" method ="post">
+			            <input type="hidden" name="delete" value=${o.orderId} />
+			            <input type="submit" value="Delete"/>
+			        </form>
+			        </td>
                 </tr>
             </c:forEach>
             </tbody>

@@ -40,6 +40,11 @@
         
         
         
+        
+        <br><br><br><br><br><br>
+        
+        
+        
         <h3>Courses Part</h3>
         <a href="addcourse.htm?formtype=addcourse"><h3>[Add Courses]</h3></a>
         <h4>Search</h4>
