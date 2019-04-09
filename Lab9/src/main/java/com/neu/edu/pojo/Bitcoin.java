@@ -41,5 +41,4 @@ public class Bitcoin {
 		this.bicoinID = bicoinID;
 	}
 
-	
 }

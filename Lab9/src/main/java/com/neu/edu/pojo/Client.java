@@ -29,19 +29,15 @@ public class Client {
 	private String name;
 	
 	@Column(name = "balance")
-	private int balance;
+	private double balance;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name = "USER_ID")
 	private Set<Bitcoin> bitcoins;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "USER_ID")
 	private Set<Order> orders;
-	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "USER_ID")
-	private Set<Record> records;
 
 	public Client() {
 
@@ -79,11 +75,11 @@ public class Client {
 		this.name = name;
 	}
 
-	public int getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(int balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 
@@ -103,13 +99,6 @@ public class Client {
 		this.orders = orders;
 	}
 
-	public Set<Record> getRecords() {
-		return records;
-	}
-
-	public void setRecords(Set<Record> records) {
-		this.records = records;
-	}
 
 
 }

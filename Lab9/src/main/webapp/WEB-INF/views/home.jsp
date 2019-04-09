@@ -7,15 +7,15 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
 </head>
 <body>
-	<h1>Welcome to Lab 9!</h1>
+	<h1>Bitcoin Transaction Application</h1>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-	<a href="${contextPath}/create">Create users and categories :</a>
-	<a href="${contextPath}/advert/create">Create advert :</a>
+<%-- 	<a href="${contextPath}/create">Create users and categories :</a> --%>
+<%-- 	<a href="${contextPath}/advert/create">Create advert :</a> --%>
 	
-	<a href="${contextPath}/createClient">Create client</a>
+<%-- 	<a href="${contextPath}/createClient">Create client</a> --%>
 	<a href="${contextPath}/register/">register :</a>
 
-	
+	<br><br><br>
 	<form action="${contextPath}/signin/" method="POST">
         <label>username :</label>  <input type="text" name="userName" required><br /><br/>
         <label>password :</label>  <input type="text" name="password" required><br /><br/>

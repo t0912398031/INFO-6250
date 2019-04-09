@@ -17,6 +17,40 @@
             <input type="submit" value="Logout"/>
         </form><br/>
         
+        
+        <table border="1">
+            <thead>  
+                <th>userName</th>
+                <th>password</th>
+                <th>name</th>
+                <th>balance</th>
+                <th></th>
+            </thead>
+            <tbody>           
+            <c:forEach var="c" items="${clients}">
+                <tr>
+                    <td>${c.userName}</td>
+                    <td>${c.password}</td>
+                    <td>${c.name}</td>
+                    <td>${c.balance}</td>
+                    <td>
+                    	<c:if test="${c != sessionScope.USER}">
+	                    <form action="${contextPath}/admin/delete" method ="post">
+				            <input type="hidden" name="delete" value=${c.userId} />
+				            <input type="submit" value="Delete"/>
+				        </form>
+				        </c:if> 
+			        </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+        
+        
+        
+            
+        
+        
         <form action="${contextPath}/signin/order" method="POST">
             Price: <input type="number" name="price" />
             Amount: <input type="number" name="amount" />
@@ -29,11 +63,11 @@
             <input type="submit" value="Create Order"/>
         </form>
         
-        <form action="${contextPath}/signin/view" method="POST">     
+        <form action="${contextPath}/admin/view" method="POST">     
             <input type="submit" value="View Orders"/>
         </form>
         
-        <form action="${contextPath}/signin/match" method="POST">     
+        <form action="${contextPath}/admin/match" method="POST">     
             <input type="submit" value="Match Orders"/>
         </form>
         

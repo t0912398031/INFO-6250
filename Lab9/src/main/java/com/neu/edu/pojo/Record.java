@@ -20,7 +20,7 @@ public class Record {
 
 	// Explicit column name
 	@Column(name = "price")
-	private int price;
+	private double price;
 	
 	@Column(name = "amount")
 	private int amount;
@@ -33,6 +33,12 @@ public class Record {
 
 	public Record() {
 	}
+	
+	public Record(int dealAmount, double sellPrice) {
+		this.amount = dealAmount;
+		this.price = sellPrice;
+		this.date = new Date();
+	}
 
 	public long getId() {
 		return Id;
@@ -42,11 +48,11 @@ public class Record {
 		Id = id;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
@@ -74,7 +80,4 @@ public class Record {
 		this.date = date;
 	}
 
-	
-
-	
 }

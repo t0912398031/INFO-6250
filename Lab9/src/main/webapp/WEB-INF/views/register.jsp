@@ -6,8 +6,7 @@
 --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%--<jsp:useBean id="USER" type="com.neu.edu.pojo.Login" scope="session"></jsp:useBean>--%>
-<%--<jsp:useBean id="usersMessages" class="Message" scope="request"></jsp:useBean>--%>
+
     <!DOCTYPE html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

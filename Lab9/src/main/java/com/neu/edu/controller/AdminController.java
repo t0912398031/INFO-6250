@@ -36,14 +36,12 @@ import com.neu.edu.pojo.Client;
 import com.neu.edu.pojo.Order;
 import com.neu.edu.pojo.Record;
 import com.neu.edu.pojo.User;
-import com.neu.service.Service;
 
 @Controller
-@RequestMapping("/signin/*")
-public class SigninController {
+@RequestMapping("/admin/*")
+public class AdminController {
 
-	private static final Log LOGGER = LogFactory.getLog(SigninController.class);
-	
+	private static final Log LOGGER = LogFactory.getLog(AdminController.class);
 	@Autowired
 	ClientDao clientDao;
 	
@@ -56,48 +54,67 @@ public class SigninController {
 	@Autowired
 	RecordDao recordDao;
 
-//	@RequestMapping("/")
-//	public String viewHome() {
-//		return "home";
-//	}
-	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ModelAndView signin(HttpServletRequest request) throws CategoryException, ClientException {
-		
-		HttpSession session = request.getSession();
-		String userName = request.getParameter("userName");
-        String password = request.getParameter("password");
-
-		Client loggedUser = clientDao.authenticateLogin(userName, password);
-
-        if (loggedUser == null) {
-            session.setAttribute("error", "No user found, please check your username and password");
-            System.out.println("no user");
-            return new ModelAndView("home");
-        } else if(loggedUser.getUserName().equals("admin")&&loggedUser.getPassword().equals("123")){
-
-        	session.setAttribute("USER", loggedUser);
-            session.setAttribute("error", "");
-            
-            List<Client> clients = clientDao.list();
-
-            ModelAndView mv = new ModelAndView();
-    		mv.addObject("clients", clients);
-    		mv.setViewName("admin");
-            
-            return mv;
-        } else {
-            session.setAttribute("USER", loggedUser);
-            session.setAttribute("error", "");
-            return new ModelAndView("signin");
-        }
+	@RequestMapping("/")
+	public String viewHome() {
+		return "admin";
 	}
 	
-	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	public String logout(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		session.invalidate();
-		return ("redirect:/");
+//	@RequestMapping(value = "/", method = RequestMethod.POST)
+//	public ModelAndView signin(HttpServletRequest request) throws CategoryException, ClientException {
+//		
+//		HttpSession session = request.getSession();
+//		String userName = request.getParameter("userName");
+//        String password = request.getParameter("password");
+//        
+//		Client loggedUser = clientDao.authenticateLogin(userName, password);
+//		
+//        if (loggedUser == null) {
+//            session.setAttribute("error", "No user found, please check your username and password");
+//            System.out.println("no user");
+//            return new ModelAndView("home");
+//        } else if(loggedUser.getUserName().equals("lipang")&&loggedUser.getPassword().equals("123")){
+//            session.setAttribute("USER", loggedUser);
+//            session.setAttribute("error", "");
+//            
+//            List<Client> clients = clientDao.list();
+//            ModelAndView mv = new ModelAndView();
+//    		mv.addObject("clients", clients);
+//    		mv.setViewName("admin");
+//            
+//            return mv;
+//        } else {
+//            session.setAttribute("USER", loggedUser);
+//            session.setAttribute("error", "");
+//            return new ModelAndView("signin");
+//        }
+//	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public ModelAndView delete(HttpServletRequest request) {
+//		HttpSession session = request.getSession();
+//		session.invalidate();
+		System.out.println(request.getParameter("delete"));
+		
+		try {
+			System.out.println("delete");
+			Client user = clientDao.get(Long.parseLong(request.getParameter("delete")));
+			clientDao.delete(user);
+			
+			List<Client> clients = clientDao.list();
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("clients", clients);
+			mv.setViewName("admin");
+	        
+	        return mv;
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+
+        return new ModelAndView("admin");
+//		return ("redirect:/admin/");
 	}
 	
 	
@@ -151,19 +168,22 @@ public class SigninController {
 	
 	@RequestMapping(value = "/view", method = RequestMethod.POST)
 	public ModelAndView view(@ModelAttribute("order") Order order, HttpServletRequest request)
-			throws CategoryException, AdvertException, ClientException {
+			throws CategoryException, AdvertException, ClientException, OrderException {
 		
 		HttpSession session = request.getSession();
 		Client loggeduser = (Client) session.getAttribute("USER");
-		Client u = clientDao.get(loggeduser.getUserId());
-		Set orders = u.getOrders();
+		
+//		Client u = clientDao.get(loggeduser.getUserId());
+//		Set orders = u.getOrders();
+		
+		List orders = orderDao.list();
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("orders", orders);
 		mv.setViewName("orderlist");
+		request.setAttribute("admin", "admin");
 		return mv;
 	}
-	
 	
 	@RequestMapping(value = "/match", method = RequestMethod.POST)
 	public ModelAndView match(@ModelAttribute("order") Order order, HttpServletRequest request)
@@ -215,9 +235,9 @@ public class SigninController {
 //		int sellAmount = sellOrder.getAmount();
 		double sellPrice = sellOrder.getPrice();    
 		if(buyPrice < sellPrice) return;
-		
-		Client buyer = clientDao.get(buyOrder.getUSER_ID());
-		Client seller = clientDao.get(sellOrder.getUSER_ID());
+
+		Client buyer = clientDao.get(buyOrder.getUser().getUserId());
+		Client seller = clientDao.get(sellOrder.getUser().getUserId());
 
       int dealAmount = buyAmount;
       int bitCoinOfSeller = seller.getBitcoins().size();
@@ -232,19 +252,23 @@ public class SigninController {
     /**
      * Begin to transaction
     */       
+      System.out.println(buyer.getUserId());
+      System.out.println(seller.getUserId());
       
       Set sellerBitcoins = seller.getBitcoins();
       Set buyerBitcoins = buyer.getBitcoins();
+      System.out.println(buyerBitcoins.size());
       for(int i = 0; i< dealAmount; i++){
     	  Bitcoin sellerBitcoin = bitcoinDao.get(seller.getUserId());
     	  buyerBitcoins.add(sellerBitcoin);
     	  sellerBitcoins.remove(sellerBitcoin);
 //    	  bitcoinDao.delete(sellerBitcoin);
-        
+    	  System.out.println("transfer");
 //        Coin coin = sellerAccount.getCoinCollection().getCoinList().get(0);
 //        transactionHistory.createTransaction(coin.getCoinKey(), sellerAccount.getName(), buyerAccount.getName(),coin.getType());
       }
-    buyer.setBitcoins(buyerBitcoins);
+      System.out.println(buyerBitcoins.size());
+//    buyer.setBitcoins(buyerBitcoins);
     clientDao.update(buyer);
         
 //    /*Service Fee*/

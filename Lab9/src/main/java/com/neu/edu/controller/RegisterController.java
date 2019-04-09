@@ -68,6 +68,10 @@ public class RegisterController {
 			Set bitcoins = new HashSet<Bitcoin>();
 	        bitcoins.add(new Bitcoin());
 	        bitcoins.add(new Bitcoin());
+	        bitcoins.add(new Bitcoin());
+	        bitcoins.add(new Bitcoin());
+	        bitcoins.add(new Bitcoin());
+
 	        client.setBitcoins(bitcoins);
 			clientDao.register(client);
 

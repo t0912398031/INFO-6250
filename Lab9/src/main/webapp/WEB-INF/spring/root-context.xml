@@ -11,6 +11,8 @@
 	
 	<bean id="clientDao" class="com.neu.edu.dao.ClientDao" />
 	<bean id="orderDao" class="com.neu.edu.dao.OrderDao" />
+	<bean id="recordDao" class="com.neu.edu.dao.RecordDao" />
+	<bean id="bitcoinDao" class="com.neu.edu.dao.BitcoinDao" />
 	
 
 </beans>

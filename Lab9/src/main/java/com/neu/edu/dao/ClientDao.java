@@ -1,12 +1,16 @@
 package com.neu.edu.dao;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 
+import com.neu.edu.exception.AdvertException;
 import com.neu.edu.exception.CategoryException;
 import com.neu.edu.exception.ClientException;
 import com.neu.edu.pojo.Category;
 import com.neu.edu.pojo.Client;
+import com.neu.edu.pojo.Order;
 
 public class ClientDao extends DAO {
 
@@ -46,7 +50,7 @@ public class ClientDao extends DAO {
 			commit();
 		} catch (HibernateException e) {
 			rollback();
-			throw new ClientException("Could not save the client", e);
+			throw new ClientException("Could not save the client" + u.getUserId(), e);
 		}
 	}
 
@@ -76,4 +80,19 @@ public class ClientDao extends DAO {
 			throw new ClientException("Could not get user " + username, e);
 		}
 	}
+	
+	 public List<Client> list() throws ClientException{
+	    	
+    	try {
+            begin();
+            Query q = getSession().createQuery("from Client");
+            List<Client> clients = q.list();
+            commit();
+            return clients;
+        } catch (HibernateException e) {
+            rollback();
+            throw new ClientException("Could not list users", e);
+        }
+    	
+    }
 }

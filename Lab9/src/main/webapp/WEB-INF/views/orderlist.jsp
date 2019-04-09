@@ -11,28 +11,35 @@
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-	
-		<table>
-			<tr>
-				<td>orderlist:</td>
-				
-			</tr>
-			<tr>
-				<td>Category:</td>
-				
-			</tr>
-			<tr>
-				<td>Advert Title:</td>
-				
-			</tr>
-			<tr>
-				<td>Message:</td>
-				
-			</tr>
-			<tr>
-				
-			</tr>
-		</table>
+		
+		<table border="1">
+            <thead>
+            	<c:if test="${requestScope.admin == 'admin'}">
+                	<th>USER_ID</th>
+                </c:if> 
+                <th>type</th>
+                <th>amount</th>
+                <th>price</th>
+                <th>status</th>
+                <th>date</th> 
+                <th>dealdate</th> 
+            </thead>
+            <tbody>           
+            <c:forEach var="o" items="${orders}">
+                <tr>
+	                <c:if test="${requestScope.admin == 'admin'}">
+	                	<th>${o.USER_ID}</th>
+	                </c:if> 
+                    <td>${o.type}</td>
+                    <td>${o.amount}</td>
+                    <td>${o.price}</td>
+                    <td>${o.status}</td>
+                    <td>${o.date}</td>
+                    <td>${o.dealdate}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
 	
 </body>
 </html>

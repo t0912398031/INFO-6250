@@ -1,12 +1,18 @@
 package com.neu.edu.pojo;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,13 +29,27 @@ public class Order {
 	private String type;
 	
 	@Column(name = "amount")
-	private String amount;
-	
+	private int amount;
+
 	@Column(name = "price")
-	private String price;
+	private double price;
+	
+	@Column(name = "status")
+	private String status;
 	
 	@Column(name = "date")
 	private Date date;
+	
+	@Column(name = "dealdate")
+	private Date dealdate;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private Client user;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "ORDER_ID")
+	private Set<Record> records;
 
 	public Order() {
 		this.date = new Date();
@@ -51,19 +71,21 @@ public class Order {
 		this.type = type;
 	}
 
-	public String getAmount() {
+	
+
+	public int getAmount() {
 		return amount;
 	}
 
-	public void setAmount(String amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 
-	public String getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
@@ -75,6 +97,37 @@ public class Order {
 		this.date = date;
 	}
 
-	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Date getDealdate() {
+		return dealdate;
+	}
+
+	public void setDealdate(Date dealdate) {
+		this.dealdate = dealdate;
+	}
+
+	public Set<Record> getRecords() {
+		return records;
+	}
+
+	public void setRecords(Set<Record> records) {
+		this.records = records;
+	}
+
+	public Client getUser() {
+		return user;
+	}
+
+	public void setUser(Client user) {
+		this.user = user;
+	}
+
 	
 }
