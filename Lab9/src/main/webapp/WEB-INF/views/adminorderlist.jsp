@@ -20,7 +20,7 @@
 		<table border="1">
             <thead>
             	<c:if test="${requestScope.admin == 'admin'}">
-                	<th>USER_ID</th>
+                	<th>userId</th>
                 </c:if> 
                 <th>type</th>
                 <th>amount</th>
@@ -34,7 +34,7 @@
             <c:forEach var="o" items="${orders}">
                 <tr>
 	                <c:if test="${requestScope.admin == 'admin'}">
-	                	<th>${o.USER_ID}</th>
+	                	<th>${o.userId}</th>
 	                </c:if> 
                     <td>${o.type}</td>
                     <td>${o.amount}</td>

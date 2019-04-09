@@ -34,7 +34,7 @@
                     <td>${c.name}</td>
                     <td>${c.balance}</td>
                     <td>
-                    	<c:if test="${c != sessionScope.USER}">
+                    	<c:if test="${c.userName != sessionScope.USER.userName}">
 	                    <form action="${contextPath}/admin/delete" method ="post">
 				            <input type="hidden" name="delete" value=${c.userId} />
 				            <input type="submit" value="Delete"/>

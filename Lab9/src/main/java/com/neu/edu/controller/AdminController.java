@@ -1,6 +1,7 @@
 package com.neu.edu.controller;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -72,30 +73,20 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public ModelAndView delete(HttpServletRequest request) {
-//		HttpSession session = request.getSession();
-//		session.invalidate();
-		System.out.println(request.getParameter("delete"));
-		
-		try {
-			System.out.println("delete");
-			Client user = clientDao.get(Long.parseLong(request.getParameter("delete")));
-			clientDao.delete(user);
-			
-			List<Client> clients = clientDao.list();
-			ModelAndView mv = new ModelAndView();
-			mv.addObject("clients", clients);
-			mv.setViewName("admin");
-	        
-	        return mv;
-		} catch (ClientException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+	public ModelAndView delete(HttpServletRequest request) throws ClientException{
 
-        return new ModelAndView("admin");
+		System.out.println(request.getParameter("delete"));
+		Client user = clientDao.get(Long.parseLong(request.getParameter("delete")));
+		clientDao.delete(user);
+		
+		List<Client> clients = clientDao.list();
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("clients", clients);
+		mv.setViewName("admin");
+        
+        return mv;
+
+//        return new ModelAndView("admin");
 //		return ("redirect:/admin/");
 	}
 	
@@ -202,7 +193,15 @@ public class AdminController {
 //		mv.setViewName("orderlist");
 //		return mv;
 	}
+	
+	
 	public void match(Order buyOrder, Order sellOrder) throws ClientException, BitcoinException{
+		if(buyOrder.getUserId()==sellOrder.getUserId()) return;
+		
+		double buyPrice = buyOrder.getPrice();
+		double sellPrice = sellOrder.getPrice();    
+		if(buyPrice < sellPrice) return;
+		
 		int buyAmount = buyOrder.getAmount();
 		for(Record r: buyOrder.getRecords()) {
 			buyAmount -= r.getAmount();
@@ -211,19 +210,15 @@ public class AdminController {
 		for(Record r: buyOrder.getRecords()) {
 			sellAmount -= r.getAmount();
 		}
-		
-//		int buyAmount = buyOrder.getAmount();
-		double buyPrice = buyOrder.getPrice();
-//		int sellAmount = sellOrder.getAmount();
-		double sellPrice = sellOrder.getPrice();    
-		if(buyPrice < sellPrice) return;
-
-		Client buyer = clientDao.get(buyOrder.getClient().getUserId());
-		Client seller = clientDao.get(sellOrder.getClient().getUserId());
+	
+	
+		Client buyer = clientDao.get(buyOrder.getUserId());
+		Client seller = clientDao.get(sellOrder.getUserId());
 
 
       int dealAmount = buyAmount;
       int bitCoinOfSeller = seller.getBitcoins().size();
+      
       if(buyAmount > sellAmount) dealAmount = Math.min(sellAmount, bitCoinOfSeller);           
       if(buyer.getBalance() < sellPrice*dealAmount){ 
           dealAmount = (int)Math.floor(buyer.getBalance()/sellPrice);
@@ -235,25 +230,38 @@ public class AdminController {
     /**
      * Begin to transaction
     */       
-      System.out.println(buyer.getUserId());
-      System.out.println(seller.getUserId());
+      System.out.println("buyerId"+buyer.getUserId());
+      System.out.println("sellerId"+seller.getUserId());
       
       Set sellerBitcoins = seller.getBitcoins();
       Set buyerBitcoins = buyer.getBitcoins();
-      System.out.println(buyerBitcoins.size());
+      System.out.println("buyercoins"+buyerBitcoins.size());
+      System.out.println("sellercoins"+sellerBitcoins.size());
+      
       for(int i = 0; i< dealAmount; i++){
-    	  Bitcoin sellerBitcoin = bitcoinDao.get(seller.getUserId());
+//    	  Bitcoin sellerBitcoin = bitcoinDao.get(seller.getUserId());
+    	  Bitcoin sellerBitcoin = null;
+    	  if(sellerBitcoins.iterator().hasNext()){
+    		  sellerBitcoin = (Bitcoin) sellerBitcoins.iterator().next();
+    	  }
+    	  
+//    	  Bitcoin sellerBitcoin = (Bitcoin)sellerBitcoins.iterator().next();
+    	  System.out.println(sellerBitcoin.getId());
+    	  
     	  buyerBitcoins.add(sellerBitcoin);
-    	  sellerBitcoins.remove(sellerBitcoin);
+//    	  sellerBitcoins.remove(sellerBitcoin);
+    	  
 //    	  bitcoinDao.delete(sellerBitcoin);
     	  System.out.println("transfer");
 //        Coin coin = sellerAccount.getCoinCollection().getCoinList().get(0);
 //        transactionHistory.createTransaction(coin.getCoinKey(), sellerAccount.getName(), buyerAccount.getName(),coin.getType());
       }
-      System.out.println(buyerBitcoins.size());
+      System.out.println("buyercoins"+buyerBitcoins.size());
+      System.out.println("sellercoins"+sellerBitcoins.size());
 //    buyer.setBitcoins(buyerBitcoins);
     clientDao.update(buyer);
-        
+    clientDao.update(seller);
+    System.out.println("bitcoin transfer complete");
 //    /*Service Fee*/
 //    double actualSpend = sellPrice * dealAmount * (1 + buyServiceRate);
 //    double actualEarn = sellPrice * dealAmount * (1 + sellServiceRate);
@@ -265,6 +273,7 @@ public class AdminController {
 //    sellRequestCustodyAccount.setDollorAccount(sellRequestCustodyAccount.getDollorAccount() + custodySellRequestEarn);
     seller.setBalance(seller.getBalance() + sellPrice * dealAmount);
     buyer.setBalance(buyer.getBalance() - sellPrice * dealAmount);
+    System.out.println("balance transfer complete");
     
     Set<Record> buyOrderRecords = buyOrder.getRecords() == null? new HashSet<Record>():buyOrder.getRecords();
     buyOrderRecords.add(new Record(dealAmount, sellPrice));

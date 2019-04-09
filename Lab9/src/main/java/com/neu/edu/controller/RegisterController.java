@@ -66,11 +66,14 @@ public class RegisterController {
 		LOGGER.debug(client);
 		try {
 			Set bitcoins = new HashSet<Bitcoin>();
-	        bitcoins.add(new Bitcoin());
-	        bitcoins.add(new Bitcoin());
-	        bitcoins.add(new Bitcoin());
-	        bitcoins.add(new Bitcoin());
-	        bitcoins.add(new Bitcoin());
+			for(int i=0;i<10;i++) {
+				bitcoins.add(new Bitcoin());
+			}
+//	        bitcoins.add(new Bitcoin());
+//	        bitcoins.add(new Bitcoin());
+//	        bitcoins.add(new Bitcoin());
+//	        bitcoins.add(new Bitcoin());
+//	        bitcoins.add(new Bitcoin());
 
 	        client.setBitcoins(bitcoins);
 			clientDao.register(client);

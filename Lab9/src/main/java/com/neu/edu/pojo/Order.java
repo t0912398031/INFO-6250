@@ -43,8 +43,8 @@ public class Order {
 	@Column(name = "dealdate")
 	private Date dealdate;
 	
-	@Column(name = "USER_ID")
-	private long USER_ID;
+	@Column(name = "userId")
+	private long userId;
 	
 //	@ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "client")
@@ -124,13 +124,21 @@ public class Order {
 		this.records = records;
 	}
 
-	public long getUSER_ID() {
-		return USER_ID;
+	public long getUserId() {
+		return userId;
 	}
 
-	public void setUSER_ID(long uSER_ID) {
-		USER_ID = uSER_ID;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
+
+//	public long getUSER_ID() {
+//		return USER_ID;
+//	}
+//
+//	public void setUSER_ID(long uSER_ID) {
+//		USER_ID = uSER_ID;
+//	}
 
 	
 }

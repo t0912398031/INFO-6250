@@ -72,7 +72,6 @@ public class SigninController {
 
         if (loggedUser == null) {
             session.setAttribute("error", "No user found, please check your username and password");
-            System.out.println("no user");
             return new ModelAndView("home");
         } else if(loggedUser.getUserName().equals("admin")&&loggedUser.getPassword().equals("123")){
 
@@ -118,18 +117,19 @@ public class SigninController {
 		Client loggeduser = (Client) session.getAttribute("USER");
 //		System.out.println(loggeduser);
 //		System.out.println(loggeduser.getOrders());
-		order.setStatus("Pending");
 		LOGGER.debug(order);
+		order.setStatus("Pending");
+		order.setUserId(loggeduser.getUserId());
+		
 		Client u = clientDao.get(loggeduser.getUserId());
 		u.getOrders().add(order);
 		clientDao.update(u);
-		
 		
 		Client u2 = clientDao.get(loggeduser.getUserId());
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("orders", u2.getOrders());
-//		mv.addObject("advert", new Advert());
+
 		mv.setViewName("orderlist");
 		return mv;
 //		try {
