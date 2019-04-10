@@ -226,7 +226,7 @@ public class AdminController {
 	}
 	
 	
-	public void match(Order buyOrder, Order sellOrder) throws ClientException, BitcoinException{
+	public void match(Order buyOrder, Order sellOrder) throws ClientException, BitcoinException, OrderException{
 		if(buyOrder.getUserId()==sellOrder.getUserId()) return;
 		
 		double buyPrice = buyOrder.getPrice();
@@ -234,21 +234,30 @@ public class AdminController {
 		if(buyPrice < sellPrice) return;
 		
 		int buyAmount = buyOrder.getAmount();
-		for(Record r: buyOrder.getRecords()) {
+		int sellAmount = sellOrder.getAmount();
+		
+		if(buyOrder.getRecords().size()!=0) {
+			for(Record r: buyOrder.getRecords()) {
 			buyAmount -= r.getAmount();
+			}
 		}
-		int sellAmount = buyOrder.getAmount();
-		for(Record r: buyOrder.getRecords()) {
-			sellAmount -= r.getAmount();
+		if(sellOrder.getRecords().size()!=0) {
+			for(Record r: sellOrder.getRecords()) {
+				sellAmount -= r.getAmount();
+			}
 		}
+		
+		
 	
 	
 		Client buyer = clientDao.get(buyOrder.getUserId());
 		Client seller = clientDao.get(sellOrder.getUserId());
 
-
+	  System.out.println("sellAmount"+sellAmount);
+	  
       int dealAmount = buyAmount;
       int bitCoinOfSeller = seller.getBitcoins().size();
+      System.out.println("sellAmount"+bitCoinOfSeller);
       
       if(buyAmount > sellAmount) dealAmount = Math.min(sellAmount, bitCoinOfSeller);           
       if(buyer.getBalance() < sellPrice*dealAmount){ 
@@ -270,6 +279,7 @@ public class AdminController {
 
       List<Bitcoin> sellerBitcoins = new ArrayList<Bitcoin>(seller.getBitcoins());
 //      List<Bitcoin> buyerBitcoins = new ArrayList<Bitcoin>(buyer.getBitcoins());
+    System.out.println("dealAmount"+dealAmount);
     System.out.println("buyercoins"+buyerBitcoins.size());
     System.out.println("sellercoins"+sellerBitcoins.size());
   
@@ -317,18 +327,31 @@ public class AdminController {
     buyer.setBalance(buyer.getBalance() - sellPrice * dealAmount);
     System.out.println("balance transfer complete");
     
-    Set<Record> buyOrderRecords = buyOrder.getRecords() == null? new HashSet<Record>():buyOrder.getRecords();
+    
+    Order buyorder= orderDao.get(buyOrder.getOrderId());
+    Order sellorder = orderDao.get(sellOrder.getOrderId());
+//    Set<Record> buyOrderRecords = buyOrder.getRecords() == null? new HashSet<Record>():buyOrder.getRecords();
+    Set<Record> buyOrderRecords = buyorder.getRecords();
     buyOrderRecords.add(new Record(dealAmount, sellPrice, buyOrder.getOrderId(), "buy", seller.getUserId()));
-    buyOrder.setRecords(buyOrderRecords);
+//    buyOrder.setRecords(buyOrderRecords);
 
-    Set<Record> sellOrderRecords = sellOrder.getRecords() == null? new HashSet<Record>():sellOrder.getRecords();
+//    Set<Record> sellOrderRecords = sellOrder.getRecords() == null? new HashSet<Record>():sellOrder.getRecords();
+    Set<Record> sellOrderRecords = sellorder.getRecords();
     sellOrderRecords.add(new Record(dealAmount, sellPrice, sellOrder.getOrderId(), "sell", buyer.getUserId()));
-    sellOrder.setRecords(sellOrderRecords);
-    
-    if( buyAmount == dealAmount) buyOrder.setStatus("Filled");
-    if( sellAmount == dealAmount) sellOrder.setStatus("Filled");
-    
-    
+//    sellOrder.setRecords(sellOrderRecords);
+    int buyRecordAmount = 0;
+    int sellRecordAmount = 0;
+    for(Record r: buyOrderRecords) {
+    	buyRecordAmount += r.getAmount();
+    }
+    for(Record r: sellOrderRecords) {
+    	sellRecordAmount += r.getAmount();
+    }
+
+    if( buyOrder.getAmount() == buyRecordAmount) buyorder.setStatus("Filled");
+    if( sellOrder.getAmount() == sellRecordAmount) sellorder.setStatus("Filled");
+    orderDao.update(buyorder);
+    orderDao.update(sellorder);
 //    buyRequest.setAmount(buyRequest.getAmount() - dealAmount);
 //    sellRequest.setAmount(sellRequest.getAmount() - dealAmount);
 //    buyRequest.getDealRecord().addDeal(dealAmount, sellPrice);

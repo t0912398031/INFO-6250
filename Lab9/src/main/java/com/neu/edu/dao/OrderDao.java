@@ -40,6 +40,17 @@ public class OrderDao extends DAO {
 			throw new OrderException("Could not get order " + orderId, e);
 		}
 	}
+    
+    public void update(Order u) throws OrderException {
+		try {
+			begin();
+			getSession().update(u);
+			commit();
+		} catch (HibernateException e) {
+			rollback();
+			throw new OrderException("Could not save the order" + u.getOrderId(), e);
+		}
+	}
 
     public void delete(Order order) throws OrderException {
         try {
