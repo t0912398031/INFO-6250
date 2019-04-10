@@ -30,13 +30,22 @@ public class Record {
 	
 	@Column(name = "date")
 	private Date date;
+	
+	@Column(name = "orderId")
+	private long orderId;
+	
+	@Column(name = "targetId")
+	private long targetId;
 
 	public Record() {
 	}
 	
-	public Record(int dealAmount, double sellPrice) {
+	public Record(int dealAmount, double sellPrice, long orderId, String type, long targetId) {
 		this.amount = dealAmount;
 		this.price = sellPrice;
+		this.orderId = orderId;
+		this.type = type;
+		this.targetId = targetId;
 		this.date = new Date();
 	}
 
@@ -78,6 +87,22 @@ public class Record {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(long orderId) {
+		this.orderId = orderId;
+	}
+
+	public long getTargetId() {
+		return targetId;
+	}
+
+	public void setTargetId(long targetId) {
+		this.targetId = targetId;
 	}
 
 }

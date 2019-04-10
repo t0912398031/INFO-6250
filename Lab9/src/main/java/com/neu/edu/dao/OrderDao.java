@@ -82,7 +82,7 @@ public class OrderDao extends DAO {
     	
     }
     
-public List<Order> listByType(String type) throws OrderException{
+    public List<Order> listByType(String type) throws OrderException{
     	
     	try {
             begin();

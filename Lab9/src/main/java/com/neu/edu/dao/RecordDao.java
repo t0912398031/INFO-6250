@@ -6,6 +6,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 
 import com.neu.edu.exception.AdvertException;
+import com.neu.edu.exception.OrderException;
 import com.neu.edu.pojo.Advert;
 import com.neu.edu.pojo.Order;
 import com.neu.edu.pojo.Record;
@@ -48,6 +49,22 @@ public class RecordDao extends DAO {
         } catch (HibernateException e) {
             rollback();
             throw new AdvertException("Could not list records", e);
+        }
+    	
+    }
+    
+    public List<Record> listByOrderId(long orderId) throws OrderException{
+    	
+    	try {
+            begin();
+            Query q = getSession().createQuery("from Record where orderId = :orderId");
+            q.setLong("orderId", orderId);
+            List<Record> orders = q.list();
+            commit();
+            return orders;
+        } catch (HibernateException e) {
+            rollback();
+            throw new OrderException("Could not list records", e);
         }
     	
     }

@@ -127,6 +127,32 @@ public class OrderController {
 
 	}
 	
+	@RequestMapping(value = "/record", method = RequestMethod.POST)
+	public ModelAndView record(HttpServletRequest request) throws OrderException, ClientException{
+//		HttpSession session = request.getSession();
+//		session.invalidate();
+		System.out.println(request.getParameter("record"));
+		
+	
+		Order order = orderDao.get(Long.parseLong(request.getParameter("record")));
+		
+		List<Record> records = recordDao.listByOrderId(order.getOrderId());
+		
+		for (Record r: records) {System.out.println(r.getAmount());}
+		
+		
+		HttpSession session = request.getSession();
+		Client loggeduser = (Client) session.getAttribute("USER");
+		Client u = clientDao.get(loggeduser.getUserId());
+		Set orders = u.getOrders();
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("records", records);
+		mv.setViewName("recordlist");
+		return mv;
+
+	}
+	
 	
 	
 	

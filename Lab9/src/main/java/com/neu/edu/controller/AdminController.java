@@ -1,5 +1,8 @@
 package com.neu.edu.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -150,9 +153,39 @@ public class AdminController {
 //		Set orders = u.getOrders();
 		
 		List orders = orderDao.list();
+		List buyorders = orderDao.listByType("buy");
+		List sellorders = orderDao.listByType("sell");
+		
+		String search = request.getParameter("search")==null? "":request.getParameter("search");
+		
+		Comparator<Order> orderDateComparator = new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+            	switch(search){
+            		case "date":
+            			return o1.getDate().compareTo(o2.getDate());
+//            			break;
+            		case "userId":
+            			return Long.compare(o1.getUserId(), o2.getUserId());
+//            			return o1.getUserId().compareTo(o2.getUserId());
+//            			break;
+    				default :return Long.compare(o1.getUserId(), o2.getUserId());
+                }
+            		 
+            	
+            }
+        };
+		
+        Collections.sort(orders, orderDateComparator);
+        Collections.sort(buyorders, orderDateComparator);
+        Collections.sort(sellorders, orderDateComparator);
+		
+		
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("orders", orders);
+		mv.addObject("buyorders", buyorders);
+		mv.addObject("sellorders", sellorders);
 		mv.setViewName("adminorderlist");
 		request.setAttribute("admin", "admin");
 		return mv;
@@ -177,21 +210,19 @@ public class AdminController {
 				match(buyOrder, sellOrder);
 			}
 		}
-		List<Order> orders = orderDao.list();
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("orders", orders);
-		mv.setViewName("orderlist");
-		return mv;
-		
-//		HttpSession session = request.getSession();
-//		Client loggeduser = (Client) session.getAttribute("USER");
-//		Client u = clientDao.get(loggeduser.getUserId());
-//		Set orders = u.getOrders();
-//		
+//		List<Order> orders = orderDao.list();
 //		ModelAndView mv = new ModelAndView();
 //		mv.addObject("orders", orders);
 //		mv.setViewName("orderlist");
 //		return mv;
+//		
+		List orders = orderDao.list();
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("orders", orders);
+		mv.setViewName("adminorderlist");
+		request.setAttribute("admin", "admin");
+		return mv;
 	}
 	
 	
@@ -233,19 +264,27 @@ public class AdminController {
       System.out.println("buyerId"+buyer.getUserId());
       System.out.println("sellerId"+seller.getUserId());
       
-      Set sellerBitcoins = seller.getBitcoins();
+//      Set sellerBitcoins = seller.getBitcoins();
       Set buyerBitcoins = buyer.getBitcoins();
-      System.out.println("buyercoins"+buyerBitcoins.size());
-      System.out.println("sellercoins"+sellerBitcoins.size());
-      
+
+
+      List<Bitcoin> sellerBitcoins = new ArrayList<Bitcoin>(seller.getBitcoins());
+//      List<Bitcoin> buyerBitcoins = new ArrayList<Bitcoin>(buyer.getBitcoins());
+    System.out.println("buyercoins"+buyerBitcoins.size());
+    System.out.println("sellercoins"+sellerBitcoins.size());
+  
+    
+    Bitcoin sellerBitcoin = null;
+    
       for(int i = 0; i< dealAmount; i++){
 //    	  Bitcoin sellerBitcoin = bitcoinDao.get(seller.getUserId());
-    	  Bitcoin sellerBitcoin = null;
-    	  if(sellerBitcoins.iterator().hasNext()){
-    		  sellerBitcoin = (Bitcoin) sellerBitcoins.iterator().next();
-    	  }
+//    	  Bitcoin sellerBitcoin = null;
+    	  sellerBitcoin = sellerBitcoins.get(i);
     	  
-//    	  Bitcoin sellerBitcoin = (Bitcoin)sellerBitcoins.iterator().next();
+//    	  if(sellerBitcoins.iterator().hasNext()){
+//    		  sellerBitcoin = (Bitcoin) sellerBitcoins.iterator().next();
+//    	  }
+
     	  System.out.println(sellerBitcoin.getId());
     	  
     	  buyerBitcoins.add(sellerBitcoin);
@@ -253,14 +292,17 @@ public class AdminController {
     	  
 //    	  bitcoinDao.delete(sellerBitcoin);
     	  System.out.println("transfer");
-//        Coin coin = sellerAccount.getCoinCollection().getCoinList().get(0);
-//        transactionHistory.createTransaction(coin.getCoinKey(), sellerAccount.getName(), buyerAccount.getName(),coin.getType());
       }
       System.out.println("buyercoins"+buyerBitcoins.size());
       System.out.println("sellercoins"+sellerBitcoins.size());
 //    buyer.setBitcoins(buyerBitcoins);
     clientDao.update(buyer);
     clientDao.update(seller);
+    
+
+    
+    System.out.println("buyercoins"+clientDao.get(buyOrder.getUserId()).getBitcoins().size());
+    System.out.println("sellercoins"+clientDao.get(sellOrder.getUserId()).getBitcoins().size());
     System.out.println("bitcoin transfer complete");
 //    /*Service Fee*/
 //    double actualSpend = sellPrice * dealAmount * (1 + buyServiceRate);
@@ -276,11 +318,11 @@ public class AdminController {
     System.out.println("balance transfer complete");
     
     Set<Record> buyOrderRecords = buyOrder.getRecords() == null? new HashSet<Record>():buyOrder.getRecords();
-    buyOrderRecords.add(new Record(dealAmount, sellPrice));
+    buyOrderRecords.add(new Record(dealAmount, sellPrice, buyOrder.getOrderId(), "buy", seller.getUserId()));
     buyOrder.setRecords(buyOrderRecords);
 
     Set<Record> sellOrderRecords = sellOrder.getRecords() == null? new HashSet<Record>():sellOrder.getRecords();
-    sellOrderRecords.add(new Record(dealAmount, sellPrice));
+    sellOrderRecords.add(new Record(dealAmount, sellPrice, sellOrder.getOrderId(), "sell", buyer.getUserId()));
     sellOrder.setRecords(sellOrderRecords);
     
     if( buyAmount == dealAmount) buyOrder.setStatus("Filled");
