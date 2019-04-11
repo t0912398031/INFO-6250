@@ -75,7 +75,19 @@ public class AdminController {
 		
 	}
 	
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/user", method = RequestMethod.POST)
+	public ModelAndView user(HttpServletRequest request) throws ClientException{
+
+		List<Client> clients = clientDao.list();
+
+        ModelAndView mv = new ModelAndView();
+		mv.addObject("clients", clients);
+		mv.setViewName("user");
+        
+        return mv;
+	}
+	
+	@RequestMapping(value = "/user/delete", method = RequestMethod.POST)
 	public ModelAndView delete(HttpServletRequest request) throws ClientException{
 
 		System.out.println(request.getParameter("delete"));
@@ -85,12 +97,9 @@ public class AdminController {
 		List<Client> clients = clientDao.list();
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("clients", clients);
-		mv.setViewName("admin");
+		mv.setViewName("user");
         
         return mv;
-
-//        return new ModelAndView("admin");
-//		return ("redirect:/admin/");
 	}
 	
 	
@@ -152,7 +161,7 @@ public class AdminController {
 //		Client u = clientDao.get(loggeduser.getUserId());
 //		Set orders = u.getOrders();
 		
-		List orders = orderDao.list();
+//		List orders = orderDao.list();
 		List buyorders = orderDao.listByType("buy");
 		List sellorders = orderDao.listByType("sell");
 		
@@ -176,14 +185,14 @@ public class AdminController {
             }
         };
 		
-        Collections.sort(orders, orderDateComparator);
+//        Collections.sort(orders, orderDateComparator);
         Collections.sort(buyorders, orderDateComparator);
         Collections.sort(sellorders, orderDateComparator);
 		
 		
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("orders", orders);
+//		mv.addObject("orders", orders);
 		mv.addObject("buyorders", buyorders);
 		mv.addObject("sellorders", sellorders);
 		mv.setViewName("adminorderlist");
@@ -194,14 +203,7 @@ public class AdminController {
 	@RequestMapping(value = "/match", method = RequestMethod.POST)
 	public ModelAndView match(@ModelAttribute("order") Order order, HttpServletRequest request)
 			throws CategoryException, AdvertException, ClientException, OrderException, BitcoinException {
-		
-//		Service service = new Service();
-//		service.matchTradingRequest();
-//		List<Order> orders = orderDao.list();
-//		List<Record> records = recordDao.list();
-//		for(Order o : orders) {
-//			System.out.println(o.getPrice() + " " + o.getUSER_ID());
-//		}
+
 		List<Order> buyOrders = orderDao.listByTypeAndStatus("buy", "Pending");
 		List<Order> sellOrders = orderDao.listByTypeAndStatus("sell", "Pending");
 
@@ -210,12 +212,7 @@ public class AdminController {
 				match(buyOrder, sellOrder);
 			}
 		}
-//		List<Order> orders = orderDao.list();
-//		ModelAndView mv = new ModelAndView();
-//		mv.addObject("orders", orders);
-//		mv.setViewName("orderlist");
-//		return mv;
-//		
+
 		List orders = orderDao.list();
 		
 		ModelAndView mv = new ModelAndView();
@@ -238,7 +235,7 @@ public class AdminController {
 		
 		if(buyOrder.getRecords().size()!=0) {
 			for(Record r: buyOrder.getRecords()) {
-			buyAmount -= r.getAmount();
+				buyAmount -= r.getAmount();
 			}
 		}
 		if(sellOrder.getRecords().size()!=0) {
@@ -246,10 +243,7 @@ public class AdminController {
 				sellAmount -= r.getAmount();
 			}
 		}
-		
-		
-	
-	
+
 		Client buyer = clientDao.get(buyOrder.getUserId());
 		Client seller = clientDao.get(sellOrder.getUserId());
 
@@ -287,25 +281,17 @@ public class AdminController {
     Bitcoin sellerBitcoin = null;
     
       for(int i = 0; i< dealAmount; i++){
-//    	  Bitcoin sellerBitcoin = bitcoinDao.get(seller.getUserId());
-//    	  Bitcoin sellerBitcoin = null;
     	  sellerBitcoin = sellerBitcoins.get(i);
-    	  
-//    	  if(sellerBitcoins.iterator().hasNext()){
-//    		  sellerBitcoin = (Bitcoin) sellerBitcoins.iterator().next();
-//    	  }
 
     	  System.out.println(sellerBitcoin.getId());
     	  
     	  buyerBitcoins.add(sellerBitcoin);
-//    	  sellerBitcoins.remove(sellerBitcoin);
-    	  
-//    	  bitcoinDao.delete(sellerBitcoin);
+
     	  System.out.println("transfer");
       }
       System.out.println("buyercoins"+buyerBitcoins.size());
       System.out.println("sellercoins"+sellerBitcoins.size());
-//    buyer.setBitcoins(buyerBitcoins);
+
     clientDao.update(buyer);
     clientDao.update(seller);
     
@@ -328,30 +314,37 @@ public class AdminController {
     System.out.println("balance transfer complete");
     
     
-    Order buyorder= orderDao.get(buyOrder.getOrderId());
-    Order sellorder = orderDao.get(sellOrder.getOrderId());
+//    Order buyorder= orderDao.get(buyOrder.getOrderId());
+//    Order sellorder = orderDao.get(sellOrder.getOrderId());
+    
 //    Set<Record> buyOrderRecords = buyOrder.getRecords() == null? new HashSet<Record>():buyOrder.getRecords();
-    Set<Record> buyOrderRecords = buyorder.getRecords();
+    Set<Record> buyOrderRecords = buyOrder.getRecords();
     buyOrderRecords.add(new Record(dealAmount, sellPrice, buyOrder.getOrderId(), "buy", seller.getUserId()));
 //    buyOrder.setRecords(buyOrderRecords);
 
 //    Set<Record> sellOrderRecords = sellOrder.getRecords() == null? new HashSet<Record>():sellOrder.getRecords();
-    Set<Record> sellOrderRecords = sellorder.getRecords();
+    Set<Record> sellOrderRecords = sellOrder.getRecords();
     sellOrderRecords.add(new Record(dealAmount, sellPrice, sellOrder.getOrderId(), "sell", buyer.getUserId()));
 //    sellOrder.setRecords(sellOrderRecords);
+    
+    
     int buyRecordAmount = 0;
     int sellRecordAmount = 0;
-    for(Record r: buyOrderRecords) {
-    	buyRecordAmount += r.getAmount();
-    }
-    for(Record r: sellOrderRecords) {
-    	sellRecordAmount += r.getAmount();
-    }
-
-    if( buyOrder.getAmount() == buyRecordAmount) buyorder.setStatus("Filled");
-    if( sellOrder.getAmount() == sellRecordAmount) sellorder.setStatus("Filled");
-    orderDao.update(buyorder);
-    orderDao.update(sellorder);
+	
+	if(buyOrder.getRecords().size()!=0) {
+		for(Record r: buyOrder.getRecords()) {
+			buyRecordAmount += r.getAmount();
+		}
+	}
+	if(sellOrder.getRecords().size()!=0) {
+		for(Record r: sellOrder.getRecords()) {
+			sellRecordAmount += r.getAmount();
+		}
+	}
+    if( buyOrder.getAmount() == buyRecordAmount) buyOrder.setStatus("Filled");
+    if( sellOrder.getAmount() == sellRecordAmount) sellOrder.setStatus("Filled");
+    orderDao.update(buyOrder);
+    orderDao.update(sellOrder);
 //    buyRequest.setAmount(buyRequest.getAmount() - dealAmount);
 //    sellRequest.setAmount(sellRequest.getAmount() - dealAmount);
 //    buyRequest.getDealRecord().addDeal(dealAmount, sellPrice);

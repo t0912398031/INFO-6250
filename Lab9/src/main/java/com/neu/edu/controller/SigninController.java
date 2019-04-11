@@ -1,5 +1,8 @@
 package com.neu.edu.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -56,6 +59,13 @@ public class SigninController {
 	@Autowired
 	RecordDao recordDao;
 
+	Comparator<Order> orderDateComparator = new Comparator<Order>() {
+        @Override
+        public int compare(Order o1, Order o2) {
+			return o1.getDate().compareTo(o2.getDate());       	
+        }
+    };
+	
 //	@RequestMapping("/")
 //	public String viewHome() {
 //		return "home";
@@ -76,6 +86,7 @@ public class SigninController {
         } else if(loggedUser.getUserName().equals("admin")&&loggedUser.getPassword().equals("123")){
 
         	session.setAttribute("USER", loggedUser);
+        	session.setAttribute("admin", "admin");
             session.setAttribute("error", "");
             
             List<Client> clients = clientDao.list();
@@ -100,23 +111,22 @@ public class SigninController {
 	}
 	
 	
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView register() throws CategoryException {
-		ModelAndView mv = new ModelAndView();
-//		mv.addObject("categories", categoryDao.list());
-//		mv.addObject("advert", new Advert());
-		mv.setViewName("register");
-		return mv;
-	}
+//	@RequestMapping(value = "/create", method = RequestMethod.GET)
+//	public ModelAndView register() throws CategoryException {
+//		ModelAndView mv = new ModelAndView();
+////		mv.addObject("categories", categoryDao.list());
+////		mv.addObject("advert", new Advert());
+//		mv.setViewName("register");
+//		return mv;
+//	}
 
-	@RequestMapping(value = "/order", method = RequestMethod.POST)
-	public ModelAndView order(@ModelAttribute("order") Order order, HttpServletRequest request)
+	@RequestMapping(value = "/order/create", method = RequestMethod.POST)
+	public ModelAndView createOrder(@ModelAttribute("order") Order order, HttpServletRequest request)
 			throws CategoryException, AdvertException, ClientException {
 		
 		HttpSession session = request.getSession();
 		Client loggeduser = (Client) session.getAttribute("USER");
-//		System.out.println(loggeduser);
-//		System.out.println(loggeduser.getOrders());
+
 		LOGGER.debug(order);
 		order.setStatus("Pending");
 		order.setUserId(loggeduser.getUserId());
@@ -125,10 +135,14 @@ public class SigninController {
 		u.getOrders().add(order);
 		clientDao.update(u);
 		
-		Client u2 = clientDao.get(loggeduser.getUserId());
+//		Client u2 = clientDao.get(loggeduser.getUserId());
+		Set orders = u.getOrders();
+		List<Order> o = new ArrayList<Order>(orders);
+		
+        Collections.sort(o, orderDateComparator);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("orders", u2.getOrders());
+		mv.addObject("orders", o);
 
 		mv.setViewName("orderlist");
 		return mv;
@@ -159,7 +173,8 @@ public class SigninController {
 //		return new ModelAndView("signin");
 	}
 	
-	@RequestMapping(value = "/view", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "/order", method = RequestMethod.POST)
 	public ModelAndView view(@ModelAttribute("order") Order order, HttpServletRequest request)
 			throws CategoryException, AdvertException, ClientException {
 		
@@ -167,9 +182,15 @@ public class SigninController {
 		Client loggeduser = (Client) session.getAttribute("USER");
 		Client u = clientDao.get(loggeduser.getUserId());
 		Set orders = u.getOrders();
+		List<Order> o = new ArrayList<Order>(orders);
+		
+		
+        Collections.sort(o, orderDateComparator);
+
+		
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("orders", orders);
+		mv.addObject("orders", o);
 		mv.setViewName("orderlist");
 		return mv;
 	}

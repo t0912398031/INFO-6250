@@ -8,7 +8,36 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Advert form</title>
+
+<style>
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+
 </head>
+
+
+
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 		
@@ -29,19 +58,19 @@
         <input type="hidden" name="option" value="logout"/>
         <input type="submit" value="Sort"/>
     </form><br/>
-    
-		<table border="1">
+    <h1>Buy Orders:</h1>
+		<table id="customers">
             <thead>
             	<c:if test="${requestScope.admin == 'admin'}">
                 	<th>userId</th>
                 </c:if> 
-                <th>type</th>
+<!--                 <th>type</th> -->
                 <th>amount</th>
                 <th>price</th>
                 <th>status</th>
                 <th>date</th> 
                 <th>view record</th> 
-                <th></th> 
+<!--                 <th></th>  -->
             </thead>
             <tbody>           
             <c:forEach var="o" items="${buyorders}">
@@ -49,7 +78,7 @@
 	                <c:if test="${requestScope.admin == 'admin'}">
 	                	<th>${o.userId}</th>
 	                </c:if> 
-                    <td>${o.type}</td>
+<%--                     <td>${o.type}</td> --%>
                     <td>${o.amount}</td>
                     <td>${o.price}</td>
                     <td>${o.status}</td>
@@ -60,29 +89,29 @@
 			            <input type="submit" value="Record"/>
 			        </form>
 					</td>
-                    <td>
-                    <form action="${contextPath}/signin/order/delete" method ="post">
-			            <input type="hidden" name="delete" value=${o} />
-			            <input type="submit" value="Delete"/>
-			        </form>
-			        </td>
+<!--                     <td> -->
+<%--                     <form action="${contextPath}/signin/order/delete" method ="post"> --%>
+<!-- 			            <input type="hidden" name="delete" value=${o} /> -->
+<!-- 			            <input type="submit" value="Delete"/> -->
+<%-- 			        </form> --%>
+<!-- 			        </td> -->
                 </tr>
             </c:forEach>
             </tbody>
         </table>
-        
-        <table border="1">
+<h1>Sell Orders:</h1>
+        <table id="customers">
             <thead>
             	<c:if test="${requestScope.admin == 'admin'}">
                 	<th>userId</th>
                 </c:if> 
-                <th>type</th>
+<!--                 <th>type</th> -->
                 <th>amount</th>
                 <th>price</th>
                 <th>status</th>
                 <th>date</th> 
                 <th>view record</th> 
-                <th></th> 
+<!--                 <th></th>  -->
             </thead>
             <tbody>           
             <c:forEach var="o" items="${sellorders}">
@@ -90,7 +119,7 @@
 	                <c:if test="${requestScope.admin == 'admin'}">
 	                	<th>${o.userId}</th>
 	                </c:if> 
-                    <td>${o.type}</td>
+<%--                     <td>${o.type}</td> --%>
                     <td>${o.amount}</td>
                     <td>${o.price}</td>
                     <td>${o.status}</td>
@@ -100,12 +129,12 @@
 			            <input type="hidden" name="record" value=${o.orderId} />
 			            <input type="submit" value="Record"/>
 			        </form></td>
-                    <td>
-                    <form action="${contextPath}/signin/order/delete" method ="post">
-			            <input type="hidden" name="delete" value=${o} />
-			            <input type="submit" value="Delete"/>
-			        </form>
-			        </td>
+<!--                     <td> -->
+<%--                     <form action="${contextPath}/signin/order/delete" method ="post"> --%>
+<!-- 			            <input type="hidden" name="delete" value=${o} /> -->
+<!-- 			            <input type="submit" value="Delete"/> -->
+<%-- 			        </form> --%>
+<!-- 			        </td> -->
                 </tr>
             </c:forEach>
             </tbody>

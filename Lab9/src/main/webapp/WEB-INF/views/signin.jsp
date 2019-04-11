@@ -17,7 +17,7 @@
             <input type="submit" value="Logout"/>
         </form><br/>
         
-        <form action="${contextPath}/signin/order" method="POST">
+        <form action="${contextPath}/signin/order/create" method="POST">
             Price: <input type="number" name="price" />
             Amount: <input type="number" name="amount" />
             <select name="type">
@@ -29,7 +29,7 @@
             <input type="submit" value="Create Order"/>
         </form>
         
-        <form action="${contextPath}/signin/view" method="POST">     
+        <form action="${contextPath}/signin/order" method="POST">     
             <input type="submit" value="View Orders"/>
         </form>
         

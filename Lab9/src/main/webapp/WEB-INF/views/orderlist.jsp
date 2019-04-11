@@ -3,6 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,8 +29,10 @@
                 <th>status</th>
                 <th>date</th> 
                 <th>dealdate</th> 
-                <th></th> 
+                <th>record</th> 
+                <th>delete</th> 
             </thead>
+            
             <tbody>           
             <c:forEach var="o" items="${orders}">
                 <tr>
@@ -43,10 +46,19 @@
                     <td>${o.date}</td>
                     <td>${o.dealdate}</td>
                     <td>
-                    <form action="${contextPath}/signin/order/delete" method ="post">
-			            <input type="hidden" name="delete" value=${o.orderId} />
-			            <input type="submit" value="Delete"/>
+					<form action="${contextPath}/signin/order/record" method ="post">
+			            <input type="hidden" name="record" value=${o.orderId} />
+			            <input type="submit" value="Record"/>
 			        </form>
+					</td>
+                    <td>
+                    <c:if test="${o.status != 'Filled'}">
+	                	<form action="${contextPath}/signin/order/delete" method ="post">
+				            <input type="hidden" name="delete" value=${o.orderId} />
+				            <input type="submit" value="Delete"/>
+				        </form>
+	                </c:if> 
+                    
 			        </td>
                 </tr>
             </c:forEach>

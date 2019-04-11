@@ -8,14 +8,49 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Advert form</title>
+
+<style>
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-		
-	<form action="${contextPath}/admin/back" method ="post">
+	
+	<c:if test="${sessionScope.admin == 'admin'}">
+	<form action="${contextPath}/admin/view" method ="post">
         <input type="hidden" name="option" value="logout"/>
         <input type="submit" value="Back"/>
     </form><br/>
+    </c:if> 
+    
+    <c:if test="${sessionScope.admin == null}">
+	<form action="${contextPath}/signin/order" method ="post">
+        <input type="hidden" name="option" value="logout"/>
+        <input type="submit" value="Back"/>
+    </form><br/>
+	</c:if> 	
+	
     
 <%--     <form action="${contextPath}/admin/view" method ="post"> --%>
 <!-- 	    <select name="search"> -->
@@ -30,7 +65,7 @@
 <!--         <input type="submit" value="Sort"/> -->
 <%--     </form><br/> --%>
     
-		<table border="1">
+		<table id="customers">
             <thead>
             	
                 <th>type</th>

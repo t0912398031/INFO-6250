@@ -18,33 +18,33 @@
         </form><br/>
         
         
-        <table border="1">
-            <thead>  
-                <th>userName</th>
-                <th>password</th>
-                <th>name</th>
-                <th>balance</th>
-                <th></th>
-            </thead>
-            <tbody>           
-            <c:forEach var="c" items="${clients}">
-                <tr>
-                    <td>${c.userName}</td>
-                    <td>${c.password}</td>
-                    <td>${c.name}</td>
-                    <td>${c.balance}</td>
-                    <td>
-                    	<c:if test="${c.userName != sessionScope.USER.userName}">
-	                    <form action="${contextPath}/admin/delete" method ="post">
-				            <input type="hidden" name="delete" value=${c.userId} />
-				            <input type="submit" value="Delete"/>
-				        </form>
-				        </c:if> 
-			        </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+<!--         <table border="1"> -->
+<!--             <thead>   -->
+<!--                 <th>userName</th> -->
+<!--                 <th>password</th> -->
+<!--                 <th>name</th> -->
+<!--                 <th>balance</th> -->
+<!--                 <th></th> -->
+<!--             </thead> -->
+<!--             <tbody>            -->
+<%--             <c:forEach var="c" items="${clients}"> --%>
+<!--                 <tr> -->
+<%--                     <td>${c.userName}</td> --%>
+<%--                     <td>${c.password}</td> --%>
+<%--                     <td>${c.name}</td> --%>
+<%--                     <td>${c.balance}</td> --%>
+<!--                     <td> -->
+<%--                     	<c:if test="${c.userName != sessionScope.USER.userName}"> --%>
+<%-- 	                    <form action="${contextPath}/admin/delete" method ="post"> --%>
+<!-- 				            <input type="hidden" name="delete" value=${c.userId} /> -->
+<!-- 				            <input type="submit" value="Delete"/> -->
+<!-- 				        </form> -->
+<%-- 				        </c:if>  --%>
+<!-- 			        </td> -->
+<!--                 </tr> -->
+<%--             </c:forEach> --%>
+<!--             </tbody> -->
+<!--         </table> -->
         
         
         
@@ -61,6 +61,10 @@
             </select>
             <input type="hidden" value="create" name="option" />
             <input type="submit" value="Create Order"/>
+        </form>
+        
+        <form action="${contextPath}/admin/user" method="POST">     
+            <input type="submit" value="View Users"/>
         </form>
         
         <form action="${contextPath}/admin/view" method="POST">     
