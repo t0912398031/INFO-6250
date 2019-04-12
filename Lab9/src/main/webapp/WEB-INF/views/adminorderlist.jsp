@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Advert form</title>
+<title>Order List</title>
 
 <style>
 #customers {
@@ -61,10 +61,8 @@
     <h1>Buy Orders:</h1>
 		<table id="customers">
             <thead>
-            	<c:if test="${requestScope.admin == 'admin'}">
-                	<th>userId</th>
-                </c:if> 
-<!--                 <th>type</th> -->
+				<th>orderId</th>
+                <th>userId</th>
                 <th>amount</th>
                 <th>price</th>
                 <th>status</th>
@@ -75,10 +73,8 @@
             <tbody>           
             <c:forEach var="o" items="${buyorders}">
                 <tr>
-	                <c:if test="${requestScope.admin == 'admin'}">
-	                	<th>${o.userId}</th>
-	                </c:if> 
-<%--                     <td>${o.type}</td> --%>
+					<th>${o.orderId}</th>
+					<td>${o.userId}</td>
                     <td>${o.amount}</td>
                     <td>${o.price}</td>
                     <td>${o.status}</td>
@@ -102,24 +98,19 @@
 <h1>Sell Orders:</h1>
         <table id="customers">
             <thead>
-            	<c:if test="${requestScope.admin == 'admin'}">
-                	<th>userId</th>
-                </c:if> 
-<!--                 <th>type</th> -->
+            	<th>orderId</th>
+                <th>userId</th>
                 <th>amount</th>
                 <th>price</th>
                 <th>status</th>
                 <th>date</th> 
                 <th>view record</th> 
-<!--                 <th></th>  -->
             </thead>
             <tbody>           
             <c:forEach var="o" items="${sellorders}">
                 <tr>
-	                <c:if test="${requestScope.admin == 'admin'}">
-	                	<th>${o.userId}</th>
-	                </c:if> 
-<%--                     <td>${o.type}</td> --%>
+	                <th>${o.orderId}</th>
+					<td>${o.userId}</td>
                     <td>${o.amount}</td>
                     <td>${o.price}</td>
                     <td>${o.status}</td>

@@ -8,7 +8,32 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Advert form</title>
+<title>Order List</title>
+
+<style>
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
@@ -18,11 +43,9 @@
         <input type="submit" value="Back"/>
     </form><br/>
         	
-		<table border="1">
+		<table id="customers">
             <thead>
-            	<c:if test="${requestScope.admin == 'admin'}">
-                	<th>USER_ID</th>
-                </c:if> 
+            	<th>orderId</th>
                 <th>type</th>
                 <th>amount</th>
                 <th>price</th>
@@ -36,9 +59,7 @@
             <tbody>           
             <c:forEach var="o" items="${orders}">
                 <tr>
-	                <c:if test="${requestScope.admin == 'admin'}">
-	                	<th>${o.USER_ID}</th>
-	                </c:if> 
+	                <th>${o.orderId}</th> 
                     <td>${o.type}</td>
                     <td>${o.amount}</td>
                     <td>${o.price}</td>
@@ -52,10 +73,10 @@
 			        </form>
 					</td>
                     <td>
-                    <c:if test="${o.status != 'Filled'}">
+                    <c:if test="${o.status == 'Pending'}">
 	                	<form action="${contextPath}/signin/order/delete" method ="post">
 				            <input type="hidden" name="delete" value=${o.orderId} />
-				            <input type="submit" value="Delete"/>
+				            <input type="submit" value="Cancel"/>
 				        </form>
 	                </c:if> 
                     

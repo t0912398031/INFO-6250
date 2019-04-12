@@ -5,9 +5,9 @@
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
-	<bean id="userDao" class="com.neu.edu.dao.UserDao" />
-	<bean id="advertDao" class="com.neu.edu.dao.AdvertDao" />
-	<bean id="categoryDao" class="com.neu.edu.dao.CategoryDao" />
+<!-- 	<bean id="userDao" class="com.neu.edu.dao.UserDao" /> -->
+<!-- 	<bean id="advertDao" class="com.neu.edu.dao.AdvertDao" /> -->
+<!-- 	<bean id="categoryDao" class="com.neu.edu.dao.CategoryDao" /> -->
 	
 	<bean id="clientDao" class="com.neu.edu.dao.ClientDao" />
 	<bean id="orderDao" class="com.neu.edu.dao.OrderDao" />

@@ -65,21 +65,43 @@
 <!--         <input type="submit" value="Sort"/> -->
 <%--     </form><br/> --%>
     
+<%--         <c:set var="type" value="${records.get(0).type}" /> --%>
 		<table id="customers">
             <thead>
             	
+                <th>orderId</th>
                 <th>type</th>
+            </thead>
+            <tbody>           
+            
+               <tr>
+<%--                	   <td>${records.get(0).orderId}</td> --%>
+<%--                    <td>${records.get(0).type}</td>  --%>
+                   <td>${order.orderId}</td>
+                   <td>${order.type}</td>             
+               </tr>
+            
+            </tbody>
+        </table>    
+    	<br>
+		<table id="customers">
+            <thead>
+            	<c:if test="${order.type == 'buy'}">
+                	<th>target sellerId</th>
+                </c:if> 
+                <c:if test="${order.type == 'sell'}">
+                	<th>target buyerId</th>
+                </c:if> 
+<!--                 <th>target user</th> -->
                 <th>amount</th>
-                <th>price</th>
-                
+                <th>price</th>               
                 <th>date</th> 
                 
             </thead>
             <tbody>           
             <c:forEach var="o" items="${records}">
-                <tr>
-	                
-                    <td>${o.type}</td>
+                <tr>	                
+                    <td>${o.targetId}</td>
                     <td>${o.amount}</td>
                     <td>${o.price}</td>
                     <td>${o.date}</td>

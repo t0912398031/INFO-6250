@@ -31,6 +31,7 @@ import com.neu.edu.exception.BitcoinException;
 import com.neu.edu.exception.CategoryException;
 import com.neu.edu.exception.ClientException;
 import com.neu.edu.exception.OrderException;
+import com.neu.edu.exception.RecordException;
 import com.neu.edu.exception.UserException;
 import com.neu.edu.pojo.Advert;
 import com.neu.edu.pojo.Bitcoin;
@@ -129,23 +130,24 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/record", method = RequestMethod.POST)
-	public ModelAndView record(HttpServletRequest request) throws OrderException, ClientException{
+	public ModelAndView record(HttpServletRequest request) throws OrderException, ClientException, RecordException{
 //		HttpSession session = request.getSession();
 //		session.invalidate();
 		Order order = orderDao.get(Long.parseLong(request.getParameter("record")));
 		
 		List<Record> records = recordDao.listByOrderId(order.getOrderId());
 		
-		for (Record r: records) {System.out.println(r.getAmount());}
+//		for (Record r: records) {System.out.println(r.getAmount());}
 		
 		
-		HttpSession session = request.getSession();
-		Client loggeduser = (Client) session.getAttribute("USER");
-		Client u = clientDao.get(loggeduser.getUserId());
-		Set orders = u.getOrders();
+//		HttpSession session = request.getSession();
+//		Client loggeduser = (Client) session.getAttribute("USER");
+//		Client u = clientDao.get(loggeduser.getUserId());
+//		Set orders = u.getOrders();
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("records", records);
+		mv.addObject("order", order);
 		mv.setViewName("recordlist");
 		return mv;
 

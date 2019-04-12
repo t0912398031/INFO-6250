@@ -33,6 +33,10 @@
             <input type="submit" value="View Orders"/>
         </form>
         
+        <form action="${contextPath}/signin/marketprice" method="POST">     
+            <input type="submit" value="Market Price"/>
+        </form>
+        
 <%--         <form action="${contextPath}/signin/match" method="POST">      --%>
 <!--             <input type="submit" value="Match Orders"/> -->
 <!--         </form> -->

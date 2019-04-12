@@ -20,6 +20,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/gson_lib"/>
 	<classpathentry kind="lib" path="D:/download/Github/INFO-6250/Lab9/lib/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="D:/download/Github/INFO-6250/Lab9/lib/c3p0-0.9.2.1.jar"/>
 	<classpathentry kind="lib" path="D:/download/Github/INFO-6250/Lab9/lib/cglib-2.2.jar"/>

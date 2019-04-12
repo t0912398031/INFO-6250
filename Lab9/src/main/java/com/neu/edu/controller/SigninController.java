@@ -3,8 +3,10 @@ package com.neu.edu.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.neu.edu.dao.AdvertDao;
 import com.neu.edu.dao.BitcoinDao;
 import com.neu.edu.dao.CategoryDao;
@@ -31,6 +34,7 @@ import com.neu.edu.exception.BitcoinException;
 import com.neu.edu.exception.CategoryException;
 import com.neu.edu.exception.ClientException;
 import com.neu.edu.exception.OrderException;
+import com.neu.edu.exception.RecordException;
 import com.neu.edu.exception.UserException;
 import com.neu.edu.pojo.Advert;
 import com.neu.edu.pojo.Bitcoin;
@@ -101,6 +105,11 @@ public class SigninController {
             session.setAttribute("error", "");
             return new ModelAndView("signin");
         }
+	}
+	
+	@RequestMapping("/back")
+	public String back() {
+		return "signin";
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
@@ -195,6 +204,36 @@ public class SigninController {
 		return mv;
 	}
 	
+	@RequestMapping(value = "/marketprice", method = RequestMethod.POST)
+	public ModelAndView marketprice(HttpServletRequest request) throws OrderException, ClientException, RecordException{
+
+		List<Record> records = recordDao.list();
+
+		Gson gsonObj = new Gson();
+		Map<Object,Object> map = null;
+		List<Map<Object,Object>> list = new ArrayList<Map<Object,Object>>();
+
+		for (Record r: records) {	
+			map = new HashMap<Object,Object>(); map.put("y", r.getPrice());  map.put("label", r.getDate().getTime()/1000); list.add(map);
+		}
+//		map = new HashMap<Object,Object>(); map.put("y", 17363);  map.put("label", "2005-06"); list.add(map);
+//		map = new HashMap<Object,Object>(); map.put("y", 28726);  map.put("label", "2006-07"); list.add(map);
+//		map = new HashMap<Object,Object>(); map.put("y", 35000);  map.put("label", "2007-08"); list.add(map);
+//		map = new HashMap<Object,Object>(); map.put("y", 25250);  map.put("label", "2008-09"); list.add(map);
+//		map = new HashMap<Object,Object>(); map.put("y", 19750);  map.put("label", "2009-10"); list.add(map);
+//		map = new HashMap<Object,Object>(); map.put("y", 18850);  map.put("label", "2010-11"); list.add(map);
+//		map = new HashMap<Object,Object>(); map.put("y", 26700);  map.put("label", "2011-12"); list.add(map);
+//		map = new HashMap<Object,Object>(); map.put("y", 16000);  map.put("label", "2012-13"); list.add(map);
+//		map = new HashMap<Object,Object>(); map.put("y", 19000);  map.put("label", "2013-14"); list.add(map);
+//		map = new HashMap<Object,Object>(); map.put("y", 18000);  map.put("label", "2014-15"); list.add(map);	
+		String dataPoints = gsonObj.toJson(list);
+ 
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("dataPoints", dataPoints);
+		mv.setViewName("marketprice");
+		return mv;
+
+	}
 	
 //	@RequestMapping(value = "/match", method = RequestMethod.POST)
 //	public ModelAndView match(@ModelAttribute("order") Order order, HttpServletRequest request)

@@ -51,17 +51,17 @@
             
         
         
-        <form action="${contextPath}/signin/order" method="POST">
-            Price: <input type="number" name="price" />
-            Amount: <input type="number" name="amount" />
-            <select name="type">
-            <option value="buy">Buy</option>
-            <!--<option value="add">Add New Movie to Database</option>-->
-            <option value="sell">Sell</option>
-            </select>
-            <input type="hidden" value="create" name="option" />
-            <input type="submit" value="Create Order"/>
-        </form>
+<%--         <form action="${contextPath}/signin/order" method="POST"> --%>
+<!--             Price: <input type="number" name="price" /> -->
+<!--             Amount: <input type="number" name="amount" /> -->
+<!--             <select name="type"> -->
+<!--             <option value="buy">Buy</option> -->
+<!--             <option value="add">Add New Movie to Database</option> -->
+<!--             <option value="sell">Sell</option> -->
+<!--             </select> -->
+<!--             <input type="hidden" value="create" name="option" /> -->
+<!--             <input type="submit" value="Create Order"/> -->
+<!--         </form> -->
         
         <form action="${contextPath}/admin/user" method="POST">     
             <input type="submit" value="View Users"/>

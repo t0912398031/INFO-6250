@@ -176,23 +176,16 @@ public class AdminController {
 //            			break;
             		case "userId":
             			return Long.compare(o1.getUserId(), o2.getUserId());
-//            			return o1.getUserId().compareTo(o2.getUserId());
-//            			break;
-    				default :return Long.compare(o1.getUserId(), o2.getUserId());
+    				default :return Long.compare(o1.getOrderId(), o2.getOrderId());
                 }
-            		 
-            	
+
             }
         };
 		
-//        Collections.sort(orders, orderDateComparator);
         Collections.sort(buyorders, orderDateComparator);
         Collections.sort(sellorders, orderDateComparator);
 		
-		
-		
 		ModelAndView mv = new ModelAndView();
-//		mv.addObject("orders", orders);
 		mv.addObject("buyorders", buyorders);
 		mv.addObject("sellorders", sellorders);
 		mv.setViewName("adminorderlist");
@@ -227,9 +220,12 @@ public class AdminController {
 		if(buyOrder.getUserId()==sellOrder.getUserId()) return;
 		
 		double buyPrice = buyOrder.getPrice();
-		double sellPrice = sellOrder.getPrice();    
+		double sellPrice = sellOrder.getPrice();
+		
+		/*Price too high for buyer*/	
 		if(buyPrice < sellPrice) return;
 		
+		/*Get rest buy and sell amount of the order*/
 		int buyAmount = buyOrder.getAmount();
 		int sellAmount = sellOrder.getAmount();
 		
@@ -248,15 +244,23 @@ public class AdminController {
 		Client seller = clientDao.get(sellOrder.getUserId());
 
 	  System.out.println("sellAmount"+sellAmount);
+	  System.out.println("buyAmount"+buyAmount);
+//      int dealAmount = buyAmount;
 	  
-      int dealAmount = buyAmount;
+	  
+	  int dealAmount = Math.min(buyAmount, buyAmount); 
+	  
+	  /*Seller bitcoins not enough*/
       int bitCoinOfSeller = seller.getBitcoins().size();
-      System.out.println("sellAmount"+bitCoinOfSeller);
+      System.out.println("sellerbitcoinAmount"+bitCoinOfSeller);
+      dealAmount = Math.min(dealAmount, bitCoinOfSeller); 
+//      if(dealAmount > sellAmount) dealAmount = Math.min(sellAmount, bitCoinOfSeller); 
       
-      if(buyAmount > sellAmount) dealAmount = Math.min(sellAmount, bitCoinOfSeller);           
+      /*Buyer balance not enough*/
       if(buyer.getBalance() < sellPrice*dealAmount){ 
           dealAmount = (int)Math.floor(buyer.getBalance()/sellPrice);
-      }                
+      }        
+      System.out.println("dealAmount"+dealAmount);
       if(dealAmount==0) return; 
 		
       
@@ -326,7 +330,8 @@ public class AdminController {
     Set<Record> sellOrderRecords = sellOrder.getRecords();
     sellOrderRecords.add(new Record(dealAmount, sellPrice, sellOrder.getOrderId(), "sell", buyer.getUserId()));
 //    sellOrder.setRecords(sellOrderRecords);
-    
+    buyOrder.setStatus("Trading");
+    sellOrder.setStatus("Trading");
     
     int buyRecordAmount = 0;
     int sellRecordAmount = 0;

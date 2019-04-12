@@ -26,11 +26,11 @@ import com.neu.edu.pojo.User;
 @RequestMapping("/*")
 public class IndexController {
 
-	@Autowired
-	CategoryDao categoryDao;
-
-	@Autowired
-	UserDao userDao;
+//	@Autowired
+//	CategoryDao categoryDao;
+//
+//	@Autowired
+//	UserDao userDao;
 	
 	
 	@Autowired
@@ -61,32 +61,32 @@ public class IndexController {
 		return new ModelAndView("home");
 	}
 
-	@RequestMapping("/create")
-	public ModelAndView setup() throws CategoryException, UserException {
-		categoryDao.create("Entertainment");
-		categoryDao.create("Food");
-		categoryDao.create("Sports");
-		categoryDao.create("Medical");
-
-		User user = new User();
-		user.setFirstName("John");
-		user.setLastName("Doe");
-		Set<Phone> phoneNumbers = new HashSet<Phone>();
-		phoneNumbers.add(new Phone("1234567890"));
-		phoneNumbers.add(new Phone("0987654321"));
-		user.setPhoneNumbers(phoneNumbers);
-		user = userDao.register(user);
-
-		user = new User();
-		user.setFirstName("Dohn");
-		user.setLastName("Joe");
-		phoneNumbers = new HashSet<Phone>();
-		phoneNumbers.add(new Phone("246801214"));
-		phoneNumbers.add(new Phone("141208642"));
-		user.setPhoneNumbers(phoneNumbers);
-		user = userDao.register(user);
-		return new ModelAndView("home");
-	}
+//	@RequestMapping("/create")
+//	public ModelAndView setup() throws CategoryException, UserException {
+//		categoryDao.create("Entertainment");
+//		categoryDao.create("Food");
+//		categoryDao.create("Sports");
+//		categoryDao.create("Medical");
+//
+//		User user = new User();
+//		user.setFirstName("John");
+//		user.setLastName("Doe");
+//		Set<Phone> phoneNumbers = new HashSet<Phone>();
+//		phoneNumbers.add(new Phone("1234567890"));
+//		phoneNumbers.add(new Phone("0987654321"));
+//		user.setPhoneNumbers(phoneNumbers);
+//		user = userDao.register(user);
+//
+//		user = new User();
+//		user.setFirstName("Dohn");
+//		user.setLastName("Joe");
+//		phoneNumbers = new HashSet<Phone>();
+//		phoneNumbers.add(new Phone("246801214"));
+//		phoneNumbers.add(new Phone("141208642"));
+//		user.setPhoneNumbers(phoneNumbers);
+//		user = userDao.register(user);
+//		return new ModelAndView("home");
+//	}
 	
 	
 //	@RequestMapping("/signin")

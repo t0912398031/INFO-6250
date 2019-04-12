@@ -7,6 +7,7 @@ import org.hibernate.Query;
 
 import com.neu.edu.exception.AdvertException;
 import com.neu.edu.exception.OrderException;
+import com.neu.edu.exception.RecordException;
 import com.neu.edu.pojo.Advert;
 import com.neu.edu.pojo.Order;
 import com.neu.edu.pojo.Record;
@@ -14,7 +15,7 @@ import com.neu.edu.pojo.Record;
 public class RecordDao extends DAO {
 
     public Record create(Record record)
-            throws AdvertException {
+            throws RecordException {
         try {
             begin();            
             getSession().save(record);     
@@ -22,23 +23,23 @@ public class RecordDao extends DAO {
             return record;
         } catch (HibernateException e) {
             rollback();
-            throw new AdvertException("Exception while creating record: " + e.getMessage());
+            throw new RecordException("Exception while creating record: " + e.getMessage());
         }
     }
 
     public void delete(Record record)
-            throws AdvertException {
+            throws RecordException {
         try {
             begin();
             getSession().delete(record);
             commit();
         } catch (HibernateException e) {
             rollback();
-            throw new AdvertException("Could not delete record", e);
+            throw new RecordException("Could not delete record", e);
         }
     }
     
-    public List<Record> list() throws AdvertException{
+    public List<Record> list() throws RecordException{
     	
     	try {
             begin();
@@ -48,12 +49,12 @@ public class RecordDao extends DAO {
             return records;
         } catch (HibernateException e) {
             rollback();
-            throw new AdvertException("Could not list records", e);
+            throw new RecordException("Could not list records", e);
         }
     	
     }
     
-    public List<Record> listByOrderId(long orderId) throws OrderException{
+    public List<Record> listByOrderId(long orderId) throws RecordException{
     	
     	try {
             begin();
@@ -64,7 +65,7 @@ public class RecordDao extends DAO {
             return orders;
         } catch (HibernateException e) {
             rollback();
-            throw new OrderException("Could not list records", e);
+            throw new RecordException("Could not list records", e);
         }
     	
     }
