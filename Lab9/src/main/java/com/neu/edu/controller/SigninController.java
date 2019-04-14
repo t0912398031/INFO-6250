@@ -22,13 +22,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.neu.edu.dao.AdvertDao;
 import com.neu.edu.dao.BitcoinDao;
-import com.neu.edu.dao.CategoryDao;
 import com.neu.edu.dao.ClientDao;
 import com.neu.edu.dao.OrderDao;
 import com.neu.edu.dao.RecordDao;
-import com.neu.edu.dao.UserDao;
+
 import com.neu.edu.exception.AdvertException;
 import com.neu.edu.exception.BitcoinException;
 import com.neu.edu.exception.CategoryException;

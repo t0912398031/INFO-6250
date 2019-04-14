@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.neu.edu.dao.AdvertDao;
-import com.neu.edu.dao.CategoryDao;
+
 import com.neu.edu.dao.ClientDao;
-import com.neu.edu.dao.UserDao;
+
 import com.neu.edu.exception.AdvertException;
 import com.neu.edu.exception.CategoryException;
 import com.neu.edu.exception.ClientException;

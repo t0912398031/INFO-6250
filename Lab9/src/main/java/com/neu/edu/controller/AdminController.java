@@ -20,13 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.neu.edu.dao.AdvertDao;
+
 import com.neu.edu.dao.BitcoinDao;
-import com.neu.edu.dao.CategoryDao;
+
 import com.neu.edu.dao.ClientDao;
 import com.neu.edu.dao.OrderDao;
 import com.neu.edu.dao.RecordDao;
-import com.neu.edu.dao.UserDao;
 import com.neu.edu.exception.AdvertException;
 import com.neu.edu.exception.BitcoinException;
 import com.neu.edu.exception.CategoryException;
@@ -155,15 +154,11 @@ public class AdminController {
 	public ModelAndView view(@ModelAttribute("order") Order order, HttpServletRequest request)
 			throws CategoryException, AdvertException, ClientException, OrderException {
 		
-		HttpSession session = request.getSession();
-		Client loggeduser = (Client) session.getAttribute("USER");
+//		HttpSession session = request.getSession();
+//		Client loggeduser = (Client) session.getAttribute("USER");
 		
-//		Client u = clientDao.get(loggeduser.getUserId());
-//		Set orders = u.getOrders();
-		
-//		List orders = orderDao.list();
-		List buyorders = orderDao.listByType("buy");
-		List sellorders = orderDao.listByType("sell");
+		List<Order> buyorders = orderDao.listByType("buy");
+		List<Order> sellorders = orderDao.listByType("sell");
 		
 		String search = request.getParameter("search")==null? "":request.getParameter("search");
 		
@@ -173,7 +168,6 @@ public class AdminController {
             	switch(search){
             		case "date":
             			return o1.getDate().compareTo(o2.getDate());
-//            			break;
             		case "userId":
             			return Long.compare(o1.getUserId(), o2.getUserId());
     				default :return Long.compare(o1.getOrderId(), o2.getOrderId());
@@ -206,10 +200,31 @@ public class AdminController {
 			}
 		}
 
-		List orders = orderDao.list();
+		List buyorders = orderDao.listByType("buy");
+		List sellorders = orderDao.listByType("sell");
+		
+		String search = request.getParameter("search")==null? "":request.getParameter("search");
+		
+		Comparator<Order> orderDateComparator = new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+            	switch(search){
+            		case "date":
+            			return o1.getDate().compareTo(o2.getDate());
+            		case "userId":
+            			return Long.compare(o1.getUserId(), o2.getUserId());
+    				default :return Long.compare(o1.getOrderId(), o2.getOrderId());
+                }
+
+            }
+        };
+		
+        Collections.sort(buyorders, orderDateComparator);
+        Collections.sort(sellorders, orderDateComparator);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("orders", orders);
+		mv.addObject("buyorders", buyorders);
+		mv.addObject("sellorders", sellorders);
 		mv.setViewName("adminorderlist");
 		request.setAttribute("admin", "admin");
 		return mv;
@@ -248,7 +263,7 @@ public class AdminController {
 //      int dealAmount = buyAmount;
 	  
 	  
-	  int dealAmount = Math.min(buyAmount, buyAmount); 
+	  int dealAmount = Math.min(buyAmount, sellAmount); 
 	  
 	  /*Seller bitcoins not enough*/
       int bitCoinOfSeller = seller.getBitcoins().size();
@@ -296,8 +311,8 @@ public class AdminController {
       System.out.println("buyercoins"+buyerBitcoins.size());
       System.out.println("sellercoins"+sellerBitcoins.size());
 
-    clientDao.update(buyer);
-    clientDao.update(seller);
+//    clientDao.update(buyer);
+//    clientDao.update(seller);
     
 
     
@@ -348,8 +363,9 @@ public class AdminController {
 	}
     if( buyOrder.getAmount() == buyRecordAmount) buyOrder.setStatus("Filled");
     if( sellOrder.getAmount() == sellRecordAmount) sellOrder.setStatus("Filled");
-    orderDao.update(buyOrder);
-    orderDao.update(sellOrder);
+//    orderDao.update(buyOrder);
+//    orderDao.update(sellOrder);
+    
 //    buyRequest.setAmount(buyRequest.getAmount() - dealAmount);
 //    sellRequest.setAmount(sellRequest.getAmount() - dealAmount);
 //    buyRequest.getDealRecord().addDeal(dealAmount, sellPrice);
