@@ -33,10 +33,9 @@ import com.neu.edu.exception.CategoryException;
 import com.neu.edu.exception.ClientException;
 import com.neu.edu.exception.OrderException;
 import com.neu.edu.exception.RecordException;
-import com.neu.edu.exception.UserException;
-import com.neu.edu.pojo.Advert;
+
 import com.neu.edu.pojo.Bitcoin;
-import com.neu.edu.pojo.Category;
+
 import com.neu.edu.pojo.Client;
 import com.neu.edu.pojo.Order;
 import com.neu.edu.pojo.Record;
@@ -72,6 +71,11 @@ public class SigninController {
 //	public String viewHome() {
 //		return "home";
 //	}
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+	public String home(HttpServletRequest request) throws CategoryException, ClientException {
+		
+    	return "home";
+	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ModelAndView signin(HttpServletRequest request) throws CategoryException, ClientException {
@@ -143,8 +147,8 @@ public class SigninController {
 		clientDao.update(u);
 		
 //		Client u2 = clientDao.get(loggeduser.getUserId());
-		Set orders = u.getOrders();
-		List<Order> o = new ArrayList<Order>(orders);
+//		Set orders = u.getOrders();
+		List<Order> o = new ArrayList<Order>(u.getOrders());
 		
         Collections.sort(o, orderDateComparator);
 		
@@ -153,49 +157,23 @@ public class SigninController {
 
 		mv.setViewName("orderlist");
 		return mv;
-//		try {
-//			Set orders;
-//			Client u = clientDao.get(loggeduser.getUserId());
-//			if(u.getOrders().size() == 0) {
-//				orders = new HashSet<Order>();
-//			} else {
-//				orders = u.getOrders();
-//			}
-//			orders.add(order);
-//			u.setOrders(orders);
-//
-//			clientDao.update(u);
-//			
-//			Client u2 = clientDao.get(loggeduser.getUserId());
-//			orders = u2.getOrders();
-//			
-//			ModelAndView mv = new ModelAndView();
-//			mv.addObject("orders", orders);
-////			mv.addObject("advert", new Advert());
-//			mv.setViewName("orderlist");
-//			return mv;
-//		} catch (NumberFormatException e) {
-//			e.printStackTrace();
-//		}
-//		return new ModelAndView("signin");
 	}
 	
 	
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
 	public ModelAndView view(@ModelAttribute("order") Order order, HttpServletRequest request)
-			throws CategoryException, AdvertException, ClientException {
+			throws ClientException, OrderException {
 		
 		HttpSession session = request.getSession();
 		Client loggeduser = (Client) session.getAttribute("USER");
-		Client u = clientDao.get(loggeduser.getUserId());
-		Set orders = u.getOrders();
-		List<Order> o = new ArrayList<Order>(orders);
+//		Client u = clientDao.get(loggeduser.getUserId());
 		
+//		List<Order> o = new ArrayList<Order>(u.getOrders());
+
+		List<Order> o = orderDao.listByUser((loggeduser.getUserId()));
 		
         Collections.sort(o, orderDateComparator);
-
-		
-		
+	
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("orders", o);
 		mv.setViewName("orderlist");

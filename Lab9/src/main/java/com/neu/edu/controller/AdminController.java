@@ -3,6 +3,7 @@ package com.neu.edu.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -111,52 +112,49 @@ public class AdminController {
 		return mv;
 	}
 
-	@RequestMapping(value = "/order", method = RequestMethod.POST)
-	public ModelAndView order(@ModelAttribute("order") Order order, HttpServletRequest request)
-			throws CategoryException, AdvertException, ClientException {
-		
-		HttpSession session = request.getSession();
-		Client loggeduser = (Client) session.getAttribute("USER");
-//		System.out.println(loggeduser);
-//		System.out.println(loggeduser.getOrders());
-		order.setStatus("Pending");
-		LOGGER.debug(order);
-		try {
-			Set orders;
-			Client u = clientDao.get(loggeduser.getUserId());
-			if(u.getOrders().size() == 0) {
-				orders = new HashSet<Order>();
-			} else {
-				orders = u.getOrders();
-			}
-			orders.add(order);
-			u.setOrders(orders);
-			
-//			for(Order o : loggeduser.getOrders()) {System.out.println(o.getPrice());}
-//			System.out.println(loggeduser.getOrders());
-			clientDao.update(u);
-			
-			Client u2 = clientDao.get(loggeduser.getUserId());
-			orders = u2.getOrders();
-			
-			ModelAndView mv = new ModelAndView();
-			mv.addObject("orders", orders);
-//			mv.addObject("advert", new Advert());
-			mv.setViewName("orderlist");
-			return mv;
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		}
-		return new ModelAndView("signin");
-	}
+//	@RequestMapping(value = "/order", method = RequestMethod.POST)
+//	public ModelAndView order(@ModelAttribute("order") Order order, HttpServletRequest request)
+//			throws CategoryException, AdvertException, ClientException {
+//		
+//		HttpSession session = request.getSession();
+//		Client loggeduser = (Client) session.getAttribute("USER");
+////		System.out.println(loggeduser);
+////		System.out.println(loggeduser.getOrders());
+//		order.setStatus("Pending");
+//		LOGGER.debug(order);
+//		try {
+//			Set orders;
+//			Client u = clientDao.get(loggeduser.getUserId());
+//			if(u.getOrders().size() == 0) {
+//				orders = new HashSet<Order>();
+//			} else {
+//				orders = u.getOrders();
+//			}
+//			orders.add(order);
+//			u.setOrders(orders);
+//			
+////			for(Order o : loggeduser.getOrders()) {System.out.println(o.getPrice());}
+////			System.out.println(loggeduser.getOrders());
+//			clientDao.update(u);
+//			
+//			Client u2 = clientDao.get(loggeduser.getUserId());
+//			orders = u2.getOrders();
+//			
+//			ModelAndView mv = new ModelAndView();
+//			mv.addObject("orders", orders);
+////			mv.addObject("advert", new Advert());
+//			mv.setViewName("orderlist");
+//			return mv;
+//		} catch (NumberFormatException e) {
+//			e.printStackTrace();
+//		}
+//		return new ModelAndView("signin");
+//	}
 	
 	@RequestMapping(value = "/view", method = RequestMethod.POST)
 	public ModelAndView view(@ModelAttribute("order") Order order, HttpServletRequest request)
-			throws CategoryException, AdvertException, ClientException, OrderException {
-		
-//		HttpSession session = request.getSession();
-//		Client loggeduser = (Client) session.getAttribute("USER");
-		
+			throws ClientException, OrderException {
+
 		List<Order> buyorders = orderDao.listByType("buy");
 		List<Order> sellorders = orderDao.listByType("sell");
 		
@@ -170,6 +168,8 @@ public class AdminController {
             			return o1.getDate().compareTo(o2.getDate());
             		case "userId":
             			return Long.compare(o1.getUserId(), o2.getUserId());
+            		case "orderId":
+            			return Long.compare(o1.getOrderId(), o2.getOrderId());
     				default :return Long.compare(o1.getOrderId(), o2.getOrderId());
                 }
 
@@ -191,8 +191,8 @@ public class AdminController {
 	public ModelAndView match(@ModelAttribute("order") Order order, HttpServletRequest request)
 			throws CategoryException, AdvertException, ClientException, OrderException, BitcoinException {
 
-		List<Order> buyOrders = orderDao.listByTypeAndStatus("buy", "Pending");
-		List<Order> sellOrders = orderDao.listByTypeAndStatus("sell", "Pending");
+		List<Order> buyOrders = orderDao.listByTypeAndStatus("buy", "Pending", "Trading");
+		List<Order> sellOrders = orderDao.listByTypeAndStatus("sell", "Pending", "Trading");
 
 		for(Order buyOrder : buyOrders) {
 			for(Order sellOrder : sellOrders) {
@@ -200,8 +200,8 @@ public class AdminController {
 			}
 		}
 
-		List buyorders = orderDao.listByType("buy");
-		List sellorders = orderDao.listByType("sell");
+		List<Order> buyorders = orderDao.listByType("buy");
+		List<Order> sellorders = orderDao.listByType("sell");
 		
 		String search = request.getParameter("search")==null? "":request.getParameter("search");
 		
@@ -260,16 +260,13 @@ public class AdminController {
 
 	  System.out.println("sellAmount"+sellAmount);
 	  System.out.println("buyAmount"+buyAmount);
-//      int dealAmount = buyAmount;
-	  
 	  
 	  int dealAmount = Math.min(buyAmount, sellAmount); 
 	  
-	  /*Seller bitcoins not enough*/
+	  /*Seller bitcoins might not enough*/
       int bitCoinOfSeller = seller.getBitcoins().size();
       System.out.println("sellerbitcoinAmount"+bitCoinOfSeller);
-      dealAmount = Math.min(dealAmount, bitCoinOfSeller); 
-//      if(dealAmount > sellAmount) dealAmount = Math.min(sellAmount, bitCoinOfSeller); 
+      dealAmount = Math.min(dealAmount, bitCoinOfSeller);  
       
       /*Buyer balance not enough*/
       if(buyer.getBalance() < sellPrice*dealAmount){ 
@@ -285,14 +282,11 @@ public class AdminController {
     */       
       System.out.println("buyerId"+buyer.getUserId());
       System.out.println("sellerId"+seller.getUserId());
-      
-//      Set sellerBitcoins = seller.getBitcoins();
+
       Set buyerBitcoins = buyer.getBitcoins();
 
-
       List<Bitcoin> sellerBitcoins = new ArrayList<Bitcoin>(seller.getBitcoins());
-//      List<Bitcoin> buyerBitcoins = new ArrayList<Bitcoin>(buyer.getBitcoins());
-    System.out.println("dealAmount"+dealAmount);
+
     System.out.println("buyercoins"+buyerBitcoins.size());
     System.out.println("sellercoins"+sellerBitcoins.size());
   
@@ -309,7 +303,7 @@ public class AdminController {
     	  System.out.println("transfer");
       }
       System.out.println("buyercoins"+buyerBitcoins.size());
-      System.out.println("sellercoins"+sellerBitcoins.size());
+      System.out.println("sellercoins"+seller.getBitcoins().size());
 
 //    clientDao.update(buyer);
 //    clientDao.update(seller);
@@ -328,10 +322,15 @@ public class AdminController {
 //    buyerAccount.setDollorAccount(buyerAccount.getDollorAccount() - actualSpend);  
 //    buyRequestCustodyAccount.setDollorAccount(buyRequestCustodyAccount.getDollorAccount() + custodyBuyRequestEarn);
 //    sellRequestCustodyAccount.setDollorAccount(sellRequestCustodyAccount.getDollorAccount() + custodySellRequestEarn);
+    System.out.println("seller balance" + seller.getBalance());
+    System.out.println("buyer balance" + buyer.getBalance());
     seller.setBalance(seller.getBalance() + sellPrice * dealAmount);
     buyer.setBalance(buyer.getBalance() - sellPrice * dealAmount);
-    System.out.println("balance transfer complete");
     
+    
+    System.out.println("balance transfer complete");
+    System.out.println("seller balance" + seller.getBalance());
+    System.out.println("buyer balance" + buyer.getBalance());
     
 //    Order buyorder= orderDao.get(buyOrder.getOrderId());
 //    Order sellorder = orderDao.get(sellOrder.getOrderId());
@@ -361,8 +360,14 @@ public class AdminController {
 			sellRecordAmount += r.getAmount();
 		}
 	}
-    if( buyOrder.getAmount() == buyRecordAmount) buyOrder.setStatus("Filled");
-    if( sellOrder.getAmount() == sellRecordAmount) sellOrder.setStatus("Filled");
+    if( buyOrder.getAmount() == buyRecordAmount){
+    	buyOrder.setStatus("Filled");
+    	buyOrder.setDealdate(new Date());
+    }
+    if( sellOrder.getAmount() == sellRecordAmount) {
+    	sellOrder.setStatus("Filled"); 
+    	sellOrder.setDealdate(new Date());
+    } 
 //    orderDao.update(buyOrder);
 //    orderDao.update(sellOrder);
     

@@ -48,12 +48,9 @@
     
     <form action="${contextPath}/admin/view" method ="post">
 	    <select name="search">
+	      <option value="orderId">OrderID</option>
     	  <option value="userId">UserID</option>
-		  <option value="date">Date</option>
-		  <option value="type">UserID</option>
-		  <option value="userId">UserID</option>
-		  <option value="date">Date</option>
-		  <option value="userId">UserID</option>		 
+		  <option value="date">Date</option>	 
 		</select>
         <input type="hidden" name="option" value="logout"/>
         <input type="submit" value="Sort"/>
@@ -68,7 +65,6 @@
                 <th>status</th>
                 <th>date</th> 
                 <th>view record</th> 
-<!--                 <th></th>  -->
             </thead>
             <tbody>           
             <c:forEach var="o" items="${buyorders}">
@@ -85,12 +81,6 @@
 			            <input type="submit" value="Record"/>
 			        </form>
 					</td>
-<!--                     <td> -->
-<%--                     <form action="${contextPath}/signin/order/delete" method ="post"> --%>
-<!-- 			            <input type="hidden" name="delete" value=${o} /> -->
-<!-- 			            <input type="submit" value="Delete"/> -->
-<%-- 			        </form> --%>
-<!-- 			        </td> -->
                 </tr>
             </c:forEach>
             </tbody>
@@ -120,12 +110,6 @@
 			            <input type="hidden" name="record" value=${o.orderId} />
 			            <input type="submit" value="Record"/>
 			        </form></td>
-<!--                     <td> -->
-<%--                     <form action="${contextPath}/signin/order/delete" method ="post"> --%>
-<!-- 			            <input type="hidden" name="delete" value=${o} /> -->
-<!-- 			            <input type="submit" value="Delete"/> -->
-<%-- 			        </form> --%>
-<!-- 			        </td> -->
                 </tr>
             </c:forEach>
             </tbody>

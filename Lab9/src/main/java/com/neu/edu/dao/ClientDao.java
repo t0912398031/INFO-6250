@@ -2,6 +2,7 @@ package com.neu.edu.dao;
 
 import java.util.List;
 
+import org.hibernate.CacheMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 
@@ -22,6 +23,7 @@ public class ClientDao extends DAO {
 			begin();
 			Query q = getSession().createQuery("from Client where userId = :userId");
 			q.setLong("userId", userId);
+			q.setCacheMode(CacheMode.IGNORE);
 			Client user = (Client) q.uniqueResult();
 			commit();
 			return user;

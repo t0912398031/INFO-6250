@@ -25,21 +25,17 @@ import com.neu.edu.dao.ClientDao;
 import com.neu.edu.dao.OrderDao;
 import com.neu.edu.dao.RecordDao;
 
-import com.neu.edu.exception.AdvertException;
-import com.neu.edu.exception.BitcoinException;
 import com.neu.edu.exception.CategoryException;
 import com.neu.edu.exception.ClientException;
 import com.neu.edu.exception.OrderException;
 import com.neu.edu.exception.RecordException;
-import com.neu.edu.exception.UserException;
-import com.neu.edu.pojo.Advert;
+
 import com.neu.edu.pojo.Bitcoin;
-import com.neu.edu.pojo.Category;
+
 import com.neu.edu.pojo.Client;
 import com.neu.edu.pojo.Order;
 import com.neu.edu.pojo.Record;
-import com.neu.edu.pojo.User;
-import com.neu.service.Service;
+
 
 @Controller
 @RequestMapping("/signin/order/*")
@@ -112,18 +108,18 @@ public class OrderController {
 	public ModelAndView delete(HttpServletRequest request) throws OrderException, ClientException{
 
 		Order order = orderDao.get(Long.parseLong(request.getParameter("delete")));
-		orderDao.delete(order);
-		
+		if(order  != null) {
+			orderDao.delete(order);
+		}
 		HttpSession session = request.getSession();
 		Client loggeduser = (Client) session.getAttribute("USER");
 		Client u = clientDao.get(loggeduser.getUserId());
-		Set orders = u.getOrders();
-		List<Order> o = new ArrayList<Order>(orders);
-		
+		List<Order> o = new ArrayList<Order>(u.getOrders());
+
         Collections.sort(o, orderDateComparator);
-		
+	
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("orders", orders);
+		mv.addObject("orders", o);
 		mv.setViewName("orderlist");
 		return mv;
 	}
@@ -133,9 +129,10 @@ public class OrderController {
 //		HttpSession session = request.getSession();
 //		session.invalidate();
 		Order order = orderDao.get(Long.parseLong(request.getParameter("record")));
-		
-		List<Record> records = recordDao.listByOrderId(order.getOrderId());
-		
+		List<Record> records = null;
+		if(order!=null) {
+			records = recordDao.listByOrderId(order.getOrderId());
+		}
 //		for (Record r: records) {System.out.println(r.getAmount());}
 		
 		

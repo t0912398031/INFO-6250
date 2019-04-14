@@ -49,6 +49,9 @@ public class OrderDao extends DAO {
 		} catch (HibernateException e) {
 			rollback();
 			throw new OrderException("Could not save the order" + u.getOrderId(), e);
+		} finally {
+			getSession().clear();
+			close();
 		}
 	}
 
@@ -60,6 +63,9 @@ public class OrderDao extends DAO {
         } catch (HibernateException e) {
             rollback();
             throw new OrderException("Could not delete order", e);
+        } finally {
+        	getSession().clear();
+        	close();
         }
     }
 //    
@@ -93,6 +99,22 @@ public class OrderDao extends DAO {
     	
     }
     
+public List<Order> listByUser(long userId) throws OrderException{
+    	
+    	try {
+            begin();
+            Query q = getSession().createQuery("from Order where userId = :userId");
+            q.setLong("userId", userId);
+            List<Order> orders = q.list();
+            commit();
+            return orders;
+        } catch (HibernateException e) {
+            rollback();
+            throw new OrderException("Could not list orders", e);
+        }
+    	
+    }
+    
     public List<Order> listByType(String type) throws OrderException{
     	
     	try {
@@ -109,13 +131,14 @@ public class OrderDao extends DAO {
     	
     }
 
-	public List<Order> listByTypeAndStatus(String type, String status) throws OrderException{
+	public List<Order> listByTypeAndStatus(String type, String status1, String status2) throws OrderException{
 		
 		try {
 	        begin();
-	        Query q = getSession().createQuery("from Order where type = :type AND status= :status");
+	        Query q = getSession().createQuery("from Order where( status= :status1 or status= :status2) AND type = :type ");
 	        q.setString("type", type);
-	        q.setString("status", status);
+	        q.setString("status1", status1);
+	        q.setString("status2", status2);
 	        List<Order> orders = q.list();
 	        commit();
 	        return orders;
