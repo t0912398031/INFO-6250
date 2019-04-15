@@ -62,47 +62,122 @@ public class OrderController {
         }
     };
 
-//	@RequestMapping("/")
-//	public String viewHome() {
-//		return "home";
-//	}
-	
 	@RequestMapping("/back")
 	public String back() {
 		return "signin";
 	}
 	
+//	@RequestMapping(value = "/", method = RequestMethod.POST)
+//	public ModelAndView signin(HttpServletRequest request) throws CategoryException, ClientException {
+//		
+//		HttpSession session = request.getSession();
+//		String userName = request.getParameter("userName");
+//        String password = request.getParameter("password");
+//
+//		Client loggedUser = clientDao.authenticateLogin(userName, password);
+//
+//        if (loggedUser == null) {
+//            session.setAttribute("error", "No user found, please check your username and password");
+//            System.out.println("no user");
+//            return new ModelAndView("home");
+//        } else if(loggedUser.getUserName().equals("admin")&&loggedUser.getPassword().equals("123")){
+//
+//        	session.setAttribute("USER", loggedUser);
+//            session.setAttribute("error", "");
+//            
+//            List<Client> clients = clientDao.list();
+//
+//            ModelAndView mv = new ModelAndView();
+//    		mv.addObject("clients", clients);
+//    		mv.setViewName("admin");
+//            
+//            return mv;
+//        } else {
+//            session.setAttribute("USER", loggedUser);
+//            session.setAttribute("error", "");
+//            return new ModelAndView("signin");
+//        }
+//	}
+	
+	public ModelAndView viewOrderList(Client loggeduser) throws OrderException{
+		List<Order> o = orderDao.listByUser((loggeduser.getUserId()));
+		
+        Collections.sort(o, orderDateComparator);
+	
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("orders", o);
+		mv.setViewName("orderlist");
+		return mv;		
+	}
+	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ModelAndView signin(HttpServletRequest request) throws CategoryException, ClientException {
+	public ModelAndView view(@ModelAttribute("order") Order order, HttpServletRequest request)
+			throws ClientException, OrderException {
 		
 		HttpSession session = request.getSession();
-		String userName = request.getParameter("userName");
-        String password = request.getParameter("password");
+		Client loggeduser = (Client) session.getAttribute("USER");
+//		Client u = clientDao.get(loggeduser.getUserId());
+		
+//		List<Order> o = new ArrayList<Order>(u.getOrders());
 
-		Client loggedUser = clientDao.authenticateLogin(userName, password);
+//		List<Order> o = orderDao.listByUser((loggeduser.getUserId()));
+//		
+//        Collections.sort(o, orderDateComparator);
+//	
+//		ModelAndView mv = new ModelAndView();
+//		mv.addObject("orders", o);
+//		mv.setViewName("orderlist");
+//		return mv;
+		return viewOrderList(loggeduser);
+	}
 
-        if (loggedUser == null) {
-            session.setAttribute("error", "No user found, please check your username and password");
-            System.out.println("no user");
-            return new ModelAndView("home");
-        } else if(loggedUser.getUserName().equals("admin")&&loggedUser.getPassword().equals("123")){
-
-        	session.setAttribute("USER", loggedUser);
-            session.setAttribute("error", "");
-            
-            List<Client> clients = clientDao.list();
-
-            ModelAndView mv = new ModelAndView();
-    		mv.addObject("clients", clients);
-    		mv.setViewName("admin");
-            
-            return mv;
-        } else {
-            session.setAttribute("USER", loggedUser);
-            session.setAttribute("error", "");
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public ModelAndView createOrder(@ModelAttribute("order") Order order, HttpServletRequest request)
+			throws OrderException, ClientException {
+		
+		HttpSession session = request.getSession();
+		Client loggeduser = (Client) session.getAttribute("USER");
+		
+		if (order.getAmount() == 0) {
+            request.setAttribute("error", "* amount must > 0");
+            return new ModelAndView("signin");
+        }	
+		
+		if (order.getType().equalsIgnoreCase("sell") && order.getAmount() > loggeduser.getBitcoins().size()) {
+            request.setAttribute("error", "* amount must < " + loggeduser.getBitcoins().size());
             return new ModelAndView("signin");
         }
+		
+		if (order.getType().equalsIgnoreCase("buy") && order.getPrice()*order.getAmount() > loggeduser.getBalance()) {
+            request.setAttribute("error", "* requested order price exceeds your balance");
+            return new ModelAndView("signin");
+        }
+		
+		
+
+		LOGGER.debug(order);
+		order.setStatus("Pending");
+		order.setUserId(loggeduser.getUserId());
+		
+		Client u = clientDao.get(loggeduser.getUserId());
+		u.getOrders().add(order);
+		clientDao.update(u);
+		
+
+//		List<Order> o = new ArrayList<Order>(u.getOrders());
+//		
+//        Collections.sort(o, orderDateComparator);
+//		
+//		ModelAndView mv = new ModelAndView();
+//		mv.addObject("orders", o);
+//
+//		mv.setViewName("orderlist");
+//		return mv;
+		return viewOrderList(loggeduser);
 	}
+	
+	
+	
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public ModelAndView delete(HttpServletRequest request) throws OrderException, ClientException{
@@ -125,21 +200,12 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/record", method = RequestMethod.POST)
-	public ModelAndView record(HttpServletRequest request) throws OrderException, ClientException, RecordException{
-//		HttpSession session = request.getSession();
-//		session.invalidate();
+	public ModelAndView record(HttpServletRequest request) throws OrderException, RecordException{;
 		Order order = orderDao.get(Long.parseLong(request.getParameter("record")));
 		List<Record> records = null;
 		if(order!=null) {
 			records = recordDao.listByOrderId(order.getOrderId());
 		}
-//		for (Record r: records) {System.out.println(r.getAmount());}
-		
-		
-//		HttpSession session = request.getSession();
-//		Client loggeduser = (Client) session.getAttribute("USER");
-//		Client u = clientDao.get(loggeduser.getUserId());
-//		Set orders = u.getOrders();
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("records", records);

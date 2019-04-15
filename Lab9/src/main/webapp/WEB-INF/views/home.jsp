@@ -22,7 +22,7 @@
         <input type="submit" value="Sign In"/>
     </form>
     <br>
-    ${sessionScope.error}
+    ${requestScope.error}
 
 </body>
 </html>

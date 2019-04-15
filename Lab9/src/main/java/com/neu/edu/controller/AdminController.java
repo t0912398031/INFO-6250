@@ -102,6 +102,37 @@ public class AdminController {
         return mv;
 	}
 	
+	@RequestMapping(value = "/user/edit", method = RequestMethod.POST)
+	public ModelAndView editpage(HttpServletRequest request) throws ClientException{
+
+		Client user = clientDao.get(Long.parseLong(request.getParameter("edit")));
+
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("user", user);
+		mv.setViewName("useredit");
+        
+        return mv;
+	}
+	
+	@RequestMapping(value = "/user/edit/edit", method = RequestMethod.POST)
+	public ModelAndView edit(HttpServletRequest request) throws ClientException{
+
+		Client user = clientDao.get(Long.parseLong(request.getParameter("user")));
+		user.setUserName(request.getParameter("userName"));
+		user.setPassword(request.getParameter("password"));
+		user.setName(request.getParameter("name"));
+		user.setBalance((long)Double.parseDouble(request.getParameter("balance")));
+		
+		clientDao.update(user);
+		
+		List<Client> clients = clientDao.list();
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("clients", clients);
+		mv.setViewName("user");
+        
+        return mv;
+	}
+	
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView register() throws CategoryException {
@@ -231,7 +262,10 @@ public class AdminController {
 	}
 	
 	
-	public void match(Order buyOrder, Order sellOrder) throws ClientException, BitcoinException, OrderException{
+	public void match(Order b, Order s) throws ClientException, BitcoinException, OrderException{
+		Order buyOrder = orderDao.get(b.getOrderId());
+		Order sellOrder = orderDao.get(s.getOrderId());
+		
 		if(buyOrder.getUserId()==sellOrder.getUserId()) return;
 		
 		double buyPrice = buyOrder.getPrice();
@@ -255,8 +289,8 @@ public class AdminController {
 			}
 		}
 
-		Client buyer = clientDao.get(buyOrder.getUserId());
-		Client seller = clientDao.get(sellOrder.getUserId());
+	Client buyer = clientDao.get(buyOrder.getUserId());
+	Client seller = clientDao.get(sellOrder.getUserId());
 
 	  System.out.println("sellAmount"+sellAmount);
 	  System.out.println("buyAmount"+buyAmount);
@@ -305,8 +339,7 @@ public class AdminController {
       System.out.println("buyercoins"+buyerBitcoins.size());
       System.out.println("sellercoins"+seller.getBitcoins().size());
 
-//    clientDao.update(buyer);
-//    clientDao.update(seller);
+    
     
 
     
@@ -368,8 +401,13 @@ public class AdminController {
     	sellOrder.setStatus("Filled"); 
     	sellOrder.setDealdate(new Date());
     } 
-//    orderDao.update(buyOrder);
-//    orderDao.update(sellOrder);
+    
+    
+    clientDao.update(buyer);
+    clientDao.update(seller);
+    
+    orderDao.update(buyOrder);
+    orderDao.update(sellOrder);
     
 //    buyRequest.setAmount(buyRequest.getAmount() - dealAmount);
 //    sellRequest.setAmount(sellRequest.getAmount() - dealAmount);

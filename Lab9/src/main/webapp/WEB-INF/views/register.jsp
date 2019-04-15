@@ -31,26 +31,7 @@
             <input type="hidden" value="addUser" name="userOption" />
             <input type="submit" value="Register"/>
         </form>
-        <br>
-        
-        
-	
-        
-        
-        
-        
-        
-        
-        
-        <c:if test="${requestScope.status != null}">
-            <c:out value="${requestScope.status}"/>
-
-            <form action="movie.htm" method="POST">
-                <input type="hidden" value="browse" name="option" />
-                <input type="submit" value="Browse Movies"/>
-            </form>
-            
-        </c:if> 
+        <br>     
 
 </body>
 </html>

@@ -22,8 +22,8 @@
         Your current bitcoins: ${sessionScope.USER.bitcoins.size()}
         
         <form action="${contextPath}/signin/order/create" method="POST">
-            Price: <input type="number" name="price" />
-            Amount: <input type="number" name="amount" />
+            Price: <input type="number" name="price" required/>
+            Amount: <input type="number" name="amount" required/>
             <select name="type">
             <option value="buy">Buy</option>
             <!--<option value="add">Add New Movie to Database</option>-->
@@ -31,9 +31,11 @@
             </select>
             <input type="hidden" value="create" name="option" />
             <input type="submit" value="Create Order"/>
-        </form><br>
+        </form>
+        ${requestScope.error}
+        <br><br>
         
-        <form action="${contextPath}/signin/order" method="POST">     
+        <form action="${contextPath}/signin/order/" method="POST">     
             <input type="submit" value="View Orders"/>
         </form><br>
         

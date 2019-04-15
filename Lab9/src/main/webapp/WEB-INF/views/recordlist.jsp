@@ -45,7 +45,7 @@
     </c:if> 
     
     <c:if test="${sessionScope.admin == null}">
-	<form action="${contextPath}/signin/order" method ="post">
+	<form action="${contextPath}/signin/order/" method ="post">
         <input type="hidden" name="option" value="logout"/>
         <input type="submit" value="Back"/>
     </form><br/>

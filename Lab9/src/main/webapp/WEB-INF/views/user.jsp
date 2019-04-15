@@ -25,6 +25,7 @@
                 <th>name</th>
                 <th>balance</th>
                 <th></th>
+                <th></th>
             </thead>
             <tbody>           
             <c:forEach var="c" items="${clients}">
@@ -33,6 +34,12 @@
                     <td>${c.password}</td>
                     <td>${c.name}</td>
                     <td>${c.balance}</td>
+                    <td>
+	                    <form action="${contextPath}/admin/user/edit" method ="post">
+				            <input type="hidden" name="edit" value=${c.userId} />
+				            <input type="submit" value="Edit"/>
+				        </form>
+			        </td>
                     <td>
                     	<c:if test="${c.userName != sessionScope.USER.userName}">
 	                    <form action="${contextPath}/admin/user/delete" method ="post">
