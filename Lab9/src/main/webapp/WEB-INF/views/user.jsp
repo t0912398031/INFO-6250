@@ -24,6 +24,7 @@
                 <th>password</th>
                 <th>name</th>
                 <th>balance</th>
+                <th>bitcoins</th>
                 <th></th>
                 <th></th>
             </thead>
@@ -34,6 +35,7 @@
                     <td>${c.password}</td>
                     <td>${c.name}</td>
                     <td>${c.balance}</td>
+                    <td>${c.bitcoins.size()}</td>
                     <td>
 	                    <form action="${contextPath}/admin/user/edit" method ="post">
 				            <input type="hidden" name="edit" value=${c.userId} />

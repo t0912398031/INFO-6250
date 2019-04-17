@@ -122,14 +122,17 @@ public class SigninController {
 	}
 	
 	
-//	@RequestMapping(value = "/create", method = RequestMethod.GET)
-//	public ModelAndView register() throws CategoryException {
-//		ModelAndView mv = new ModelAndView();
-////		mv.addObject("categories", categoryDao.list());
-////		mv.addObject("advert", new Advert());
-//		mv.setViewName("register");
-//		return mv;
-//	}
+	@RequestMapping(value = "/bitcoins", method = RequestMethod.POST)
+	public ModelAndView bitcoins(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Client loggeduser = (Client) session.getAttribute("USER");
+		ModelAndView mv = new ModelAndView();
+		System.out.println(loggeduser.getBitcoins().size());
+		System.out.println(loggeduser.getBitcoins());
+		mv.addObject("bitcoins", loggeduser.getBitcoins());
+		mv.setViewName("bitcoins");
+		return mv;
+	}
 	
 //	public ModelAndView viewOrderList(Client loggeduser) throws OrderException{
 //		List<Order> o = orderDao.listByUser((loggeduser.getUserId()));
@@ -226,11 +229,7 @@ public class SigninController {
 //		map = new HashMap<Object,Object>(); map.put("y", 35000);  map.put("label", "2007-08"); list.add(map);
 //		map = new HashMap<Object,Object>(); map.put("y", 25250);  map.put("label", "2008-09"); list.add(map);
 //		map = new HashMap<Object,Object>(); map.put("y", 19750);  map.put("label", "2009-10"); list.add(map);
-//		map = new HashMap<Object,Object>(); map.put("y", 18850);  map.put("label", "2010-11"); list.add(map);
-//		map = new HashMap<Object,Object>(); map.put("y", 26700);  map.put("label", "2011-12"); list.add(map);
-//		map = new HashMap<Object,Object>(); map.put("y", 16000);  map.put("label", "2012-13"); list.add(map);
-//		map = new HashMap<Object,Object>(); map.put("y", 19000);  map.put("label", "2013-14"); list.add(map);
-//		map = new HashMap<Object,Object>(); map.put("y", 18000);  map.put("label", "2014-15"); list.add(map);	
+
 		String dataPoints = gsonObj.toJson(list);
  
 		ModelAndView mv = new ModelAndView();
@@ -240,122 +239,5 @@ public class SigninController {
 
 	}
 	
-//	@RequestMapping(value = "/match", method = RequestMethod.POST)
-//	public ModelAndView match(@ModelAttribute("order") Order order, HttpServletRequest request)
-//			throws CategoryException, AdvertException, ClientException, OrderException, BitcoinException {
-//		
-////		Service service = new Service();
-////		service.matchTradingRequest();
-////		List<Order> orders = orderDao.list();
-////		List<Record> records = recordDao.list();
-////		for(Order o : orders) {
-////			System.out.println(o.getPrice() + " " + o.getUSER_ID());
-////		}
-//		List<Order> buyOrders = orderDao.listByTypeAndStatus("buy", "Pending");
-//		List<Order> sellOrders = orderDao.listByTypeAndStatus("sell", "Pending");
-//
-//		for(Order buyOrder : buyOrders) {
-//			for(Order sellOrder : sellOrders) {
-//				match(buyOrder, sellOrder);
-//			}
-//		}
-//		List<Order> orders = orderDao.list();
-//		ModelAndView mv = new ModelAndView();
-//		mv.addObject("orders", orders);
-//		mv.setViewName("orderlist");
-//		return mv;
-//		
-////		HttpSession session = request.getSession();
-////		Client loggeduser = (Client) session.getAttribute("USER");
-////		Client u = clientDao.get(loggeduser.getUserId());
-////		Set orders = u.getOrders();
-////		
-////		ModelAndView mv = new ModelAndView();
-////		mv.addObject("orders", orders);
-////		mv.setViewName("orderlist");
-////		return mv;
-//	}
-//	public void match(Order buyOrder, Order sellOrder) throws ClientException, BitcoinException{
-//		int buyAmount = buyOrder.getAmount();
-//		for(Record r: buyOrder.getRecords()) {
-//			buyAmount -= r.getAmount();
-//		}
-//		int sellAmount = buyOrder.getAmount();
-//		for(Record r: buyOrder.getRecords()) {
-//			sellAmount -= r.getAmount();
-//		}
-//		
-////		int buyAmount = buyOrder.getAmount();
-//		double buyPrice = buyOrder.getPrice();
-////		int sellAmount = sellOrder.getAmount();
-//		double sellPrice = sellOrder.getPrice();    
-//		if(buyPrice < sellPrice) return;
-//		
-//		Client buyer = clientDao.get(buyOrder.getClient().getUserId());
-//		Client seller = clientDao.get(sellOrder.getClient().getUserId());
-//
-//      int dealAmount = buyAmount;
-//      int bitCoinOfSeller = seller.getBitcoins().size();
-//      if(buyAmount > sellAmount) dealAmount = Math.min(sellAmount, bitCoinOfSeller);           
-//      if(buyer.getBalance() < sellPrice*dealAmount){ 
-//          dealAmount = (int)Math.floor(buyer.getBalance()/sellPrice);
-//      }                
-//      if(dealAmount==0) return; 
-//		
-//      
-//      
-//    /**
-//     * Begin to transaction
-//    */       
-//      
-//      Set sellerBitcoins = seller.getBitcoins();
-//      Set buyerBitcoins = buyer.getBitcoins();
-//      for(int i = 0; i< dealAmount; i++){
-//    	  Bitcoin sellerBitcoin = bitcoinDao.get(seller.getUserId());
-//    	  buyerBitcoins.add(sellerBitcoin);
-//    	  sellerBitcoins.remove(sellerBitcoin);
-////    	  bitcoinDao.delete(sellerBitcoin);
-//        
-////        Coin coin = sellerAccount.getCoinCollection().getCoinList().get(0);
-////        transactionHistory.createTransaction(coin.getCoinKey(), sellerAccount.getName(), buyerAccount.getName(),coin.getType());
-//      }
-//    buyer.setBitcoins(buyerBitcoins);
-//    clientDao.update(buyer);
-//        
-////    /*Service Fee*/
-////    double actualSpend = sellPrice * dealAmount * (1 + buyServiceRate);
-////    double actualEarn = sellPrice * dealAmount * (1 + sellServiceRate);
-////    double custodyBuyRequestEarn = sellPrice * dealAmount * buyServiceRate;
-////    double custodySellRequestEarn = sellPrice * dealAmount * sellServiceRate;
-////    sellerAccount.setDollorAccount(sellerAccount.getDollorAccount() + actualEarn);
-////    buyerAccount.setDollorAccount(buyerAccount.getDollorAccount() - actualSpend);  
-////    buyRequestCustodyAccount.setDollorAccount(buyRequestCustodyAccount.getDollorAccount() + custodyBuyRequestEarn);
-////    sellRequestCustodyAccount.setDollorAccount(sellRequestCustodyAccount.getDollorAccount() + custodySellRequestEarn);
-//    seller.setBalance(seller.getBalance() + sellPrice * dealAmount);
-//    buyer.setBalance(buyer.getBalance() - sellPrice * dealAmount);
-//    
-//    Set<Record> buyOrderRecords = buyOrder.getRecords() == null? new HashSet<Record>():buyOrder.getRecords();
-//    buyOrderRecords.add(new Record(dealAmount, sellPrice));
-//    buyOrder.setRecords(buyOrderRecords);
-//
-//    Set<Record> sellOrderRecords = sellOrder.getRecords() == null? new HashSet<Record>():sellOrder.getRecords();
-//    sellOrderRecords.add(new Record(dealAmount, sellPrice));
-//    sellOrder.setRecords(sellOrderRecords);
-//    
-//    if( buyAmount == dealAmount) buyOrder.setStatus("Filled");
-//    if( sellAmount == dealAmount) sellOrder.setStatus("Filled");
-//    
-//    
-////    buyRequest.setAmount(buyRequest.getAmount() - dealAmount);
-////    sellRequest.setAmount(sellRequest.getAmount() - dealAmount);
-////    buyRequest.getDealRecord().addDeal(dealAmount, sellPrice);
-////    sellRequest.getDealRecord().addDeal(dealAmount, sellPrice);
-////    buyRequest.setStatus("Trading");
-////    sellRequest.setStatus("Trading");  
-////    if(buyRequest.getAmount() == 0) buyRequest.setStatus("Filled");
-////    if(sellRequest.getAmount() == 0) sellRequest.setStatus("Filled");   
-////		System.out.println("match");
-////		Set<Record> buyRecords = buyOrder.getRecords();
-//		
-//	}
+
 }

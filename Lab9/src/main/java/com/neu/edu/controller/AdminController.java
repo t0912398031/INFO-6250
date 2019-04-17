@@ -183,9 +183,10 @@ public class AdminController {
 //	}
 	
 	@RequestMapping(value = "/view", method = RequestMethod.POST)
-	public ModelAndView view(@ModelAttribute("order") Order order, HttpServletRequest request)
+	public ModelAndView view(HttpServletRequest request)
 			throws ClientException, OrderException {
 
+		orderDao.close();
 		List<Order> buyorders = orderDao.listByType("buy");
 		List<Order> sellorders = orderDao.listByType("sell");
 		

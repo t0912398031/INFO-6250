@@ -73,7 +73,7 @@
 			        </form>
 					</td>
                     <td>
-                    <c:if test="${o.status == 'Pending'}">
+                    <c:if test="${o.status == 'Pending'||o.status == 'Create'}">
 	                	<form action="${contextPath}/signin/order/delete" method ="post">
 				            <input type="hidden" name="delete" value=${o.orderId} />
 				            <input type="submit" value="Cancel"/>
@@ -84,7 +84,13 @@
                 </tr>
             </c:forEach>
             </tbody>
-        </table>
+        </table><br/>
+
+    	
+        <form action="${contextPath}/signin/order/match" method ="post">
+        <input type="hidden" name="option" value="logout"/>
+        <input type="submit" value="Confirm"/>
+    	</form><br/>
 	
 </body>
 </html>

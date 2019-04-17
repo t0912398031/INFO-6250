@@ -25,9 +25,9 @@
             <input type="submit" value="View Orders"/>
         </form><br>
         
-        <form action="${contextPath}/admin/match" method="POST">     
-            <input type="submit" value="Match Orders"/>
-        </form>
+<%--         <form action="${contextPath}/admin/match" method="POST">      --%>
+<!--             <input type="submit" value="Match Orders"/> -->
+<!--         </form> -->
 
         
 </body>

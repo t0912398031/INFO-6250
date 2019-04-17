@@ -21,6 +21,10 @@
         <br>
         Your current bitcoins: ${sessionScope.USER.bitcoins.size()}
         
+        <form action="${contextPath}/signin/bitcoins" method="POST">     
+            <input type="submit" value="Bitcoins"/>
+        </form><br>
+        
         <form action="${contextPath}/signin/order/create" method="POST">
             Price: <input type="number" name="price" required/>
             Amount: <input type="number" name="amount" required/>

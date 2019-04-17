@@ -37,60 +37,24 @@
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 	
-	<c:if test="${sessionScope.admin == 'admin'}">
-	<form action="${contextPath}/admin/view" method ="post">
-        <input type="hidden" name="option" value="logout"/>
-        <input type="submit" value="Back"/>
-    </form><br/>
-    </c:if> 
-    
-    <c:if test="${sessionScope.admin == null}">
-	<form action="${contextPath}/signin/order/" method ="post">
-        <input type="hidden" name="option" value="logout"/>
-        <input type="submit" value="Back"/>
-    </form><br/>
-	</c:if> 	
 	
+	<form action="${contextPath}/signin/back" method ="post">
+        <input type="hidden" name="option" value="logout"/>
+        <input type="submit" value="Back"/>
+    </form><br/>
    
-		<table id="customers">
-            <thead>
-            	
-                <th>orderId</th>
-                <th>type</th>
-            </thead>
-            <tbody>           
-            
-               <tr>
-<%--                	   <td>${records.get(0).orderId}</td> --%>
-<%--                    <td>${records.get(0).type}</td>  --%>
-                   <td>${order.orderId}</td>
-                   <td>${order.type}</td>             
-               </tr>
-            
-            </tbody>
-        </table>    
     	<br>
 		<table id="customers">
             <thead>
-            	<c:if test="${order.type == 'buy'}">
-                	<th>target sellerId</th>
-                </c:if> 
-                <c:if test="${order.type == 'sell'}">
-                	<th>target buyerId</th>
-                </c:if> 
-<!--                 <th>target user</th> -->
-                <th>amount</th>
-                <th>price</th>               
-                <th>date</th> 
+                 
+                <th>Bitcoin ID</th> 
                 
             </thead>
             <tbody>           
-            <c:forEach var="o" items="${records}">
+            <c:forEach var="b" items="${bitcoins}">
                 <tr>	                
-                    <td>${o.targetId}</td>
-                    <td>${o.amount}</td>
-                    <td>${o.price}</td>
-                    <td>${o.date}</td>
+                    <td>${b.bicoinID}</td>
+     
                     
                     
                 </tr>

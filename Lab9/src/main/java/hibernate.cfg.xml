@@ -13,11 +13,6 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
         
-<!--         <mapping class="com.neu.edu.pojo.User"/> -->
-<!--         <mapping class="com.neu.edu.pojo.Phone"/> -->
-<!--         <mapping class="com.neu.edu.pojo.Advert"/> -->
-<!--         <mapping class="com.neu.edu.pojo.Category"/> -->
-        
         <mapping class="com.neu.edu.pojo.Client"/>
         <mapping class="com.neu.edu.pojo.Bitcoin"/>
         <mapping class="com.neu.edu.pojo.Order"/>
